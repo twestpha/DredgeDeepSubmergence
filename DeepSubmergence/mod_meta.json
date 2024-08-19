@@ -1,0 +1,9 @@
+{
+	"Author": "twestpha",
+	"Name": "Deep Submergence",
+	"ModGUID": "twestpha.DeepSubmergence",
+	"Version": "0.0.1",
+	"ModAssembly": "DeepSubmergence.dll",
+	"MinWinchVersion": "0.4.0",
+	"Entrypoint": "DeepSubmergence.Loader/Initialize"
+}
