@@ -2,6 +2,7 @@ using System.Collections.Generic;
 ﻿using System.Collections;
 using UnityEngine;
 using Winch.Core;
+using Winch.Util;
 
 namespace DeepSubmergence {
     public class DeepSubmergence : MonoBehaviour {
@@ -33,6 +34,8 @@ namespace DeepSubmergence {
         void Awake(){
             instance = this;
             WinchCore.Log.Debug("mod loaded");
+            
+            ModelUtil.Initialize();
         }
         
         IEnumerator Start(){
@@ -61,11 +64,14 @@ namespace DeepSubmergence {
         private void SetupSubmarinePlayer(){
             submarinePlayer = Utils.SetupModelTextureAsGameObject(
                 "SubmarinePlayer",
-                BakedAssets.GetBoxMesh(),
-                null
+                ModelUtil.GetModel("deepsubmergence.testmodel"),
+                TextureUtil.GetTexture("deepsubmergence.testtexture")
             );
             
             // player.AddComponent<SubmarinePlayer>();
+            
+            // iteracte children of dredgePlayer, look for BoatModelProxy. SetActiveFalse all of them intermittently
+            // Copy position every frame of dredgePlayer, push downward into ocean
 
             managedObjects.Add(submarinePlayer);
         }
