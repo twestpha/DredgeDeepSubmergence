@@ -9,25 +9,39 @@ namespace DeepSubmergence {
     
         public static DeepSubmergence instance;
         
+        // Helpful links
+        // https://dredgemods.com/mods/
+        // https://github.com/DREDGE-Mods/Winch/blob/5de432bc9657aae5a553bfd654b71853ca4a345b/Winch/Util/TextureUtil.cs#L15
+        // https://github.com/Hacktix/Winch/wiki/Mod-Structure
+        // https://github.com/DREDGE-Mods/Winch/blob/5de432bc9657aae5a553bfd654b71853ca4a345b/Winch/Core/AssetLoader.cs#L33
+        
         // SHORT TERM GOALS
         // [/] Get player submarine model/texture
+        // [/] Get player sub model replacing current model
+        // [/] Get player diving/surfacing (purely visually, raycasting to bottom for max dive) working
+        // [/] Showing/hiding foam when above/below surface
+        // [/] Spinning propeller in rear
         
         // V0.1: Submarine Visual Mod (might just stop here lol)
-        // [x] Get player sub model replacing current model
-        // [x] Get player diving/surfacing (purely visually, raycasting to bottom for max dive) working
         // [x] UI for diving (pick a keycode, toggle some sprites on main canvas)
-        // [x] Showing/hiding foam when above/below surface
         
-        // V0.2: Submarine Specific Collectable Fish, Submarine Parts, ship layout
+        // V0.2:
+        // [x] Light that turns on and off based on player light
+        // [x] Collision into islands is pretty damn weird
         
-        // V0.3: Submarine specific minigame and collectable points (different reel type? Not sure how to do that)
+        // V0.3: Submarine Specific Collectable Fish, Submarine Parts, ship layout
+        // [x] Robot fish only collectable with submarine while submerged
+        // [x] Dive timer, damage if stays down too long, surfacing refills
         
-        // V0.4: Deep submergence (underwater map), Underwater Base
+        // V0.X: Submarine specific minigame
         
-        // V0.5 Questline and characters
+        // V0.X: Deep submergence (underwater map), Underwater Base
+        
+        // V0.X Questline and characters
         
         public GameObject dredgePlayer;
         public GameObject submarinePlayer;
+        public GameObject debugAxes;
         public List<GameObject> managedObjects = new();
         
         void Awake(){
@@ -46,6 +60,7 @@ namespace DeepSubmergence {
             
             // Instantiate all the objects needed for the mod
             SetupSubmarinePlayer();
+            SetupDebugAxes();
         }
         
         void Update(){
@@ -76,6 +91,16 @@ namespace DeepSubmergence {
             );
 
             submarinePlayer.AddComponent<SubmarinePlayer>();
+        }
+        
+        private void SetupDebugAxes(){
+            debugAxes = Utils.SetupModelTextureAsGameObject(
+                "Debug Axes",
+                ModelUtil.GetModel("deepsubmergence.debugaxes"),
+                null
+            );
+            
+            debugAxes.transform.position = new Vector3(0.0f, -1000.0f, 0.0f);
         }
     }
 }
