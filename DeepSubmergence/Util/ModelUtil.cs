@@ -45,7 +45,7 @@ namespace Winch.Util
             
         }
 
-        public static Mesh? GetModel(string key)
+        public static Mesh GetModel(string key)
         {
             if (string.IsNullOrWhiteSpace(key)){
                 return null;

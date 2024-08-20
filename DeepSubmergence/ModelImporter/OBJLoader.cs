@@ -149,8 +149,8 @@ namespace Dummiesman
 				if (Materials == null && buffer.Is("mtllib")) {
 					buffer.SkipWhitespaces();
 					buffer.ReadUntilNewLine();
-					string mtlLibPath = buffer.GetString();
-					LoadMaterialLibrary(mtlLibPath);
+					// string mtlLibPath = buffer.GetString();
+					// LoadMaterialLibrary(mtlLibPath);
 					continue;
 				}
 				

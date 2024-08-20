@@ -29,7 +29,7 @@ namespace DeepSubmergence {
         
         public GameObject dredgePlayer;
         public GameObject submarinePlayer;
-        private List<GameObject> managedObjects = new();
+        public List<GameObject> managedObjects = new();
         
         void Awake(){
             instance = this;
@@ -69,11 +69,8 @@ namespace DeepSubmergence {
             );
             
             // player.AddComponent<SubmarinePlayer>();
-            
-            // iteracte children of dredgePlayer, look for BoatModelProxy. SetActiveFalse all of them intermittently
+            // iterate children of dredgePlayer, look for BoatModelProxy. SetActiveFalse all of them intermittently
             // Copy position every frame of dredgePlayer, push downward into ocean
-
-            managedObjects.Add(submarinePlayer);
         }
     }
 }

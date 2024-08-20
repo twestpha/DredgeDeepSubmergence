@@ -5,11 +5,9 @@ namespace DeepSubmergence {
     public static class Utils {
         
         const string DEFAULT_SHADER_NAME = "Shader Graphs/Lit_Shader";
+        const string DEFAULT_TEXTURE_PROP = "Texture2D_9aa7ba2263944b48bbf43c218dc48459";
         
         public static GameObject SetupModelTextureAsGameObject(string name, Mesh mesh, Texture texture){
-            // find and copy material from somewhere (?)
-            // cache and re-instantiate a copy each time
-            
             GameObject newObject = new GameObject();
             newObject.name = "[DeepSubmergence] " + name;
             
@@ -18,15 +16,16 @@ namespace DeepSubmergence {
             WinchCore.Log.Debug("mod loaded");
             newMeshFilter.mesh = mesh;
             
-            Material newMaterial = null; // TODO copy from existing, but put our texture in it
-            // There seems to be a per-boat material, so I don't think that's the answer...
-            // Consider using "Shader Graphs/Lit_Shader" using https://docs.unity3d.com/ScriptReference/Shader.Find.html
+            // Setup material with texture
+            Material newMaterial = new Material(Shader.Find(DEFAULT_SHADER_NAME));
+            newMaterial.SetTexture(DEFAULT_TEXTURE_PROP, texture);
             
             MeshRenderer newMeshRenderer = newObject.AddComponent<MeshRenderer>();
             newMeshRenderer.material = newMaterial;
             
             // Manually manage lifetime
             GameObject.DontDestroyOnLoad(newObject);
+            DeepSubmergence.instance.managedObjects.Add(newObject);
             
             return newObject;
         }
