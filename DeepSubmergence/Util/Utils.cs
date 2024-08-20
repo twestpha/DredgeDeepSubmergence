@@ -29,5 +29,9 @@ namespace DeepSubmergence {
             
             return newObject;
         }
+        
+        public static GameObject SetupTextureAsSpriteOnCavas(string name, Texture texture){
+            return null;
+        }
     }
 }

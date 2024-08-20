@@ -15,11 +15,12 @@ namespace DeepSubmergence {
         // V0.1: Submarine Visual Mod (might just stop here lol)
         // [x] Get player sub model replacing current model
         // [x] Get player diving/surfacing (purely visually, raycasting to bottom for max dive) working
-        // [x] UI for diving (pick a key, toggle a sprite?)
+        // [x] UI for diving (pick a keycode, toggle some sprites on main canvas)
+        // [x] Showing/hiding foam when above/below surface
         
         // V0.2: Submarine Specific Collectable Fish, Submarine Parts, ship layout
         
-        // V0.3: Submarine specific minigame and collectable points, 
+        // V0.3: Submarine specific minigame and collectable points (different reel type? Not sure how to do that)
         
         // V0.4: Deep submergence (underwater map), Underwater Base
         
