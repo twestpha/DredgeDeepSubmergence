@@ -7,7 +7,7 @@ using Winch.Util;
 namespace DeepSubmergence {
     public class SubmarinePlayer : MonoBehaviour {
         
-        private const float DISABLE_MODELS_TIME = 0.5f;
+        private const float DISABLE_MODELS_TIME = 0.1f;
         
         private const float DIVE_TIME = 1.2f;
         private const float MAX_DIVE_DISTANCE = 2.0f;
@@ -18,6 +18,9 @@ namespace DeepSubmergence {
         private const float PROP_SPEED = 1440.0f;
         private const float PROP_SPINUP_TIME = 1.6f;
         private readonly Vector3 SURFACE_MODEL_OFFSET = new Vector3(0.0f, -0.1f, 0.0f);
+        
+         // Pretty sure this is in the base game
+        private const string BOAT_PROXY_NAME = "Boat4";
         
         private GameObject cachedDredgePlayer;
         private GameObject propeller;
@@ -33,21 +36,14 @@ namespace DeepSubmergence {
         
         private Vector3 diveTargetPosition;
                         
-        private List<GameObject> boatModelProxies = new();
-        private Timer disableModelProxiesTimer = new(DISABLE_MODELS_TIME);
+        private List<GameObject> boatModelProxies;
+        private Timer disableTimer = new(DISABLE_MODELS_TIME);
     
         void Start(){
             cachedDredgePlayer = DeepSubmergence.instance.dredgePlayer;
             
-            // Hide player boat models
-            boatModelProxies.Clear();
-            BoatModelProxy[] allBoatModelProxies = Object.FindObjectsOfType<BoatModelProxy>();
-            foreach(BoatModelProxy b in allBoatModelProxies){
-                b.gameObject.SetActive(false);
-                boatModelProxies.Add(b.gameObject);
-            }
-
-            disableModelProxiesTimer.Start();
+            // Set up and dis/enable the right player gameobjects and components to make this all work
+            ApplyAblingToDredgePlayer();
             
             // Find and cache boat particles
             cachedBoatParticles = GameObject.Find("BoatTrailParticles").GetComponent<ParticleSystem>();
@@ -64,12 +60,9 @@ namespace DeepSubmergence {
         
         void Update(){
             // Intermittently disable all the other boat models in case they get activated in other ways
-            if(disableModelProxiesTimer.Finished()){
-                disableModelProxiesTimer.Start();
-                
-                for(int i = 0, count = boatModelProxies.Count; i < count; ++i){
-                    boatModelProxies[i].SetActive(false);
-                }
+            if(disableTimer.Finished()){
+                disableTimer.Start();
+                ApplyAblingToDredgePlayer();
             }
             
             UpdateInputs();
@@ -146,6 +139,31 @@ namespace DeepSubmergence {
         
         public bool OnSurface(){
             return onSurface;
+        }
+        
+        public void ApplyAblingToDredgePlayer(){
+            if(boatModelProxies == null){
+                boatModelProxies = new();
+                
+                BoatModelProxy[] allBoatModelProxies = Object.FindObjectsOfType<BoatModelProxy>();
+                
+                foreach(BoatModelProxy b in allBoatModelProxies){
+                    b.gameObject.SetActive(false);
+                    boatModelProxies.Add(b.gameObject);
+                }
+            }
+            
+            // Disable all mesh renderers, but leave one specific boat model on for it's collider.
+            // But then also disable all of the children.
+            for(int i = 0, icount = boatModelProxies.Count; i < icount; ++i){
+                boatModelProxies[i].SetActive(boatModelProxies[i].gameObject.name == BOAT_PROXY_NAME);
+                boatModelProxies[i].GetComponent<MeshRenderer>().enabled = false;
+                
+                for(int j = 0, jcount = boatModelProxies[i].transform.childCount; j < jcount; ++j){
+                    boatModelProxies[i].transform.GetChild(j).gameObject.SetActive(false);
+                }
+                
+            }
         }
     }
 }

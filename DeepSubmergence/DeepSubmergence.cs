@@ -17,7 +17,7 @@ namespace DeepSubmergence {
         
         // PLAN
         // V0.1: Submarine Visual Mod (might just stop here lol)
-        // [x] Collision into islands is pretty damn weird
+        // [x] Dive distance is fucky, have the player surface at *some* point, and also raycast against rocks too?
         
         // V0.2: Submarine Specific Collectable Fish, Submarine Parts, ship layout
         // [x] Light that turns on and off based on player light
