@@ -77,7 +77,13 @@ namespace DeepSubmergence {
         }
         
         private void UpdateInputs(){
-            if(Input.GetKeyDown(KeyCode.V)){
+            // TODO disable switching, moveKeyPressed when
+            // - in dock
+            // - when tab menu is open
+            // - while fishing
+            // - probably other times
+            
+            if(Input.GetKeyDown(KeyCode.Q)){
                 onSurface = !onSurface;
             }
             
@@ -136,6 +142,10 @@ namespace DeepSubmergence {
             // Propeller goes brrrr
             propAmount = Mathf.SmoothDamp(propAmount, moveKeyPressed ? PROP_SPEED : 0.0f, ref propAmountVelocity, PROP_SPINUP_TIME);
             propeller.transform.localRotation *= Quaternion.Euler(0.0f, 0.0f, propAmount * Time.deltaTime);
+        }
+        
+        public bool OnSurface(){
+            return onSurface;
         }
     }
 }
