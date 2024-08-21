@@ -8,10 +8,6 @@ namespace DeepSubmergence {
         const string DEFAULT_SHADER_NAME = "Shader Graphs/Lit_Shader";
         const string DEFAULT_TEXTURE_PROP = "Texture2D_9aa7ba2263944b48bbf43c218dc48459";
         
-        const string DEFAULT_GAME_CANVAS_NAME = "GameCanvas";
-        
-        private static GameObject cachedGameCanvas;
-        
         public static GameObject SetupModelTextureAsGameObject(string name, Mesh mesh, Texture texture){
             GameObject newObject = new GameObject();
             newObject.name = "[DeepSubmergence] " + name;
@@ -32,6 +28,9 @@ namespace DeepSubmergence {
             DeepSubmergence.instance.managedObjects.Add(newObject);
             return newObject;
         }
+        
+        const string DEFAULT_GAME_CANVAS_NAME = "GameCanvas";
+        private static GameObject cachedGameCanvas;
         
         public static GameObject SetupTextureAsSpriteOnCanvas(string name, Sprite sprite, Vector2 rect, Vector2 position){
             if(cachedGameCanvas == null){
@@ -63,6 +62,19 @@ namespace DeepSubmergence {
             GameObject.DontDestroyOnLoad(newObject);
             DeepSubmergence.instance.managedObjects.Add(newObject);
             return newObject;
+        }
+        
+        public static bool CanDive(){
+            // find and cache a bunch of shit
+            // then check those when queried
+            
+            // TODO return false when
+            // - in dock
+            // - when tab menu is open
+            // - while fishing
+            // - probably other times
+            
+            return true;
         }
     }
 }

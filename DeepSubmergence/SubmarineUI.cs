@@ -41,14 +41,10 @@ namespace DeepSubmergence {
         }
         
         void Update(){
+            bool canDive = Utils.CanDive();
+            
             // Flip direction of dive icon arrow depending on surface/not
             diveIconRect.transform.localScale = new Vector3(1.0f, cachedSubmarinePlayer.OnSurface() ? 1.0f : -1.0f, 1.0f);
-            
-            // TODO hide everything when
-            // - in dock
-            // - when tab menu is open
-            // - while fishing
-            // - probably other times
         }
     }
 }

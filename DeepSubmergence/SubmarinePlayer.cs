@@ -14,9 +14,10 @@ namespace DeepSubmergence {
         private const float DIVE_ABOVE_FLOOR = 1.0f;
         
         private const float SHOULD_FOAM = 0.2f;
+        private const float SURFACE_THRESHOLD = 0.25f;
         
         private const float PROP_SPEED = 1440.0f;
-        private const float PROP_SPINUP_TIME = 1.6f;
+        private const float PROP_SPINUP_TIME = 0.4f;
         private readonly Vector3 SURFACE_MODEL_OFFSET = new Vector3(0.0f, -0.1f, 0.0f);
         
          // Pretty sure this is in the base game
@@ -70,17 +71,15 @@ namespace DeepSubmergence {
         }
         
         private void UpdateInputs(){
-            // TODO disable switching, moveKeyPressed when
-            // - in dock
-            // - when tab menu is open
-            // - while fishing
-            // - probably other times
-            
-            if(Input.GetKeyDown(KeyCode.Q)){
-                onSurface = !onSurface;
+            if(Utils.CanDive()){
+                if(Input.GetKeyDown(KeyCode.Q)){
+                    onSurface = !onSurface;
+                }
+                
+                moveKeyPressed = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D);
+            } else {
+                onSurface = true;
             }
-            
-            moveKeyPressed = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D);
         }
         
         private void UpdatePositionAndRotation(){
@@ -96,7 +95,13 @@ namespace DeepSubmergence {
             
             if(allRaycastHits != null && allRaycastHits.Length > 0){
                 for(int i = 0, count = allRaycastHits.Length; i < count; ++i){
-                    if(allRaycastHits[i].collider.gameObject.name == "Terrain"){
+                    // We can't catch everything (partly because not everything has a collider) but this get most things
+                    // TODO maybe go through all the rocks in the game and add a mesh collider to them :P maybe later
+                    bool shouldCollide = allRaycastHits[i].collider.gameObject.name == "Terrain"
+                                         || allRaycastHits[i].collider.gameObject.name.Contains("Rock")
+                                         || allRaycastHits[i].collider.gameObject.layer == LayerMask.NameToLayer("CollidesWithPlayer");
+
+                    if(shouldCollide){
                         Vector3 toDivePosition = (allRaycastHits[i].point + Vector3.up * DIVE_ABOVE_FLOOR) - dredgePlayerPosition;
                         diveTargetPosition = dredgePlayerPosition + toDivePosition.normalized * Mathf.Min(toDivePosition.magnitude, MAX_DIVE_DISTANCE);
                         break;
@@ -107,25 +112,31 @@ namespace DeepSubmergence {
             // Always be under the player
             diveTargetPosition.x = dredgePlayerPosition.x;
             diveTargetPosition.z = dredgePlayerPosition.z;
-
-            // If we're high enough up anyway, just be surfaced
-            // if(!onSurface && atSurface){
-            //     onSurface = true;
-            // }
             
             // Drive the parameter towards the target when relevant
+            float previousDepthParameter = depthParameter;
             depthParameter = Mathf.SmoothDamp(depthParameter, onSurface ? 0.0f : 1.0f, ref depthVelocity, DIVE_TIME);
+            bool diving = previousDepthParameter > depthParameter;
+            bool surfacing = previousDepthParameter < depthParameter;
             
             // Apply the position based on parameter
+            Vector3 previousPosition = transform.position;
             transform.position = Vector3.Lerp(
                 dredgePlayerPosition + SURFACE_MODEL_OFFSET, 
                 diveTargetPosition,
                 CustomMath.EaseInOut(depthParameter)
             );
+            
             // TODO Give diving and surfacing direction-facing tweaks to make it feel more fun
             transform.rotation = cachedDredgePlayer.transform.rotation;
             
-            // Disable and enable foam near surface
+            // If we're high enough up anyway, just be surfaced
+            bool visuallySurfacing = previousPosition.y < transform.position.y;
+            if(!onSurface && visuallySurfacing && diveTargetPosition.y > dredgePlayerPosition.y - SURFACE_THRESHOLD){
+                onSurface = true;
+            }
+            
+            // Enable foam particles near surface, disable when dived far enough
             if(cachedBoatParticles.isPlaying && depthParameter >= SHOULD_FOAM){
                 cachedBoatParticles.Stop();
             } else if(!cachedBoatParticles.isPlaying && depthParameter <= SHOULD_FOAM){

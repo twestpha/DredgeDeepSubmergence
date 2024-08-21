@@ -16,10 +16,8 @@ namespace DeepSubmergence {
         // https://github.com/DREDGE-Mods/Winch/blob/5de432bc9657aae5a553bfd654b71853ca4a345b/Winch/Core/AssetLoader.cs#L33
         
         // PLAN
-        // V0.1: Submarine Visual Mod (might just stop here lol)
-        // [x] Dive distance is fucky, have the player surface at *some* point, and also raycast against rocks too?
-        
         // V0.2: Submarine Specific Collectable Fish, Submarine Parts, ship layout
+        // [x] Can dive hookups all around
         // [x] Light that turns on and off based on player light
         // [t] Test all of the powers
         // [x] Robot fish only collectable with submarine while submerged
