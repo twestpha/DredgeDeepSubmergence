@@ -15,29 +15,46 @@ namespace DeepSubmergence {
         // https://github.com/Hacktix/Winch/wiki/Mod-Structure
         // https://github.com/DREDGE-Mods/Winch/blob/5de432bc9657aae5a553bfd654b71853ca4a345b/Winch/Core/AssetLoader.cs#L33
         
-        // V0.2: Submarine Specific Collectable Fish, ship layout
-        // [/] Can dive hookups all around
-        // [/] Diving rotation for player model
+        // [/] quitting/continuing cycle
+        // [/] steelhead
+        // [/] electric eel
+        // [/] Light that turns on and off based on player light
+        // [/] Net Squid
+        // [/] Torpedo fish
+        // [/] Diving not working in deep water? Probably raycast
         
-        // [x] quitting/continuing
-        // [x] Light that turns on and off based on player light
-        // [t] Test all of the powers
+        // V0.2: Submarine Specific Collectable Fish, ship layout
         // [x] Robot fish only collectable with submarine while submerged
+        //   - how to do submerged-only fish places?
+        //   - bunch of fish assets and data
+        //     [x] Shredder Shark (smells of peach?)
+        //     [x] Giant Needlefish (with a syringe for a head)
+        //     [x] Flayed Whale (chainsaw)
+        //     [x] Iron Lungfish
+        //     [x] Boltfish
+        //     [x] Hermit crab attached to lamp
+        //     [x] Shark made of lots of tiny fish
+        // [x] Ship layout
+        // [t] Test all of the powers, bugfix
+        // [x] Scatter some harvast areas around the marrows just for now
+        // [x] Screenshot with hero render or something in github readme, see https://github.com/xen-42/cosmic-horror-fishing-buddies
         
         // V0.X: Submarine specific fishing minigame
         // [x] Dive timer, damage if stays down too long, surfacing refills
         // [x] Parts to improve dive times
         // [x] Other submarine specific parts
         
-        // V0.X: Deep submergence (fully underwater map), Underwater Base
-        
-        // V0.X Questline and characters
+        // V0.X: Underwater Base, Questline and characters
+        // [x] Find a spot on the map to put these
+        // [x] Cover art for game start?
         
         public GameObject dredgePlayer;
         public GameObject submarinePlayer;
         public GameObject submarineUI;
         public GameObject debugAxes;
         public List<GameObject> managedObjects = new();
+        
+        private bool setup;
         
         void Awake(){
             instance = this;
@@ -47,33 +64,43 @@ namespace DeepSubmergence {
         }
         
         IEnumerator Start(){
+            setup = false;
+            
             // spin until we find a player
             while(dredgePlayer == null){
                 yield return null;
                 dredgePlayer = GameObject.Find("Player");
             }
-            
+
             // Instantiate all the objects needed for the mod
             SetupSubmarinePlayer();
             SetupDebugAxes();
             SetupDiveUI();
+            
+            setup = true;
         }
         
         void Update(){
-            if(dredgePlayer == null){
-                ShutDown();
-            } else {
-                // every so often, spawn some new pickups around the player?
+            if(setup){
+                if(dredgePlayer == null){
+                    ShutDown();
+                } else {
+                    // Not sure yet...
+                }
             }
         }
         
         private void ShutDown(){
+            setup = false;
+            
+            WinchCore.Log.Debug("Resetting");
+            
             for(int i = 0, count = managedObjects.Count; i < count; ++i){
                 Destroy(managedObjects[i]);
             }
             
-            // TODO kick off restart?
-            // StartCoroutine(Start());
+            // Kick off a restart waiting for player
+            StartCoroutine(Start());
         }
         
         private void SetupSubmarinePlayer(){

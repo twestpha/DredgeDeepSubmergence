@@ -21,15 +21,22 @@ namespace DeepSubmergence {
         
         private readonly Vector3 SURFACE_MODEL_OFFSET = new Vector3(0.0f, -0.1f, 0.0f);
         
-        private readonly float DIVING_ROTATION = 10.0f;
-        private readonly float DIVE_ROTATION_TIME = 0.25f;
+        private const float DIVING_ROTATION = 10.0f;
+        private const float DIVE_ROTATION_TIME = 0.25f;
+        
+        private readonly Vector3 LIGHT_POSITION_OFFSET = new Vector3(0.0f, 0.0f, 1.5f);
+        private const float LIGHT_INTENSITY = 1.0f;
+        private const float LIGHT_ANGLE = 140.0f;
+        private const float LIGHT_RANGE = 10.0f;
         
          // Pretty sure this is in the base game
         private const string BOAT_PROXY_NAME = "Boat4";
         
         private GameObject cachedDredgePlayer;
         private GameObject propeller;
+        private Light playerLight;
         private ParticleSystem cachedBoatParticles;
+        private GameObject cachedPersonalSanityModifier;
         private bool onSurface = true;
         private bool moveKeyPressed = false;
         
@@ -64,14 +71,32 @@ namespace DeepSubmergence {
             );
             propeller.transform.parent = transform;
             propeller.transform.localPosition = Vector3.zero;
+            
+            // Create and setup ship light
+            GameObject newLight = new GameObject();
+            newLight.name = "[DeepSubmergence] Player light";
+            playerLight = newLight.AddComponent<Light>();
+            playerLight.type = LightType.Spot;
+            playerLight.intensity = LIGHT_INTENSITY;
+            playerLight.spotAngle = LIGHT_ANGLE;
+            playerLight.range = LIGHT_RANGE;
+            
+            newLight.transform.parent = transform;
+            newLight.transform.localPosition = LIGHT_POSITION_OFFSET;
+            
+            // For some reason, this enables/disables when lights are used
+            cachedPersonalSanityModifier = GameObject.Find("PersonalSanityModifier");
         }
         
-        void Update(){
+        void Update(){            
             // Intermittently disable all the other boat models in case they get activated in other ways
             if(disableTimer.Finished()){
                 disableTimer.Start();
                 ApplyAblingToDredgePlayer();
             }
+
+            // Enable lights
+            playerLight.enabled = cachedPersonalSanityModifier.activeSelf;
             
             UpdateInputs();
             UpdatePositionAndRotation();
@@ -102,19 +127,23 @@ namespace DeepSubmergence {
                 QueryTriggerInteraction.UseGlobal
             );
             
-            if(allRaycastHits != null && allRaycastHits.Length > 0){
-                for(int i = 0, count = allRaycastHits.Length; i < count; ++i){
-                    // We can't catch everything (partly because not everything has a collider) but this get most things
-                    // TODO maybe go through all the rocks in the game and add a mesh collider to them :P maybe later
-                    bool shouldCollide = allRaycastHits[i].collider.gameObject.name == "Terrain"
-                                         || allRaycastHits[i].collider.gameObject.name.Contains("Rock")
-                                         || allRaycastHits[i].collider.gameObject.layer == LayerMask.NameToLayer("CollidesWithPlayer");
+            if(allRaycastHits != null){
+                if(allRaycastHits.Length > 0){
+                    for(int i = 0, count = allRaycastHits.Length; i < count; ++i){
+                        // We can't catch everything (partly because not everything has a collider) but this get most things
+                        // TODO maybe go through all the rocks in the game and add a mesh collider to them :P maybe later
+                        bool shouldCollide = allRaycastHits[i].collider.gameObject.name == "Terrain"
+                                             || allRaycastHits[i].collider.gameObject.name.Contains("Rock")
+                                             || allRaycastHits[i].collider.gameObject.layer == LayerMask.NameToLayer("CollidesWithPlayer");
 
-                    if(shouldCollide){
-                        Vector3 toDivePosition = (allRaycastHits[i].point + Vector3.up * DIVE_ABOVE_FLOOR) - dredgePlayerPosition;
-                        diveTargetPosition = dredgePlayerPosition + toDivePosition.normalized * Mathf.Min(toDivePosition.magnitude, MAX_DIVE_DISTANCE);
-                        break;
+                        if(shouldCollide){
+                            Vector3 toDivePosition = (allRaycastHits[i].point + Vector3.up * DIVE_ABOVE_FLOOR) - dredgePlayerPosition;
+                            diveTargetPosition = dredgePlayerPosition + toDivePosition.normalized * Mathf.Min(toDivePosition.magnitude, MAX_DIVE_DISTANCE);
+                            break;
+                        }
                     }
+                } else {
+                    diveTargetPosition = dredgePlayerPosition + toDivePosition.normalized * MAX_DIVE_DISTANCE;
                 }
             }
             

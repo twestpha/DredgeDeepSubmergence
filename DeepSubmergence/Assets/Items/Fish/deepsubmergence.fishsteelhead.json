@@ -1,0 +1,37 @@
+{
+  "itemNameKey": "deepsubmergence.steelhead.name",
+  "itemDescriptionKey": "deepsubmergence.steelhead.desc",
+  "itemType": "GENERAL",
+  "itemSubtype": "FISH",
+  "sprite": "deepsubmergence.iconsteelhead",
+  "itemColor": {
+    "r": 59,
+    "g": 38,
+    "b": 34,
+    "a": 255
+  },
+  "tooltipTextColor": {
+    "r": 74,
+    "g": 237,
+    "b": 217,
+    "a": 255
+  },
+  "squishFactor": 1,
+  "value": 5,
+  "dimensions": [
+    "XX",
+    " X"
+  ],
+  "zonesFoundIn": "OPEN_OCEAN",
+  "day": true,
+  "night": true,
+  "minSizeCentimeters": 5,
+  "maxSizeCentimeters": 10,
+  "harvestMinigameType": "DREDGE_RADIAL",
+  "perSpotMin": 3,
+  "perSpotMax": 8,
+  "harvestPOICategory": "FISH_SMALL",
+  "harvestableType": "COASTAL",
+  "harvestDifficulty": "VERY_EASY",
+  "isAberration": true,
+}

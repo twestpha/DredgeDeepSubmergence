@@ -101,33 +101,24 @@ namespace DeepSubmergence {
         // Helper function for detecting our UI state and if we're allowed to
         // dive or we're in other menus
         //######################################################################
+        private static Player cachedPlayer = null;
         private static SlidePanel cachedPlayerSlidePanel = null;
-        private static GameObject cachedDockNameContainer = null;
-        private static GameObject cachedMinigameContainer = null;
         
+        private const string PLAYER_NAME = "Player";
         private const string PLAYER_SLIDE_PANEL_NAME = "PlayerSlidePanel";
-        
-        private const string PLAYER_DOCKUI_NAME = "DockUI";
-        private const string PLAYER_DOCKCONTAINER_NAME = "DockNameContainer";
-        
-        private const string PLAYER_MINIGAMEVIEW_NAME = "CombinedMinigameView";
-        private const string PLAYER_MINIGAMECONTAINER_NAME = "Container";
-        
-        
 
         public static CannotDiveReason CanDive(){
             // find and cache a bunch of shit
             // then check those when queried
-            if(cachedPlayerSlidePanel == null || cachedDockNameContainer == null || cachedMinigameContainer == null){
+            if(cachedPlayerSlidePanel == null || cachedPlayer == null){
                 cachedPlayerSlidePanel = GameObject.Find(PLAYER_SLIDE_PANEL_NAME).GetComponent<SlidePanel>();
-                cachedDockNameContainer = FindInChildren(GameObject.Find(PLAYER_DOCKUI_NAME), PLAYER_DOCKCONTAINER_NAME);
-                cachedMinigameContainer = FindInChildren(GameObject.Find(PLAYER_MINIGAMEVIEW_NAME), PLAYER_MINIGAMECONTAINER_NAME);
+                cachedPlayer = GameObject.Find(PLAYER_NAME).GetComponent<Player>();
             }
             
             CannotDiveReason reason = CannotDiveReason.None;
             if(cachedPlayerSlidePanel.isShowing || cachedPlayerSlidePanel.willShow){ reason |= CannotDiveReason.TabMenuOpen; }
-            if(cachedDockNameContainer.activeSelf){ reason |= CannotDiveReason.InDock; }
-            if(cachedMinigameContainer.activeSelf){ reason |= CannotDiveReason.Fishing; }
+            if(cachedPlayer.IsDocked) { reason |= CannotDiveReason.InDock; }
+            if(cachedPlayer.IsFishing){ reason |= CannotDiveReason.Fishing; }
 
             return reason;
         }
