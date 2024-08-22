@@ -18,7 +18,11 @@ namespace DeepSubmergence {
         
         private const float PROP_SPEED = 1440.0f;
         private const float PROP_SPINUP_TIME = 0.4f;
+        
         private readonly Vector3 SURFACE_MODEL_OFFSET = new Vector3(0.0f, -0.1f, 0.0f);
+        
+        private readonly float DIVING_ROTATION = 10.0f;
+        private readonly float DIVE_ROTATION_TIME = 0.25f;
         
          // Pretty sure this is in the base game
         private const string BOAT_PROXY_NAME = "Boat4";
@@ -34,6 +38,9 @@ namespace DeepSubmergence {
         
         private float propAmount = 0.0f;
         private float propAmountVelocity = 0.0f;
+        
+        private float pitch = 0.0f;
+        private float pitchVelocity = 0.0f;
         
         private Vector3 diveTargetPosition;
                         
@@ -71,14 +78,16 @@ namespace DeepSubmergence {
         }
         
         private void UpdateInputs(){
-            if(Utils.CanDive()){
+            CannotDiveReason cannotDiveReason = Utils.CanDive();
+            
+            if((cannotDiveReason & CannotDiveReason.InDock) != CannotDiveReason.None){
+                onSurface = true;
+            } else if(cannotDiveReason == CannotDiveReason.None){
                 if(Input.GetKeyDown(KeyCode.Q)){
                     onSurface = !onSurface;
                 }
                 
                 moveKeyPressed = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D);
-            } else {
-                onSurface = true;
             }
         }
         
@@ -116,8 +125,8 @@ namespace DeepSubmergence {
             // Drive the parameter towards the target when relevant
             float previousDepthParameter = depthParameter;
             depthParameter = Mathf.SmoothDamp(depthParameter, onSurface ? 0.0f : 1.0f, ref depthVelocity, DIVE_TIME);
-            bool diving = previousDepthParameter > depthParameter;
-            bool surfacing = previousDepthParameter < depthParameter;
+            bool diving = previousDepthParameter > depthParameter && depthParameter > 0.02f && depthParameter < 0.98f;
+            bool surfacing = previousDepthParameter < depthParameter && depthParameter > 0.02f && depthParameter < 0.98f;
             
             // Apply the position based on parameter
             Vector3 previousPosition = transform.position;
@@ -127,10 +136,19 @@ namespace DeepSubmergence {
                 CustomMath.EaseInOut(depthParameter)
             );
             
-            // TODO Give diving and surfacing direction-facing tweaks to make it feel more fun
-            // diving
-            // surfacing
-            transform.rotation = cachedDredgePlayer.transform.rotation;
+            //  Pitch the submarine model when it's diving/surfacing for fun visuals
+            Quaternion baseRotation = Quaternion.LookRotation(cachedDredgePlayer.transform.forward);
+            float distanceFromMidpoint = 1.0f - (Mathf.Abs(depthParameter - 0.5f) * 2.0f);
+            float targetPitch = 0.0f;
+            
+            if(diving){
+                targetPitch = -DIVING_ROTATION * distanceFromMidpoint;
+            } else if(surfacing){
+                targetPitch = DIVING_ROTATION * distanceFromMidpoint;
+            }
+            pitch = Mathf.SmoothDamp(pitch, targetPitch, ref pitchVelocity, DIVE_ROTATION_TIME);
+            
+            transform.rotation = baseRotation * Quaternion.Euler(pitch, 0.0f, 0.0f);
             
             // If we're high enough up anyway, just be surfaced
             bool visuallySurfacing = previousPosition.y < transform.position.y;

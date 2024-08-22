@@ -12,11 +12,15 @@ namespace DeepSubmergence {
         private GameObject diveIcon;
         private GameObject diveButton;
         
+        private Image ribbonUI;
         private RectTransform rectTransform;
         private RectTransform diveIconRect;
         
+        private Timer disableUIAtStart = new Timer(2.0f);
+        
         void Start(){
             cachedSubmarinePlayer = DeepSubmergence.instance.submarinePlayer.GetComponent<SubmarinePlayer>();
+            ribbonUI = GetComponent<Image>();
             rectTransform = GetComponent<RectTransform>();
             
             diveIcon = Utils.SetupTextureAsSpriteOnCanvas(
@@ -38,10 +42,18 @@ namespace DeepSubmergence {
             RectTransform diveButtonRect = diveButton.GetComponent<RectTransform>();
             diveButtonRect.SetParent(rectTransform);
             diveButtonRect.anchoredPosition = new Vector2(75.0f, 25.0f);
+            
+            // Force ui to be disabled for some time at the start of gameplay
+            // This lets all the other dependent UI get set up first
+            disableUIAtStart.Start();
         }
         
         void Update(){
-            bool canDive = Utils.CanDive();
+            // Show or hide UI if diving is possible
+            bool showUI = Utils.CanDive() == CannotDiveReason.None && disableUIAtStart.Finished();
+            ribbonUI.enabled = showUI;
+            diveIcon.SetActive(showUI);
+            diveButton.SetActive(showUI);
             
             // Flip direction of dive icon arrow depending on surface/not
             diveIconRect.transform.localScale = new Vector3(1.0f, cachedSubmarinePlayer.OnSurface() ? 1.0f : -1.0f, 1.0f);

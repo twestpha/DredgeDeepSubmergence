@@ -3,6 +3,15 @@ using UnityEngine;
 using Winch.Core;
 
 namespace DeepSubmergence {
+    
+    public enum CannotDiveReason : int {
+        None        = 0,
+        TabMenuOpen = 1 << 1,
+        InDock      = 1 << 2,
+        Fishing     = 1 << 3,
+        // Probably more things
+    }
+    
     public static class Utils {
         
         //######################################################################
@@ -101,33 +110,26 @@ namespace DeepSubmergence {
         private const string PLAYER_DOCKUI_NAME = "DockUI";
         private const string PLAYER_DOCKCONTAINER_NAME = "DockNameContainer";
         
-        private const string PLAYER_MINIGAMEVIEW_NAME = "CombinedMiniGameView";
+        private const string PLAYER_MINIGAMEVIEW_NAME = "CombinedMinigameView";
         private const string PLAYER_MINIGAMECONTAINER_NAME = "Container";
+        
+        
 
-        public static bool CanDive(){
+        public static CannotDiveReason CanDive(){
             // find and cache a bunch of shit
             // then check those when queried
-            // if(cachedPlayerSlidePanel == null || cachedDockNameContainer == null || cachedMinigameContainer == null){
+            if(cachedPlayerSlidePanel == null || cachedDockNameContainer == null || cachedMinigameContainer == null){
+                cachedPlayerSlidePanel = GameObject.Find(PLAYER_SLIDE_PANEL_NAME).GetComponent<SlidePanel>();
+                cachedDockNameContainer = FindInChildren(GameObject.Find(PLAYER_DOCKUI_NAME), PLAYER_DOCKCONTAINER_NAME);
+                cachedMinigameContainer = FindInChildren(GameObject.Find(PLAYER_MINIGAMEVIEW_NAME), PLAYER_MINIGAMECONTAINER_NAME);
+            }
             
-            // !!!!!! THIS HAS AN ERROR
-            
-            
-            //     cachedPlayerSlidePanel = GameObject.Find(PLAYER_SLIDE_PANEL_NAME).GetComponent<SlidePanel>();
-            //     cachedDockNameContainer = FindInChildren(GameObject.Find(PLAYER_DOCKUI_NAME), PLAYER_DOCKCONTAINER_NAME);
-            //     cachedMinigameContainer = FindInChildren(GameObject.Find(PLAYER_MINIGAMEVIEW_NAME), PLAYER_MINIGAMECONTAINER_NAME);
-            // 
-            //     WinchCore.Log.Debug("$$$ cachedPlayerSlidePanel: " + cachedPlayerSlidePanel + ", cachedDockNameContainer: " + cachedDockNameContainer + ", cachedMinigameContainer: " + cachedMinigameContainer);
-            // }
-            // 
-            // // Probably missing something
-            // bool boatTabMenuOpen = cachedPlayerSlidePanel.isShowing;
-            // bool boatInDock = cachedDockNameContainer.activeSelf;
-            // bool inFishingMinigame = cachedMinigameContainer.activeSelf;
-            // 
-            // WinchCore.Log.Debug("$$$ boatTabMenuOpen: " + boatTabMenuOpen + ", boatInDock: " + boatInDock + ", inFishingMinigame: " + inFishingMinigame);
-            
-            // return !(boatTabMenuOpen || boatInDock || inFishingMinigame);
-            return true;
+            CannotDiveReason reason = CannotDiveReason.None;
+            if(cachedPlayerSlidePanel.isShowing || cachedPlayerSlidePanel.willShow){ reason |= CannotDiveReason.TabMenuOpen; }
+            if(cachedDockNameContainer.activeSelf){ reason |= CannotDiveReason.InDock; }
+            if(cachedMinigameContainer.activeSelf){ reason |= CannotDiveReason.Fishing; }
+
+            return reason;
         }
         //######################################################################
     }

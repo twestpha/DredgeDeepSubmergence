@@ -16,8 +16,10 @@ namespace DeepSubmergence {
         // https://github.com/DREDGE-Mods/Winch/blob/5de432bc9657aae5a553bfd654b71853ca4a345b/Winch/Core/AssetLoader.cs#L33
         
         // V0.2: Submarine Specific Collectable Fish, ship layout
-        // [x] Can dive hookups all around
-        // [x] Diving rotation for player model
+        // [/] Can dive hookups all around
+        // [/] Diving rotation for player model
+        
+        // [x] quitting/continuing
         // [x] Light that turns on and off based on player light
         // [t] Test all of the powers
         // [x] Robot fish only collectable with submarine while submerged
