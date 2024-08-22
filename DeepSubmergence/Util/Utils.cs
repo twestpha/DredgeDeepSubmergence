@@ -5,6 +5,24 @@ using Winch.Core;
 namespace DeepSubmergence {
     public static class Utils {
         
+        //######################################################################
+        // Helper function for finding gameobjects by name in children
+        //######################################################################
+        public static GameObject FindInChildren(GameObject parent, string gameObjectName){
+            for(int i = 0, count = parent.transform.childCount; i < count; ++i){
+                if(parent.transform.GetChild(i).gameObject.name.Contains(gameObjectName)){
+                    return parent.transform.GetChild(i).gameObject;
+                }
+            }
+            
+            return null;
+        }
+        //######################################################################
+        
+        //######################################################################
+        // Helper function for quick-setting up a gameobject with a model and
+        // default material
+        //######################################################################
         const string DEFAULT_SHADER_NAME = "Shader Graphs/Lit_Shader";
         const string DEFAULT_TEXTURE_PROP = "Texture2D_9aa7ba2263944b48bbf43c218dc48459";
         
@@ -28,7 +46,12 @@ namespace DeepSubmergence {
             DeepSubmergence.instance.managedObjects.Add(newObject);
             return newObject;
         }
+        //######################################################################
         
+        //######################################################################
+        // Helper function for setting up a gameobject with a sprite and putting
+        // it in the game canvas
+        //######################################################################
         const string DEFAULT_GAME_CANVAS_NAME = "GameCanvas";
         private static GameObject cachedGameCanvas;
         
@@ -63,18 +86,49 @@ namespace DeepSubmergence {
             DeepSubmergence.instance.managedObjects.Add(newObject);
             return newObject;
         }
+        //######################################################################
         
+        //######################################################################
+        // Helper function for detecting our UI state and if we're allowed to
+        // dive or we're in other menus
+        //######################################################################
+        private static SlidePanel cachedPlayerSlidePanel = null;
+        private static GameObject cachedDockNameContainer = null;
+        private static GameObject cachedMinigameContainer = null;
+        
+        private const string PLAYER_SLIDE_PANEL_NAME = "PlayerSlidePanel";
+        
+        private const string PLAYER_DOCKUI_NAME = "DockUI";
+        private const string PLAYER_DOCKCONTAINER_NAME = "DockNameContainer";
+        
+        private const string PLAYER_MINIGAMEVIEW_NAME = "CombinedMiniGameView";
+        private const string PLAYER_MINIGAMECONTAINER_NAME = "Container";
+
         public static bool CanDive(){
             // find and cache a bunch of shit
             // then check those when queried
+            // if(cachedPlayerSlidePanel == null || cachedDockNameContainer == null || cachedMinigameContainer == null){
             
-            // TODO return false when
-            // - in dock
-            // - when tab menu is open
-            // - while fishing
-            // - probably other times
+            // !!!!!! THIS HAS AN ERROR
             
+            
+            //     cachedPlayerSlidePanel = GameObject.Find(PLAYER_SLIDE_PANEL_NAME).GetComponent<SlidePanel>();
+            //     cachedDockNameContainer = FindInChildren(GameObject.Find(PLAYER_DOCKUI_NAME), PLAYER_DOCKCONTAINER_NAME);
+            //     cachedMinigameContainer = FindInChildren(GameObject.Find(PLAYER_MINIGAMEVIEW_NAME), PLAYER_MINIGAMECONTAINER_NAME);
+            // 
+            //     WinchCore.Log.Debug("$$$ cachedPlayerSlidePanel: " + cachedPlayerSlidePanel + ", cachedDockNameContainer: " + cachedDockNameContainer + ", cachedMinigameContainer: " + cachedMinigameContainer);
+            // }
+            // 
+            // // Probably missing something
+            // bool boatTabMenuOpen = cachedPlayerSlidePanel.isShowing;
+            // bool boatInDock = cachedDockNameContainer.activeSelf;
+            // bool inFishingMinigame = cachedMinigameContainer.activeSelf;
+            // 
+            // WinchCore.Log.Debug("$$$ boatTabMenuOpen: " + boatTabMenuOpen + ", boatInDock: " + boatInDock + ", inFishingMinigame: " + inFishingMinigame);
+            
+            // return !(boatTabMenuOpen || boatInDock || inFishingMinigame);
             return true;
         }
+        //######################################################################
     }
 }

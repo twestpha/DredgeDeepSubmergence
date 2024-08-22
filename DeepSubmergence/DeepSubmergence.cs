@@ -15,15 +15,17 @@ namespace DeepSubmergence {
         // https://github.com/Hacktix/Winch/wiki/Mod-Structure
         // https://github.com/DREDGE-Mods/Winch/blob/5de432bc9657aae5a553bfd654b71853ca4a345b/Winch/Core/AssetLoader.cs#L33
         
-        // PLAN
-        // V0.2: Submarine Specific Collectable Fish, Submarine Parts, ship layout
+        // V0.2: Submarine Specific Collectable Fish, ship layout
         // [x] Can dive hookups all around
+        // [x] Diving rotation for player model
         // [x] Light that turns on and off based on player light
         // [t] Test all of the powers
         // [x] Robot fish only collectable with submarine while submerged
-        // [x] Dive timer, damage if stays down too long, surfacing refills
         
         // V0.X: Submarine specific fishing minigame
+        // [x] Dive timer, damage if stays down too long, surfacing refills
+        // [x] Parts to improve dive times
+        // [x] Other submarine specific parts
         
         // V0.X: Deep submergence (fully underwater map), Underwater Base
         

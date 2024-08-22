@@ -128,6 +128,8 @@ namespace DeepSubmergence {
             );
             
             // TODO Give diving and surfacing direction-facing tweaks to make it feel more fun
+            // diving
+            // surfacing
             transform.rotation = cachedDredgePlayer.transform.rotation;
             
             // If we're high enough up anyway, just be surfaced
