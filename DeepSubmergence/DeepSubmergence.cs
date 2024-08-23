@@ -15,36 +15,29 @@ namespace DeepSubmergence {
         // https://github.com/Hacktix/Winch/wiki/Mod-Structure
         // https://github.com/DREDGE-Mods/Winch/blob/5de432bc9657aae5a553bfd654b71853ca4a345b/Winch/Core/AssetLoader.cs#L33
         
-        // [/] quitting/continuing cycle
-        // [/] steelhead
-        // [/] electric eel
-        // [/] Light that turns on and off based on player light
-        // [/] Net Squid
-        // [/] Torpedo fish
-        // [/] Diving not working in deep water? Probably raycast
+        // [/] Shredder Shark (smells of peach?)
+        // [/] Giant Needlefish (with a syringe for a head)
+        // [/] Boltfish
+        // [/] Iron Lungfish
+        // [/] Hermit crab attached to lamp
+        // [/] Shark made of lots of tiny fish
+        // [/] Flayed Whale (chainsaw, digger tool)
+        // [w] Ship layout - is this even possible?
+        // [/] during manifest explosion, sub still visible
+        // [/] dive ui overlaps net ui
         
-        // V0.2: Submarine Specific Collectable Fish, ship layout
-        // [x] Robot fish only collectable with submarine while submerged
-        //   - how to do submerged-only fish places?
-        //   - bunch of fish assets and data
-        //     [x] Shredder Shark (smells of peach?)
-        //     [x] Giant Needlefish (with a syringe for a head)
-        //     [x] Flayed Whale (chainsaw)
-        //     [x] Iron Lungfish
-        //     [x] Boltfish
-        //     [x] Hermit crab attached to lamp
-        //     [x] Shark made of lots of tiny fish
-        // [x] Ship layout
-        // [t] Test all of the powers, bugfix
-        // [x] Scatter some harvast areas around the marrows just for now
-        // [x] Screenshot with hero render or something in github readme, see https://github.com/xen-42/cosmic-horror-fishing-buddies
-        
+        // V0.2: Submarine Specific Collectable Fish
+        // [x] Scatter some harvest areas around the marrows just for now
+        // [x] Screenshot with hero render or something in github readme, punch it up in general, see https://github.com/xen-42/cosmic-horror-fishing-buddies
+
         // V0.X: Submarine specific fishing minigame
         // [x] Dive timer, damage if stays down too long, surfacing refills
         // [x] Parts to improve dive times
         // [x] Other submarine specific parts
+        // [x] Make fish locations dive-only
         
         // V0.X: Underwater Base, Questline and characters
+        // [x] Submarine item, when you throw it overboard, you become a submarine; dupe and fake a player model hanging out there
         // [x] Find a spot on the map to put these
         // [x] Cover art for game start?
         
@@ -128,7 +121,7 @@ namespace DeepSubmergence {
                 "Submarine UI",
                 TextureUtil.GetSprite("deepsubmergence.uiribbon"),
                 new Vector2(75.0f, 50.0f),
-                new Vector2(37.5f, 300.0f)
+                new Vector2(37.5f, 320.0f)
             );
             
             submarineUI.AddComponent<SubmarineUI>();

@@ -1,0 +1,20 @@
+{
+    "columns": 4,
+    "rows": 1,
+    "cellGroupConfigs": [
+        {
+            "cells": [
+                "XXXX",
+            ],
+            "itemType": "GENERAL",
+            "itemSubtype": "FISH",
+            "isHidden": false,
+            "damageImmune": false
+        },
+    ],
+    "mainItemType": "GENERAL",
+    "mainItemSubtype": "FISH",
+    "itemsInThisBelongToPlayer": true,
+    "canAddItemsInQuestMode": false,
+    "hasUnderlay": true
+}

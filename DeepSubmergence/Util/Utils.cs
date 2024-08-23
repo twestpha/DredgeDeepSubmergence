@@ -18,6 +18,8 @@ namespace DeepSubmergence {
         // Helper function for finding gameobjects by name in children
         //######################################################################
         public static GameObject FindInChildren(GameObject parent, string gameObjectName){
+            if(parent == null){ return null; }
+            
             for(int i = 0, count = parent.transform.childCount; i < count; ++i){
                 if(parent.transform.GetChild(i).gameObject.name.Contains(gameObjectName)){
                     return parent.transform.GetChild(i).gameObject;
@@ -121,6 +123,53 @@ namespace DeepSubmergence {
             if(cachedPlayer.IsFishing){ reason |= CannotDiveReason.Fishing; }
 
             return reason;
+        }
+        //######################################################################
+        
+        //######################################################################
+        // Helper function for detecting using the manifest power
+        //######################################################################
+        
+        private static ParticleSystem cachedManifestEffectA = null;
+        private static ParticleSystem cachedManifestEffectB = null;
+        
+        private const string PLAYER_TELEPORT_NAME = "PlayerTeleport";
+        private const string TELEPORT_EFFECT_NAME = "TeleportEffect";
+        private const string MANIFEST_A_NAME = "ReassembleShards";
+        private const string MANIFEST_B_NAME = "blackSmokeCloud";
+        
+        public static bool IsTeleporting(){        
+            if(cachedManifestEffectA == null || cachedManifestEffectB == null){
+                GameObject playerTeleport = GameObject.Find(PLAYER_TELEPORT_NAME);
+                GameObject teleportEffect = FindInChildren(playerTeleport, TELEPORT_EFFECT_NAME);
+                
+                GameObject manifestA = FindInChildren(teleportEffect, MANIFEST_A_NAME);
+                cachedManifestEffectA = manifestA?.GetComponent<ParticleSystem>();
+                GameObject manifestB = FindInChildren(teleportEffect, MANIFEST_B_NAME);
+                cachedManifestEffectB = manifestB?.GetComponent<ParticleSystem>();
+            }
+            
+            return (cachedManifestEffectA != null && cachedManifestEffectB != null)
+              && (cachedManifestEffectA.isPlaying || cachedManifestEffectB.isPlaying);
+        }
+        //######################################################################
+        
+        //######################################################################
+        
+        //######################################################################
+        // Helper function for detecting using the manifest power
+        //######################################################################
+        private static GameObject cachedPersonalSanityModifier;
+        
+        private const string PERSONAL_SANITY_MODIFIER_NAME = "PersonalSanityModifier";
+        
+        public static bool IsLightOn(){
+            if(cachedPersonalSanityModifier == null){
+                // For some reason, this enables/disables when lights are used. So, we'll use that
+                cachedPersonalSanityModifier = GameObject.Find(PERSONAL_SANITY_MODIFIER_NAME);
+            }
+
+            return cachedPersonalSanityModifier != null && cachedPersonalSanityModifier.activeSelf;
         }
         //######################################################################
     }

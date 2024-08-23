@@ -29,14 +29,18 @@ namespace DeepSubmergence {
         private const float LIGHT_ANGLE = 140.0f;
         private const float LIGHT_RANGE = 10.0f;
         
+        private const float TELEPORT_TIME = 2.0f;
+        
          // Pretty sure this is in the base game
         private const string BOAT_PROXY_NAME = "Boat4";
         
         private GameObject cachedDredgePlayer;
         private GameObject propeller;
+        
+        private MeshRenderer submarineMesh;
         private Light playerLight;
         private ParticleSystem cachedBoatParticles;
-        private GameObject cachedPersonalSanityModifier;
+        
         private bool onSurface = true;
         private bool moveKeyPressed = false;
         
@@ -53,9 +57,14 @@ namespace DeepSubmergence {
                         
         private List<GameObject> boatModelProxies;
         private Timer disableTimer = new(DISABLE_MODELS_TIME);
+        
+        private bool previouslyTeleporting;
+        private Timer teleportTimer = new(TELEPORT_TIME);
     
         void Start(){
             cachedDredgePlayer = DeepSubmergence.instance.dredgePlayer;
+            
+            submarineMesh = GetComponent<MeshRenderer>();
             
             // Set up and dis/enable the right player gameobjects and components to make this all work
             ApplyAblingToDredgePlayer();
@@ -83,12 +92,9 @@ namespace DeepSubmergence {
             
             newLight.transform.parent = transform;
             newLight.transform.localPosition = LIGHT_POSITION_OFFSET;
-            
-            // For some reason, this enables/disables when lights are used
-            cachedPersonalSanityModifier = GameObject.Find("PersonalSanityModifier");
         }
         
-        void Update(){            
+        void Update(){
             // Intermittently disable all the other boat models in case they get activated in other ways
             if(disableTimer.Finished()){
                 disableTimer.Start();
@@ -96,8 +102,20 @@ namespace DeepSubmergence {
             }
 
             // Enable lights
-            playerLight.enabled = cachedPersonalSanityModifier.activeSelf;
+            playerLight.enabled = Utils.IsLightOn();
             
+            // Enable model
+            bool teleporting = Utils.IsTeleporting();
+            if(!previouslyTeleporting && teleporting){
+                teleportTimer.Start();
+            }
+            
+            submarineMesh.enabled = teleportTimer.Finished();
+            propeller.SetActive(teleportTimer.Finished());
+            
+            previouslyTeleporting = teleporting;
+            
+            // Update inputs, movement, position
             UpdateInputs();
             UpdatePositionAndRotation();
         }
@@ -143,7 +161,7 @@ namespace DeepSubmergence {
                         }
                     }
                 } else {
-                    diveTargetPosition = dredgePlayerPosition + toDivePosition.normalized * MAX_DIVE_DISTANCE;
+                    diveTargetPosition = dredgePlayerPosition + (Vector3.up * -1.0f) * MAX_DIVE_DISTANCE;
                 }
             }
             
