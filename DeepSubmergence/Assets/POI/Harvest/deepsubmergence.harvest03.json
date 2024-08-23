@@ -1,11 +1,11 @@
 {
     "location": {
-        "x": 0.0,
+        "x": 474.0,
         "y": 0.0,
-        "z": 0.0
+        "z": 97.0
     },
     "harvestableParticlePrefab": "SquidParticles",
-    "items": [ "deepsubmergence.fishtrenchwhale" ],
+    "items": [ "deepsubmergence.fishelectricfish", "deepsubmergence.fishneedlefish" ],
     "startStock": 30,
     "maxStock": 50,
     "doesRestock": true,

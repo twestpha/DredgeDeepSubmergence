@@ -1,0 +1,17 @@
+{
+    "location": {
+        "x": 323.0,
+        "y": 0.0,
+        "z": -175.0
+    },
+    "harvestableParticlePrefab": "SquidParticles",
+    "items": [ "deepsubmergence.fishtrenchwhale" ],
+    "startStock": 30,
+    "maxStock": 50,
+    "doesRestock": true,
+    "usesTimeSpecificStock": false,
+    "overrideDefaultDaySpecialChance": true,
+    "overriddenDaytimeSpecialChance": 0.5,
+    "overrideDefaultNightSpecialChance": true,
+    "overriddenNighttimeSpecialChance": 0.5
+}

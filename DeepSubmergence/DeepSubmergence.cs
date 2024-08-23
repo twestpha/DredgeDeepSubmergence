@@ -15,23 +15,13 @@ namespace DeepSubmergence {
         // https://github.com/Hacktix/Winch/wiki/Mod-Structure
         // https://github.com/DREDGE-Mods/Winch/blob/5de432bc9657aae5a553bfd654b71853ca4a345b/Winch/Core/AssetLoader.cs#L33
         
-        // [/] Shredder Shark (smells of peach?)
-        // [/] Giant Needlefish (with a syringe for a head)
-        // [/] Boltfish
-        // [/] Iron Lungfish
-        // [/] Hermit crab attached to lamp
-        // [/] Shark made of lots of tiny fish
-        // [/] Flayed Whale (chainsaw, digger tool)
-        // [w] Ship layout - is this even possible?
-        // [/] during manifest explosion, sub still visible
-        // [/] dive ui overlaps net ui
+        // [/] Screenshot with hero render or something in github readme, punch it up in general, see https://github.com/xen-42/cosmic-horror-fishing-buddies
         
         // V0.2: Submarine Specific Collectable Fish
         // [x] Scatter some harvest areas around the marrows just for now
-        // [x] Screenshot with hero render or something in github readme, punch it up in general, see https://github.com/xen-42/cosmic-horror-fishing-buddies
 
         // V0.X: Submarine specific fishing minigame
-        // [x] Dive timer, damage if stays down too long, surfacing refills
+        // [x] Dive timer, damage if stays down too long, surfacing refills. Don't run out while fishing.
         // [x] Parts to improve dive times
         // [x] Other submarine specific parts
         // [x] Make fish locations dive-only
