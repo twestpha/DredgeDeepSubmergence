@@ -15,18 +15,13 @@ namespace DeepSubmergence {
         // https://github.com/Hacktix/Winch/wiki/Mod-Structure
         // https://github.com/DREDGE-Mods/Winch/blob/5de432bc9657aae5a553bfd654b71853ca4a345b/Winch/Core/AssetLoader.cs#L33
         
-        // [/] Screenshot with hero render or something in github readme, punch it up in general, see https://github.com/xen-42/cosmic-horror-fishing-buddies
-        
-        // V0.2: Submarine Specific Collectable Fish
-        // [x] Scatter some harvest areas around the marrows just for now
-
-        // V0.X: Submarine specific fishing minigame
+        // V0.3: Submarine specific fishing minigame
         // [x] Dive timer, damage if stays down too long, surfacing refills. Don't run out while fishing.
         // [x] Parts to improve dive times
         // [x] Other submarine specific parts
         // [x] Make fish locations dive-only
         
-        // V0.X: Underwater Base, Questline and characters
+        // V0.4: Underwater Base, Questline and characters
         // [x] Submarine item, when you throw it overboard, you become a submarine; dupe and fake a player model hanging out there
         // [x] Find a spot on the map to put these
         // [x] Cover art for game start?
