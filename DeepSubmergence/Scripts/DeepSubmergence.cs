@@ -17,19 +17,21 @@ namespace DeepSubmergence {
         
         // [/] Collision broke again
         // [/] Dive timer, damage if stays down too long, surfacing refills
+        // [/] Dive UI
+        // [/] Don't tick dive time when fishing
         
         // V0.3: Submarine specific fishing minigame
-        // [x] Dive UI
-        // [x] Diving randomly adds flooded water items?
+        // [x] Diving randomly adds flooded water items (ui notif?)
         // [x] Parts to improve dive times
         // [x] Other submarine specific parts
-        // [x] Make fish locations dive-only
-        // [x] cant dive because in menus
+        // [x] Make fish locations dive-only, only appear when diving
+        // [x] cant dive because in esc menu
+        // [x] Better damage-dealing
         
         // V0.4: Underwater Base, Questline and characters
-        // [x] Submarine item, when you throw it overboard, you become a submarine; dupe and fake a player model hanging out there
-        // [x] Find a spot on the map to put these
-        // [x] Cover art for game start?
+        // [x] Submarine item, when you throw it overboard, you become a submarine; dupe and fake a player model hanging out there?
+        // [x] Find a spot on the map to put base, fish around it
+        // [x] Cover art for game start? Just a fullscreen splash on a canvas, not 3D
         
         public GameObject dredgePlayer;
         public GameObject submarinePlayer;

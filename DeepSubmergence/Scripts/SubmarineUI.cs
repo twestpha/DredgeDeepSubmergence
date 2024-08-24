@@ -8,6 +8,8 @@ using Winch.Util;
 namespace DeepSubmergence {
     public class SubmarineUI : MonoBehaviour {
         
+        private const float DIAL_ANGLE = 75.0f;
+        
         private SubmarinePlayer cachedSubmarinePlayer;
         private GameObject diveIcon;
         private GameObject diveButton;
@@ -63,9 +65,9 @@ namespace DeepSubmergence {
                 new Vector2(120.0f, 120.0f),
                 new Vector2(4.0f, 415.0f)
             ).GetComponent<Image>();
-            RectTransform diveDialRect = diveTimerDial.GetComponent<RectTransform>();
-            diveDialRect.SetParent(diveTimerRect);
-            diveDialRect.anchoredPosition = new Vector2(60.0f, 60.0f);
+            RectTransform diveTimerDialRect = diveTimerDial.GetComponent<RectTransform>();
+            diveTimerDialRect.SetParent(diveTimerRect);
+            diveTimerDialRect.anchoredPosition = new Vector2(60.0f, 60.0f);
             
             // Force ui to be disabled for some time at the start of gameplay
             // This lets all the other dependent UI get set up first
@@ -78,9 +80,21 @@ namespace DeepSubmergence {
             ribbonUI.enabled = showUI;
             diveIcon.SetActive(showUI);
             diveButton.SetActive(showUI);
+            diveTimerBackground.enabled = showUI;
+            diveTimerDial.enabled = showUI;
             
             // Flip direction of dive icon arrow depending on surface/not
             diveIconRect.transform.localScale = new Vector3(1.0f, cachedSubmarinePlayer.OnSurface() ? 1.0f : -1.0f, 1.0f);
+            
+            // Rotate dial based on dive time remaining
+            diveTimerDial.transform.rotation = Quaternion.Euler(
+                0.0f,
+                0.0f,
+                Mathf.Lerp(
+                    -DIAL_ANGLE, DIAL_ANGLE,
+                    cachedSubmarinePlayer.DiveTimerPercentRemaining()
+                )
+            );
         }
     }
 }

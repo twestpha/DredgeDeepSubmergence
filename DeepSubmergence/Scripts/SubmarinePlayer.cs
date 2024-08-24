@@ -8,29 +8,25 @@ namespace DeepSubmergence {
     public class SubmarinePlayer : MonoBehaviour {
         
         private const float DISABLE_MODELS_TIME = 0.1f;
-        
         private const float DIVE_TIME = 1.2f;
-        private const float MAX_DIVE_DISTANCE = 2.0f;
+        private const float MAX_DIVE_DISTANCE = 3.0f;
         private const float DIVE_ABOVE_FLOOR = 1.0f;
-        
         private const float SHOULD_FOAM = 0.2f;
         private const float SURFACE_THRESHOLD = 0.25f;
-        
         private const float PROP_SPEED = 1440.0f;
         private const float PROP_SPINUP_TIME = 0.4f;
-        
-        private readonly Vector3 SURFACE_MODEL_OFFSET = new Vector3(0.0f, -0.1f, 0.0f);
-        
         private const float DIVING_ROTATION = 10.0f;
         private const float DIVE_ROTATION_TIME = 0.25f;
-        
-        private readonly Vector3 LIGHT_POSITION_OFFSET = new Vector3(0.0f, 0.0f, 1.5f);
         private const float LIGHT_INTENSITY = 1.0f;
         private const float LIGHT_ANGLE = 140.0f;
         private const float LIGHT_RANGE = 10.0f;
-        
+        private const float SURFACE_FILL_RATE = 4.0f;
+        private const float DONE_FISHING_TIME = 1.0f;
         private const float TELEPORT_TIME = 2.0f;
         
+        private readonly Vector3 SURFACE_MODEL_OFFSET = new Vector3(0.0f, -0.1f, 0.0f);
+        private readonly Vector3 LIGHT_POSITION_OFFSET = new Vector3(0.0f, 0.0f, 1.5f);
+
          // Pretty sure this is in the base game
         private const string BOAT_PROXY_NAME = "Boat4";
         
@@ -44,27 +40,23 @@ namespace DeepSubmergence {
         
         private bool onSurface = true;
         private bool moveKeyPressed = false;
-        
+        private bool previouslyTeleporting = false;
         private float depthParameter = 0.0f;
         private float depthVelocity = 0.0f;
-        
         private float propAmount = 0.0f;
         private float propAmountVelocity = 0.0f;
-        
         private float pitch = 0.0f;
         private float pitchVelocity = 0.0f;
-        
         private float currentDiveTime = 0.0f;
         private float cachedDiveTimeMax = 0.0f;
         
         private Vector3 diveTargetPosition;
-                        
         private List<GameObject> boatModelProxies;
-        private Timer disableTimer = new(DISABLE_MODELS_TIME);
         
-        private bool previouslyTeleporting;
+        private Timer disableTimer = new(DISABLE_MODELS_TIME);
         private Timer teleportTimer = new(TELEPORT_TIME);
-    
+        private Timer doneFishingTimer = new(DONE_FISHING_TIME);
+        
         void Start(){
             cachedDredgePlayer = DeepSubmergence.instance.dredgePlayer;
             cachedDredgePlayerPlayer = cachedDredgePlayer.GetComponent<Player>();
@@ -223,18 +215,26 @@ namespace DeepSubmergence {
         }
         
         private void UpdateDiveTime(){
-            cachedDiveTimeMax = 1.0f; // Recompute based on equipment
+            cachedDiveTimeMax = 15.0f; // Recompute based on equipment
+            
+            // Set a timer after it's cleared so you don't get back from fishing at 0 time left
+            bool currentlyFishing = Utils.CanDive() != CannotDiveReason.None;
+            if(currentlyFishing){
+                doneFishingTimer.Start();
+            }
+            
+            DeepSubmergence.instance.debugAxes.transform.position = currentlyFishing ? transform.position + (Vector3.up * 3.0f) : new Vector3(0.0f, -1000.0f, 0.0f);
             
             if(onSurface){
-                currentDiveTime = 0.0f;
-            } else {
+                currentDiveTime = Mathf.Max(currentDiveTime - (Time.deltaTime * SURFACE_FILL_RATE), 0.0f);
+            } else if(doneFishingTimer.Finished()){
                 currentDiveTime += Time.deltaTime;
             }
             
             // Deal damage, force surface
             if(currentDiveTime > cachedDiveTimeMax){
-                // Eh this deals damage, good enough
                 cachedDredgePlayerPlayer.OnCollision();
+                // TODO spawn some damage particles? Shake the camera?
                 onSurface = true;
             }
         }
