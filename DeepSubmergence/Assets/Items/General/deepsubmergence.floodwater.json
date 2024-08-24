@@ -1,0 +1,18 @@
+{
+	"itemNameKey": "deepsubmergence.floodwater.name",
+	"itemDescriptionKey": "deepsubmergence.floodwater.desc",
+	"sprite": "deepsubmergence.iconfloodwater",
+	"itemColor": {
+		"r": 58,
+		"g": 40,
+		"b": 32,
+		"a": 255
+	},
+	"squishFactor": 1,
+	"value": 0,
+	"dimensions": [
+		"X"
+	],
+	"damageMode": "DESTROY",
+    "canBeDiscardedByPlayer": false
+}

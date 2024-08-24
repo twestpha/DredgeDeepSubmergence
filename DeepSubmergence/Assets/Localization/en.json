@@ -21,4 +21,12 @@
     "deepsubmergence.shoal.desc": "It moves as one, thinks as one, and eats as many.",
     "deepsubmergence.trenchwhale.name": "Flayed Whale",
     "deepsubmergence.trenchwhale.desc": "Although the machinery continues to grind, the animal is long dead. May as well give it some dignity in death.",
+    "deepsubmergence.floodwater.name": "Flooding Water",
+    "deepsubmergence.floodwater.desc": "A minor annoyance. These are automatically removed when docking, or can be dried while at sea using Pumps.",
+    "deepsubmergence.pumptier1.name": "Low-Quality Pump",
+    "deepsubmergence.pumptier1.desc": "Removes flooding water very slowly",
+    "deepsubmergence.pumptier2.name": "Straining Pump",
+    "deepsubmergence.pumptier2.desc": "Removes flooding water at a medium rate",
+    "deepsubmergence.pumptier3.name": "Pressurized Pump",
+    "deepsubmergence.pumptier3.desc": "Removes flooding water quickly",
 }

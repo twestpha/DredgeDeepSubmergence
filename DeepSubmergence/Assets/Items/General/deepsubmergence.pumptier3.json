@@ -1,0 +1,19 @@
+{
+	"itemNameKey": "deepsubmergence.pumptier3.name",
+	"itemDescriptionKey": "deepsubmergence.pumptier3.desc",
+	"sprite": "deepsubmergence.iconpumptier3",
+	"itemColor": {
+		"r": 58,
+		"g": 40,
+		"b": 32,
+		"a": 255
+	},
+	"squishFactor": 0,
+	"value": 50,
+	"dimensions": [
+        "XX",
+        "XX",
+		"XX"
+	],
+	"damageMode": "OPERATION"
+}

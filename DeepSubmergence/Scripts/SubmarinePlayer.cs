@@ -1,5 +1,6 @@
+using System;
 using System.Collections.Generic;
-﻿using System.Collections;
+using System.Linq;
 using UnityEngine;
 using Winch.Core;
 using Winch.Util;
@@ -117,6 +118,7 @@ namespace DeepSubmergence {
             UpdatePositionAndRotation();
             
             UpdateDiveTime();
+            UpdateFloodWater();
         }
         
         private void UpdateInputs(){
@@ -223,20 +225,42 @@ namespace DeepSubmergence {
                 doneFishingTimer.Start();
             }
             
-            DeepSubmergence.instance.debugAxes.transform.position = currentlyFishing ? transform.position + (Vector3.up * 3.0f) : new Vector3(0.0f, -1000.0f, 0.0f);
-            
             if(onSurface){
                 currentDiveTime = Mathf.Max(currentDiveTime - (Time.deltaTime * SURFACE_FILL_RATE), 0.0f);
             } else if(doneFishingTimer.Finished()){
                 currentDiveTime += Time.deltaTime;
             }
             
-            // Deal damage, force surface
+            // Stayed down too long
             if(currentDiveTime > cachedDiveTimeMax){
-                cachedDredgePlayerPlayer.OnCollision();
                 // TODO spawn some damage particles? Shake the camera?
+                cachedDredgePlayerPlayer.OnCollision();
+                
+                // Force surfacing
                 onSurface = true;
+                
+                // Give player several floodwaters
+                for(int i = 0, count = UnityEngine.Random.Range(1, 4); i < count; ++i){
+                    Utils.PutItemInCargo("deepsubmergence.floodwater");
+                }
             }
+        }
+        
+        private void UpdateFloodWater(){
+            // Test hotkey
+            if(Input.GetKeyDown(KeyCode.T)){
+                //while(Utils.HasItemInCargo(deepsubmergence.floodwater))
+                Utils.DestroyItemInCargo("deepsubmergence.floodwater");
+            }
+        
+            
+            // HasItemInCargo
+            // If was docked and isn't, update pump dictionary, with individual timers
+            // OR if inventory changed...? iunno
+            
+            // if not docked and now is, remove ALL waters
+            
+            // Get all them pumps, look at their timer. If timer finished, remove a single water, set the timer based on their tier
         }
         
         public bool OnSurface(){
@@ -251,7 +275,7 @@ namespace DeepSubmergence {
             if(boatModelProxies == null){
                 boatModelProxies = new();
                 
-                BoatModelProxy[] allBoatModelProxies = Object.FindObjectsOfType<BoatModelProxy>(true);
+                BoatModelProxy[] allBoatModelProxies = UnityEngine.Object.FindObjectsOfType<BoatModelProxy>(true);
                 
                 foreach(BoatModelProxy b in allBoatModelProxies){
                     b.gameObject.SetActive(false);

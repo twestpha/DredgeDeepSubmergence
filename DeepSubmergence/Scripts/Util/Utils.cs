@@ -1,6 +1,10 @@
 using UnityEngine.UI;
 using UnityEngine;
 using Winch.Core;
+using System.Collections.Generic;
+using System.Linq;
+using System;
+using Sirenix.OdinInspector;
 
 namespace DeepSubmergence {
     
@@ -184,6 +188,57 @@ namespace DeepSubmergence {
             }
 
             return cachedPersonalSanityModifier != null && cachedPersonalSanityModifier.activeSelf;
+        }
+        //######################################################################
+
+        //######################################################################
+        // Helper function for finding an item
+        //######################################################################
+        private static List<ItemData> allItems;
+        
+        public static ItemData FindItemByName(string name){
+            if(allItems == null){
+                allItems = GameManager.Instance.ItemManager.allItems;
+            }
+            
+            for(int i = 0, count = allItems.Count; i < count; i++){
+                if(allItems[i].name.Contains(name)){
+                    return allItems[i];
+                }
+            }
+            
+            return null;
+        }
+        //######################################################################
+    
+        //######################################################################
+        // Helper function for putting an item into the player's cargo
+        //######################################################################
+        public static void PutItemInCargo(string item, bool notify = false){
+            // I'd love to have one where it doesn't notify player, but whatevs
+            GameManager.Instance.DialogueRunner.AddItemById(item);
+        }
+
+        //######################################################################
+        
+        //######################################################################
+        // Helper function for testing if an item is present in the player's cargo
+        //######################################################################
+        public static bool HasItemInCargo(string item){
+            return GameManager.Instance.SaveData.HasAnyOfTheseItemsInInventory(new string[]{ item }, true);
+        }
+        //######################################################################
+        
+        //######################################################################
+        // Helper function for testing if an item is present in the player's cargo
+        //######################################################################
+        public static void DestroyItemInCargo(string item){
+            if(HasItemInCargo(item)){
+                List<SpatialItemInstance> butts = GameManager.Instance.SaveData.Inventory.GetAllItemsOfType<SpatialItemInstance>(ItemType.ALL);
+                WinchCore.Log.Debug(butts.Count);
+
+                GameManager.Instance.SaveData.Inventory.RemoveObjectFromGridData(butts[0], false);
+            }
         }
         //######################################################################
     }
