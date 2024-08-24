@@ -5,3 +5,7 @@ Installable using the [Dredge Mod Manager](https://github.com/DREDGE-Mods/Dredge
 <img src="https://i.imgur.com/95E9817.png" width="800" class="center">
 
 This mod is a work in progress. Stay tuned for more improvements, features, and content, and report any problems as an issue in github.
+
+# Feature List (Spoiler Free)
+- Dive back into familiar waters as a Submarine
+- 11 new types of creatures to find and capture
