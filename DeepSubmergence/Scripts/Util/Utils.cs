@@ -31,6 +31,20 @@ namespace DeepSubmergence {
         //######################################################################
         
         //######################################################################
+        // Helper function for quick-setting up an empty gameobject
+        //######################################################################
+        public static GameObject SetupGameObject(string name){
+            GameObject newObject = new GameObject();
+            newObject.name = "[DeepSubmergence] " + name;
+            
+            // Manually manage lifetime
+            GameObject.DontDestroyOnLoad(newObject);
+            DeepSubmergence.instance.managedObjects.Add(newObject);
+            return newObject;
+        }
+        //######################################################################
+        
+        //######################################################################
         // Helper function for quick-setting up a gameobject with a model and
         // default material
         //######################################################################

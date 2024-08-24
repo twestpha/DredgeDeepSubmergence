@@ -16,10 +16,15 @@ namespace DeepSubmergence {
         private RectTransform rectTransform;
         private RectTransform diveIconRect;
         
+        private Image diveTimerBackground;
+        private Image diveTimerDial;
+        
         private Timer disableUIAtStart = new Timer(2.0f);
         
         void Start(){
             cachedSubmarinePlayer = DeepSubmergence.instance.submarinePlayer.GetComponent<SubmarinePlayer>();
+            
+            // Setup button and arrow UI
             ribbonUI = GetComponent<Image>();
             rectTransform = GetComponent<RectTransform>();
             
@@ -42,6 +47,25 @@ namespace DeepSubmergence {
             RectTransform diveButtonRect = diveButton.GetComponent<RectTransform>();
             diveButtonRect.SetParent(rectTransform);
             diveButtonRect.anchoredPosition = new Vector2(75.0f, 25.0f);
+
+            // Setup dive timer
+            diveTimerBackground = Utils.SetupTextureAsSpriteOnCanvas(
+                "Dive Timer Outline",
+                TextureUtil.GetSprite("deepsubmergence.uidivetimerbackground"),
+                new Vector2(120.0f, 120.0f),
+                new Vector2(4.0f, 415.0f)
+            ).GetComponent<Image>();
+            RectTransform diveTimerRect = diveTimerBackground.GetComponent<RectTransform>();
+            
+            diveTimerDial = Utils.SetupTextureAsSpriteOnCanvas(
+                "Dive Timer Dial",
+                TextureUtil.GetSprite("deepsubmergence.uidivetimerdial"),
+                new Vector2(120.0f, 120.0f),
+                new Vector2(4.0f, 415.0f)
+            ).GetComponent<Image>();
+            RectTransform diveDialRect = diveTimerDial.GetComponent<RectTransform>();
+            diveDialRect.SetParent(diveTimerRect);
+            diveDialRect.anchoredPosition = new Vector2(60.0f, 60.0f);
             
             // Force ui to be disabled for some time at the start of gameplay
             // This lets all the other dependent UI get set up first

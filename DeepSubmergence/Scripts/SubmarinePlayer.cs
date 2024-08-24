@@ -35,6 +35,7 @@ namespace DeepSubmergence {
         private const string BOAT_PROXY_NAME = "Boat4";
         
         private GameObject cachedDredgePlayer;
+        private Player cachedDredgePlayerPlayer;
         private GameObject propeller;
         
         private MeshRenderer submarineMesh;
@@ -53,6 +54,9 @@ namespace DeepSubmergence {
         private float pitch = 0.0f;
         private float pitchVelocity = 0.0f;
         
+        private float currentDiveTime = 0.0f;
+        private float cachedDiveTimeMax = 0.0f;
+        
         private Vector3 diveTargetPosition;
                         
         private List<GameObject> boatModelProxies;
@@ -63,6 +67,7 @@ namespace DeepSubmergence {
     
         void Start(){
             cachedDredgePlayer = DeepSubmergence.instance.dredgePlayer;
+            cachedDredgePlayerPlayer = cachedDredgePlayer.GetComponent<Player>();
             
             submarineMesh = GetComponent<MeshRenderer>();
             
@@ -118,6 +123,8 @@ namespace DeepSubmergence {
             // Update inputs, movement, position
             UpdateInputs();
             UpdatePositionAndRotation();
+            
+            UpdateDiveTime();
         }
         
         private void UpdateInputs(){
@@ -215,15 +222,36 @@ namespace DeepSubmergence {
             propeller.transform.localRotation *= Quaternion.Euler(0.0f, 0.0f, propAmount * Time.deltaTime);
         }
         
+        private void UpdateDiveTime(){
+            cachedDiveTimeMax = 1.0f; // Recompute based on equipment
+            
+            if(onSurface){
+                currentDiveTime = 0.0f;
+            } else {
+                currentDiveTime += Time.deltaTime;
+            }
+            
+            // Deal damage, force surface
+            if(currentDiveTime > cachedDiveTimeMax){
+                // Eh this deals damage, good enough
+                cachedDredgePlayerPlayer.OnCollision();
+                onSurface = true;
+            }
+        }
+        
         public bool OnSurface(){
             return onSurface;
+        }
+        
+        public float DiveTimerPercentRemaining(){
+            return Mathf.Clamp(1.0f - (currentDiveTime / cachedDiveTimeMax), 0.0f, 1.0f);
         }
         
         public void ApplyAblingToDredgePlayer(){
             if(boatModelProxies == null){
                 boatModelProxies = new();
                 
-                BoatModelProxy[] allBoatModelProxies = Object.FindObjectsOfType<BoatModelProxy>();
+                BoatModelProxy[] allBoatModelProxies = Object.FindObjectsOfType<BoatModelProxy>(true);
                 
                 foreach(BoatModelProxy b in allBoatModelProxies){
                     b.gameObject.SetActive(false);

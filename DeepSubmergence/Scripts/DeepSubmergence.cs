@@ -15,11 +15,16 @@ namespace DeepSubmergence {
         // https://github.com/Hacktix/Winch/wiki/Mod-Structure
         // https://github.com/DREDGE-Mods/Winch/blob/5de432bc9657aae5a553bfd654b71853ca4a345b/Winch/Core/AssetLoader.cs#L33
         
+        // [/] Collision broke again
+        // [/] Dive timer, damage if stays down too long, surfacing refills
+        
         // V0.3: Submarine specific fishing minigame
-        // [x] Dive timer, damage if stays down too long, surfacing refills. Don't run out while fishing.
+        // [x] Dive UI
+        // [x] Diving randomly adds flooded water items?
         // [x] Parts to improve dive times
         // [x] Other submarine specific parts
         // [x] Make fish locations dive-only
+        // [x] cant dive because in menus
         
         // V0.4: Underwater Base, Questline and characters
         // [x] Submarine item, when you throw it overboard, you become a submarine; dupe and fake a player model hanging out there
@@ -29,6 +34,7 @@ namespace DeepSubmergence {
         public GameObject dredgePlayer;
         public GameObject submarinePlayer;
         public GameObject submarineUI;
+        public GameObject underwaterFishableManager;
         public GameObject debugAxes;
         public List<GameObject> managedObjects = new();
         
@@ -54,6 +60,7 @@ namespace DeepSubmergence {
             SetupSubmarinePlayer();
             SetupDebugAxes();
             SetupDiveUI();
+            SetupFishableManager();
             
             setup = true;
         }
@@ -110,6 +117,11 @@ namespace DeepSubmergence {
             );
             
             submarineUI.AddComponent<SubmarineUI>();
+        }
+        
+        private void SetupFishableManager(){
+            underwaterFishableManager = Utils.SetupGameObject("Underwater Fishable Manager");
+            underwaterFishableManager.AddComponent<UnderwaterFishableManager>();
         }
     }
 }
