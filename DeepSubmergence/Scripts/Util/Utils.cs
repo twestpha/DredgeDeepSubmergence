@@ -36,6 +36,22 @@ namespace DeepSubmergence {
         //######################################################################
         
         //######################################################################
+        // Helper function for getting additional dive time for pressure 
+        // vessels based on tier
+        //######################################################################
+        public static float DiveTime(string tier){
+            if(tier == "deepsubmergence.pressurevesseltier1"){
+                return 7.0f;
+            } else if(tier == "deepsubmergence.pressurevesseltier2"){
+                return 28.0f;
+            } else if(tier == "deepsubmergence.pressurevesseltier3"){
+                return 60.0f;
+            }
+            return 0.0f;
+        }
+        //######################################################################
+        
+        //######################################################################
         // Helper function for finding gameobjects by name in children
         //######################################################################
         public static GameObject FindInChildren(GameObject parent, string gameObjectName){

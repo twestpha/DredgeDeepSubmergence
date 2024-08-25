@@ -14,5 +14,6 @@
 		"X"
 	],
 	"damageMode": "DESTROY",
-    "canBeDiscardedByPlayer": false
+    "canBeDiscardedByPlayer": false,
+    "forbidStorageTray": true
 }

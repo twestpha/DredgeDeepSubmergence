@@ -15,17 +15,18 @@ namespace DeepSubmergence {
         // https://github.com/Hacktix/Winch/wiki/Mod-Structure
         // https://github.com/DREDGE-Mods/Winch/blob/5de432bc9657aae5a553bfd654b71853ca4a345b/Winch/Core/AssetLoader.cs#L33
         
-        // [/] dive ui because in esc menu
+        // [/] pressure vessel improves dive time
+        // [/] Disallow putting water into fishing tray
+        // [/] Better damage-dealing with fx, cam shake
         
         // V0.3: Submarine specific fishing minigame
-        // [x] Parts to improve dive times
+        // [x] Pressure vessel art
         // [x] Make fish locations dive-only, only appear nearby while diving
         //   - custom collider, only enabled while player diving
         //   - custom meshes/mesh renderer, only enabled and animating if player diving? drive alpha from that?
         //   - hooks to normal fishing minigame(s)...?
         // [x] Flubbing fish pickup adds water item (data set up, not sure how to add)
-        // [x] Overlay of watery thing on minigame?
-        // [x] Better damage-dealing with fx, cam shake
+        // [x] Overlay watery art thing on minigame?
         
         // V0.4: Underwater Base, Questline and characters
         // [x] Submarine item, when you throw it overboard, you become a submarine; dupe and fake a player model hanging out there?

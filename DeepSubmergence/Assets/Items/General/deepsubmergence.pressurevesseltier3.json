@@ -1,7 +1,7 @@
 {
-	"itemNameKey": "deepsubmergence.pressurevesseltier2.name",
-	"itemDescriptionKey": "deepsubmergence.pressurevesseltier2.desc",
-	"sprite": "deepsubmergence.iconpressurevesseltier2",
+	"itemNameKey": "deepsubmergence.pressurevesseltier3.name",
+	"itemDescriptionKey": "deepsubmergence.pressurevesseltier3.desc",
+	"sprite": "deepsubmergence.iconpressurevesseltier3",
 	"itemColor": {
 		"r": 58,
 		"g": 40,

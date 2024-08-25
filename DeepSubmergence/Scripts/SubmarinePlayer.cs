@@ -32,6 +32,8 @@ namespace DeepSubmergence {
         private const string BOAT_PROXY_NAME = "Boat4";
         private const string FLOOD_WATER_NAME = "deepsubmergence.floodwater";
         private const string ANY_PUMP_NAME = "pumptier";
+        private const string ANY_PRESSUREVESSEL_NAME = "pressurevessel";
+        private const string BUBBLES_NAME = "SurfaceBubbles";
         
         private class PumpData {
             public string item;
@@ -60,6 +62,7 @@ namespace DeepSubmergence {
         private MeshRenderer submarineMesh;
         private Light playerLight;
         private ParticleSystem cachedBoatParticles;
+        private ParticleSystem cachedBubbleParticlesCopy;
         
         private bool onSurface = true;
         private bool moveKeyPressed = false;
@@ -115,6 +118,12 @@ namespace DeepSubmergence {
             
             newLight.transform.parent = transform;
             newLight.transform.localPosition = LIGHT_POSITION_OFFSET;
+            
+            // Find and copy bubble particles
+            GameObject foundBubbles = GameObject.Find(BUBBLES_NAME);
+            GameObject bubbleCopy = GameObject.Instantiate(foundBubbles);
+            cachedBubbleParticlesCopy = bubbleCopy.GetComponent<ParticleSystem>();
+            cachedBubbleParticlesCopy.Stop();
         }
         
         void Update(){
@@ -140,7 +149,7 @@ namespace DeepSubmergence {
             
             // Hotkey
             if(Input.GetKeyDown(KeyCode.T)){
-                Utils.PutItemInCargo("deepsubmergence.pumptier3", true);
+                Utils.PutItemInCargo("deepsubmergence.pressurevesseltier3", true);
             }
             
             // Update inputs, movement, position
@@ -246,8 +255,20 @@ namespace DeepSubmergence {
             propeller.transform.localRotation *= Quaternion.Euler(0.0f, 0.0f, propAmount * Time.deltaTime);
         }
         
+        private const float baseDiveTime = 10.0f;
         private void UpdateDiveTime(){
-            cachedDiveTimeMax = 15.0f; // Recompute based on equipment
+            // Recompute dive time any time cargo changes
+            if(Utils.CargoChanged()){
+                cachedDiveTimeMax = baseDiveTime;
+                
+                List<SpatialItemInstance> generalItems = GameManager.Instance.SaveData.Inventory.GetAllItemsOfType<SpatialItemInstance>(ItemType.GENERAL);
+                
+                for(int i = 0, count = generalItems.Count; i < count; ++i){
+                    if(generalItems[i].id.Contains(ANY_PRESSUREVESSEL_NAME)){
+                        cachedDiveTimeMax += Utils.DiveTime(generalItems[i].id);
+                    }
+                }
+            }
             
             // Set a timer after it's cleared so you don't get back from fishing at 0 time left
             bool currentlyFishing = Utils.CanDive() != CannotDiveReason.None;
@@ -263,9 +284,11 @@ namespace DeepSubmergence {
             
             // Stayed down too long
             if(currentDiveTime > cachedDiveTimeMax){
-                // TODO spawn some damage particles? Shake the camera?
                 cachedDredgePlayerPlayer.OnCollision();
                 
+                cachedBubbleParticlesCopy.transform.position = transform.position;
+                cachedBubbleParticlesCopy.Emit(50);
+
                 // Force surfacing
                 onSurface = true;
                 
