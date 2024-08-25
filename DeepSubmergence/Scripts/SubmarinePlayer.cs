@@ -148,9 +148,9 @@ namespace DeepSubmergence {
             previouslyTeleporting = teleporting;
             
             // Hotkey
-            if(Input.GetKeyDown(KeyCode.T)){
-                Utils.PutItemInCargo("deepsubmergence.pressurevesseltier3", true);
-            }
+            // if(Input.GetKeyDown(KeyCode.T)){
+            //     Utils.PutItemInCargo("deepsubmergence.pressurevesseltier3", true);
+            // }
             
             // Update inputs, movement, position
             UpdateInputs();
@@ -334,6 +334,10 @@ namespace DeepSubmergence {
         
         public bool OnSurface(){
             return onSurface;
+        }
+        
+        public bool CompletelySubmerged(){
+            return depthParameter > 0.8f;
         }
         
         public float DiveTimerPercentRemaining(){

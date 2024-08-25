@@ -4,7 +4,7 @@
         "y": 0.0,
         "z": -176.0
     },
-    "harvestableParticlePrefab": "SquidParticles",
+    "harvestableParticlePrefab": "MediumRoundFishParticles",
     "items": [ "deepsubmergence.fishsteelfish", "deepsubmergence.fishtorpedofish" ],
     "startStock": 3,
     "maxStock": 6,
@@ -13,5 +13,6 @@
     "overrideDefaultDaySpecialChance": true,
     "overriddenDaytimeSpecialChance": 0.5,
     "overrideDefaultNightSpecialChance": true,
-    "overriddenNighttimeSpecialChance": 0.5
+    "overriddenNighttimeSpecialChance": 0.5,
+    "harvestDifficulty": "Medium",
 }

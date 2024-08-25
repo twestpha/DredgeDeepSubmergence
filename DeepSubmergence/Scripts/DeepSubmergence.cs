@@ -15,23 +15,18 @@ namespace DeepSubmergence {
         // https://github.com/Hacktix/Winch/wiki/Mod-Structure
         // https://github.com/DREDGE-Mods/Winch/blob/5de432bc9657aae5a553bfd654b71853ca4a345b/Winch/Core/AssetLoader.cs#L33
         
-        // [/] pressure vessel improves dive time
-        // [/] Disallow putting water into fishing tray
-        // [/] Better damage-dealing with fx, cam shake
+        // [/] Make fish locations dive-only, only appear nearby while diving
         
-        // V0.3: Submarine specific fishing minigame
+        // V0.3: Underwater Base, Questline and characters
         // [x] Pressure vessel art
-        // [x] Make fish locations dive-only, only appear nearby while diving
-        //   - custom collider, only enabled while player diving
-        //   - custom meshes/mesh renderer, only enabled and animating if player diving? drive alpha from that?
-        //   - hooks to normal fishing minigame(s)...?
-        // [x] Flubbing fish pickup adds water item (data set up, not sure how to add)
-        // [x] Overlay watery art thing on minigame?
-        
-        // V0.4: Underwater Base, Questline and characters
-        // [x] Submarine item, when you throw it overboard, you become a submarine; dupe and fake a player model hanging out there?
+        // [x] underwater base model, texture
         // [x] Find a spot on the map to put base, fish around it
-        // [x] Cover art for game start? Just a fullscreen splash on a canvas, not 3D
+        //   - Docking? Special dock that doesn't surface the boat?
+        // [x] Selling pumps and pressure vessels, level up with caught fish
+        // [x] Underwater Mechanic tinker character, questline for fishes
+        // [x] Re-organize harvest spots
+        // [x] Cover art for game start? Just a fullscreen splash on a canvas, not 3D backgroundy
+        // [x] Play it a shitload, bugtest, etc.
         
         public GameObject dredgePlayer;
         public GameObject submarinePlayer;

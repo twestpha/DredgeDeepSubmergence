@@ -4,7 +4,7 @@
         "y": 0.0,
         "z": 13.0
     },
-    "harvestableParticlePrefab": "SquidParticles",
+    "harvestableParticlePrefab": "MediumRoundFishParticles",
     "items": [ "deepsubmergence.fishlampcrab", "deepsubmergence.fishironlungfish" ],
     "startStock": 2,
     "maxStock": 6,

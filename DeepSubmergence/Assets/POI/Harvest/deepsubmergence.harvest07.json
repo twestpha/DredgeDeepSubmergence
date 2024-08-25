@@ -4,7 +4,7 @@
         "y": 0.0,
         "z": -216.0
     },
-    "harvestableParticlePrefab": "SquidParticles",
+    "harvestableParticlePrefab": "BronzeWhaler",
     "items": [ "deepsubmergence.fishshoal" ],
     "startStock": 1,
     "maxStock": 2,
@@ -13,5 +13,6 @@
     "overrideDefaultDaySpecialChance": true,
     "overriddenDaytimeSpecialChance": 0.5,
     "overrideDefaultNightSpecialChance": true,
-    "overriddenNighttimeSpecialChance": 0.5
+    "overriddenNighttimeSpecialChance": 0.5,
+    "harvestDifficulty": "Hard",
 }
