@@ -9,16 +9,9 @@ namespace DeepSubmergence {
     
         public static DeepSubmergence instance;
         
-        // Helpful links
-        // https://dredgemods.com/mods/
-        // https://github.com/DREDGE-Mods/Winch/blob/5de432bc9657aae5a553bfd654b71853ca4a345b/Winch/Util/TextureUtil.cs#L15
-        // https://github.com/Hacktix/Winch/wiki/Mod-Structure
-        // https://github.com/DREDGE-Mods/Winch/blob/5de432bc9657aae5a553bfd654b71853ca4a345b/Winch/Core/AssetLoader.cs#L33
-        
-        // [/] Make fish locations dive-only, only appear nearby while diving
+        // [/] Pressure vessel art
         
         // V0.3: Underwater Base, Questline and characters
-        // [x] Pressure vessel art
         // [x] underwater base model, texture
         // [x] Find a spot on the map to put base, fish around it
         //   - Docking? Special dock that doesn't surface the boat?
