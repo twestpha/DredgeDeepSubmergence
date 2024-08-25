@@ -85,8 +85,8 @@ namespace DeepSubmergence {
         // Helper function for quick-setting up a gameobject with a model and
         // default material
         //######################################################################
-        const string DEFAULT_SHADER_NAME = "Shader Graphs/Lit_Shader";
-        const string DEFAULT_TEXTURE_PROP = "Texture2D_9aa7ba2263944b48bbf43c218dc48459";
+        private const string DEFAULT_SHADER_NAME = "Shader Graphs/Lit_Shader";
+        private const string DEFAULT_TEXTURE_PROP = "Texture2D_9aa7ba2263944b48bbf43c218dc48459";
         
         public static GameObject SetupModelTextureAsGameObject(string name, Mesh mesh, Texture texture){
             GameObject newObject = new GameObject();

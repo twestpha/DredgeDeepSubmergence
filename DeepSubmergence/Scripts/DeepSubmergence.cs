@@ -10,14 +10,14 @@ namespace DeepSubmergence {
         public static DeepSubmergence instance;
         
         // [/] Pressure vessel art
+        // [/] underwater base model, texture
+        // [/] Find a spot on the map to put base
         
         // V0.3: Underwater Base, Questline and characters
-        // [x] underwater base model, texture
-        // [x] Find a spot on the map to put base, fish around it
-        //   - Docking? Special dock that doesn't surface the boat?
+        // [x] Docking? Special dock that doesn't surface the boat, and only exists when underwater
         // [x] Selling pumps and pressure vessels, level up with caught fish
         // [x] Underwater Mechanic tinker character, questline for fishes
-        // [x] Re-organize harvest spots
+        // [x] Put fish around new base, balance
         // [x] Cover art for game start? Just a fullscreen splash on a canvas, not 3D backgroundy
         // [x] Play it a shitload, bugtest, etc.
         
@@ -51,6 +51,7 @@ namespace DeepSubmergence {
             SetupDebugAxes();
             SetupDiveUI();
             SetupFishableManager();
+            SetupSeaBase();
             
             setup = true;
         }
@@ -59,8 +60,6 @@ namespace DeepSubmergence {
             if(setup){
                 if(dredgePlayer == null){
                     ShutDown();
-                } else {
-                    // Not sure yet...
                 }
             }
         }
@@ -112,6 +111,26 @@ namespace DeepSubmergence {
         private void SetupFishableManager(){
             underwaterFishableManager = Utils.SetupGameObject("Underwater Fishable Manager");
             underwaterFishableManager.AddComponent<UnderwaterFishableManager>();
+        }
+
+        private void SetupSeaBase(){
+            GameObject seaBase = Utils.SetupModelTextureAsGameObject(
+                "Sea Base",
+                ModelUtil.GetModel("deepsubmergence.seabase"),
+                TextureUtil.GetTexture("deepsubmergence.seabasetexture")
+            );
+            GameObject seaBaseWindows = Utils.SetupModelTextureAsGameObject(
+                "Sea Base Windows",
+                ModelUtil.GetModel("deepsubmergence.seabasewindows"),
+                TextureUtil.GetTexture("deepsubmergence.seabaseemittexture")
+            );
+            
+            seaBaseWindows.transform.parent = seaBase.transform;
+            seaBaseWindows.transform.localPosition = Vector3.zero;
+            
+            // Position the seas base
+            seaBase.transform.position = new Vector3(848f, -5.7f, 20.0f);
+            seaBase.transform.rotation = Quaternion.Euler(0.0f, 125.0f, 0.0f);
         }
     }
 }
