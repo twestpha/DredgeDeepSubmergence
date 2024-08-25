@@ -15,14 +15,16 @@ namespace DeepSubmergence {
         // https://github.com/Hacktix/Winch/wiki/Mod-Structure
         // https://github.com/DREDGE-Mods/Winch/blob/5de432bc9657aae5a553bfd654b71853ca4a345b/Winch/Core/AssetLoader.cs#L33
         
-        // [/] Docking removes all water
-        // [/] Pumps for removing water at a rate
+        // [/] dive ui because in esc menu
         
         // V0.3: Submarine specific fishing minigame
         // [x] Parts to improve dive times
         // [x] Make fish locations dive-only, only appear nearby while diving
+        //   - custom collider, only enabled while player diving
+        //   - custom meshes/mesh renderer, only enabled and animating if player diving? drive alpha from that?
+        //   - hooks to normal fishing minigame(s)...?
         // [x] Flubbing fish pickup adds water item (data set up, not sure how to add)
-        // [x] dive ui because in esc menu
+        // [x] Overlay of watery thing on minigame?
         // [x] Better damage-dealing with fx, cam shake
         
         // V0.4: Underwater Base, Questline and characters

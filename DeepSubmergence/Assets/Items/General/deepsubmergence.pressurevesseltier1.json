@@ -1,0 +1,21 @@
+{
+	"itemNameKey": "deepsubmergence.pressurevesseltier1.name",
+	"itemDescriptionKey": "deepsubmergence.pressurevesseltier1.desc",
+	"sprite": "deepsubmergence.iconpressurevesseltier1",
+	"itemColor": {
+		"r": 58,
+		"g": 40,
+		"b": 32,
+		"a": 255
+	},
+	"squishFactor": 0,
+	"value": 10,
+	"dimensions": [
+        "XXXX",
+        "X  X",
+        "X  X",
+        "X  X",
+        "XXXX",
+	],
+	"damageMode": "OPERATION"
+}

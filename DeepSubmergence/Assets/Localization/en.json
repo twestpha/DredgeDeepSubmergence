@@ -29,4 +29,6 @@
     "deepsubmergence.pumptier2.desc": "Removes flooding water at a medium rate",
     "deepsubmergence.pumptier3.name": "Pressurized Pump",
     "deepsubmergence.pumptier3.desc": "Removes flooding water quickly",
+    "deepsubmergence.pressurevesseltier1.name": "Cool",
+    "deepsubmergence.pressurevesseltier1.desc": "Butt",
 }

@@ -14,6 +14,7 @@ namespace DeepSubmergence {
         TabMenuOpen = 1 << 1,
         InDock      = 1 << 2,
         Fishing     = 1 << 3,
+        PauseMenu   = 1 << 4,
         // Probably more things
     }
     
@@ -139,22 +140,26 @@ namespace DeepSubmergence {
         //######################################################################
         private static Player cachedPlayer = null;
         private static SlidePanel cachedPlayerSlidePanel = null;
+        private static GameObject cachedInnerSettingsPanel = null;
         
         private const string PLAYER_NAME = "Player";
         private const string PLAYER_SLIDE_PANEL_NAME = "PlayerSlidePanel";
+        private const string SETTINGS_PANEL_NAME = "SettingsDialog";
+        private const string INNER_SETTINGS_PANEL_NAME = "TabbedPanelContainer";
 
         public static CannotDiveReason CanDive(){
-            // find and cache a bunch of shit
-            // then check those when queried
             if(cachedPlayerSlidePanel == null || cachedPlayer == null){
                 cachedPlayerSlidePanel = GameObject.Find(PLAYER_SLIDE_PANEL_NAME).GetComponent<SlidePanel>();
                 cachedPlayer = GameObject.Find(PLAYER_NAME).GetComponent<Player>();
+                
+                cachedInnerSettingsPanel = FindInChildren(GameObject.Find(SETTINGS_PANEL_NAME), INNER_SETTINGS_PANEL_NAME);
             }
             
             CannotDiveReason reason = CannotDiveReason.None;
             if(cachedPlayerSlidePanel.isShowing || cachedPlayerSlidePanel.willShow){ reason |= CannotDiveReason.TabMenuOpen; }
             if(cachedPlayer.IsDocked) { reason |= CannotDiveReason.InDock; }
             if(cachedPlayer.IsFishing){ reason |= CannotDiveReason.Fishing; }
+            if(cachedInnerSettingsPanel.activeSelf){ reason |= CannotDiveReason.PauseMenu; }
 
             return reason;
         }

@@ -138,6 +138,11 @@ namespace DeepSubmergence {
             
             previouslyTeleporting = teleporting;
             
+            // Hotkey
+            if(Input.GetKeyDown(KeyCode.T)){
+                Utils.PutItemInCargo("deepsubmergence.pumptier3", true);
+            }
+            
             // Update inputs, movement, position
             UpdateInputs();
             UpdatePositionAndRotation();
@@ -271,7 +276,7 @@ namespace DeepSubmergence {
             }
         }
         
-        private void UpdateFloodWater(){        
+        private void UpdateFloodWater(){
             bool inDock = (Utils.CanDive() & CannotDiveReason.InDock) != CannotDiveReason.None;
             
             // Clear all floodwater once arrived at dock
