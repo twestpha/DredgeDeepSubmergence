@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 using Sirenix.OdinInspector;
+using Winch.Serialization.Item;
 
 namespace DeepSubmergence {
     
@@ -17,6 +18,21 @@ namespace DeepSubmergence {
     }
     
     public static class Utils {
+        
+        //######################################################################
+        // Helper function for getting pump amount based on tier
+        //######################################################################
+        public static float PumpTime(string tier){
+            if(tier == "deepsubmergence.pumptier1"){
+                return 40.0f;
+            } else if(tier == "deepsubmergence.pumptier2"){
+                return 15.0f;
+            } else if(tier == "deepsubmergence.pumptier3"){
+                return 5.0f;
+            }
+            return 0.0f;
+        }
+        //######################################################################
         
         //######################################################################
         // Helper function for finding gameobjects by name in children
@@ -215,8 +231,37 @@ namespace DeepSubmergence {
         // Helper function for putting an item into the player's cargo
         //######################################################################
         public static void PutItemInCargo(string item, bool notify = false){
-            // I'd love to have one where it doesn't notify player, but whatevs
-            GameManager.Instance.DialogueRunner.AddItemById(item);
+            WinchCore.Log.Debug("putting " + item);
+            if (notify || true){
+                GameManager.Instance.DialogueRunner.AddItemById(item);
+            } else {
+                SpatialItemData foundItem = null;
+                List<ItemData> allItems = GameManager.Instance.ItemManager.allItems;
+
+                for(int i = 0, count = allItems.Count; i < count; ++i){
+                    if(allItems[i].id.Contains(item) && allItems[i] is SpatialItemData spacialItemData)
+                    {
+                        foundItem = spacialItemData;
+                        break;
+                    }
+                }
+                WinchCore.Log.Debug("foundItem: " + foundItem);
+
+                if(foundItem != null){
+                    SpatialItemInstance newItem = new SpatialItemInstance();
+                    newItem._itemData = foundItem;
+
+                     WinchCore.Log.Debug("newItem: " + newItem);
+
+                    //GameManager.Instance.SaveData.Inventory as 
+
+                    // None of these work, with 'not implemented' errors...
+                    //GameManager.Instance.SaveData.Inventory.ForceTriggerItemAddEvent(newItem);
+                    //GameManager.Instance.SaveData.Inventory.AddObjectToGridData(newItem, new Vector3Int(-1, -1, 0), false);
+                    //GameManager.Instance.SaveData.Inventory.FindSpaceAndAddObjectToGridData(foundItem, false);
+                    GameManager.Instance.SaveData.Inventory.TriggerRefreshEvent();
+                }
+            }
         }
 
         //######################################################################
@@ -232,14 +277,40 @@ namespace DeepSubmergence {
         //######################################################################
         // Helper function for testing if an item is present in the player's cargo
         //######################################################################
-        public static void DestroyItemInCargo(string item){
+        public static void DestroyItemInCargo(string item, bool notify = false){
+            
             if(HasItemInCargo(item)){
-                List<SpatialItemInstance> butts = GameManager.Instance.SaveData.Inventory.GetAllItemsOfType<SpatialItemInstance>(ItemType.ALL);
-                WinchCore.Log.Debug(butts.Count);
+                if(notify){
+                    GameManager.Instance.DialogueRunner.RemoveItemById(item);
+                } else {
+                    List<SpatialItemInstance> inventoryItems = GameManager.Instance.SaveData.Inventory.GetAllItemsOfType<SpatialItemInstance>(ItemType.GENERAL);
 
-                GameManager.Instance.SaveData.Inventory.RemoveObjectFromGridData(butts[0], false);
+                    SpatialItemInstance foundInstance = null;
+                    for (int i = 0, count = inventoryItems.Count; i < count; ++i)
+                    {
+                        if (inventoryItems[i].id.Contains(item))
+                        {
+                            foundInstance = inventoryItems[i];
+                            break;
+                        }
+                    }
+
+                    if (foundInstance != null)
+                    {
+                        GameManager.Instance.SaveData.Inventory.RemoveObjectFromGridData(foundInstance, false);
+                        GameManager.Instance.SaveData.Inventory.TriggerRefreshEvent();
+                    }
+                }
             }
         }
         //######################################################################
+        private static int previousFilledCells;
+        public static bool CargoChanged()
+        {
+            int filledCells = GameManager.Instance.SaveData.Inventory.GetFilledCells(ItemSubtype.ALL);
+            bool changed = filledCells != previousFilledCells;
+            previousFilledCells = filledCells;
+            return changed;
+        }
     }
 }

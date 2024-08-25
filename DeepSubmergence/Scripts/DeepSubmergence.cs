@@ -15,10 +15,11 @@ namespace DeepSubmergence {
         // https://github.com/Hacktix/Winch/wiki/Mod-Structure
         // https://github.com/DREDGE-Mods/Winch/blob/5de432bc9657aae5a553bfd654b71853ca4a345b/Winch/Core/AssetLoader.cs#L33
         
+        // [/] Docking removes all water
+        // [/] Pumps for removing water at a rate
+        
         // V0.3: Submarine specific fishing minigame
         // [x] Parts to improve dive times
-        // [x] Docking removes all water
-        // [x] Pumps for removing water at a rate
         // [x] Make fish locations dive-only, only appear nearby while diving
         // [x] Flubbing fish pickup adds water item (data set up, not sure how to add)
         // [x] dive ui because in esc menu

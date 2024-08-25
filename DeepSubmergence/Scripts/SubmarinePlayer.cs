@@ -27,9 +27,31 @@ namespace DeepSubmergence {
         
         private readonly Vector3 SURFACE_MODEL_OFFSET = new Vector3(0.0f, -0.1f, 0.0f);
         private readonly Vector3 LIGHT_POSITION_OFFSET = new Vector3(0.0f, 0.0f, 1.5f);
+        private readonly Vector2 WATER_DAMAGE_RANGE = new Vector2(4, 10);
 
-         // Pretty sure this is in the base game
         private const string BOAT_PROXY_NAME = "Boat4";
+        private const string FLOOD_WATER_NAME = "deepsubmergence.floodwater";
+        private const string ANY_PUMP_NAME = "pumptier";
+        
+        private class PumpData {
+            public string item;
+            public Timer timeRemaining;
+            
+            public PumpData(string item_){
+                item = item_;
+                timeRemaining = new(Utils.PumpTime(item));
+                timeRemaining.Start();
+            }
+            public bool ShouldDrain(){
+                if(timeRemaining.Finished()){
+                    timeRemaining.Start();
+                    return true;
+                }
+                return false;
+            }
+        }
+        
+        
         
         private GameObject cachedDredgePlayer;
         private Player cachedDredgePlayerPlayer;
@@ -42,6 +64,8 @@ namespace DeepSubmergence {
         private bool onSurface = true;
         private bool moveKeyPressed = false;
         private bool previouslyTeleporting = false;
+        private bool previousInDock = false;
+        
         private float depthParameter = 0.0f;
         private float depthVelocity = 0.0f;
         private float propAmount = 0.0f;
@@ -51,6 +75,7 @@ namespace DeepSubmergence {
         private float currentDiveTime = 0.0f;
         private float cachedDiveTimeMax = 0.0f;
         
+        private List<PumpData> activePumps = new();
         private Vector3 diveTargetPosition;
         private List<GameObject> boatModelProxies;
         
@@ -240,27 +265,43 @@ namespace DeepSubmergence {
                 onSurface = true;
                 
                 // Give player several floodwaters
-                for(int i = 0, count = UnityEngine.Random.Range(1, 4); i < count; ++i){
-                    Utils.PutItemInCargo("deepsubmergence.floodwater");
+                for(int i = 0, count = (int) UnityEngine.Random.Range(WATER_DAMAGE_RANGE.x, WATER_DAMAGE_RANGE.y); i < count; ++i){
+                    Utils.PutItemInCargo(FLOOD_WATER_NAME, true);
                 }
             }
         }
         
-        private void UpdateFloodWater(){
-            // Test hotkey
-            if(Input.GetKeyDown(KeyCode.T)){
-                //while(Utils.HasItemInCargo(deepsubmergence.floodwater))
-                Utils.DestroyItemInCargo("deepsubmergence.floodwater");
+        private void UpdateFloodWater(){        
+            bool inDock = (Utils.CanDive() & CannotDiveReason.InDock) != CannotDiveReason.None;
+            
+            // Clear all floodwater once arrived at dock
+            if(inDock && !previousInDock){
+                while(Utils.HasItemInCargo(FLOOD_WATER_NAME)){
+                    Utils.DestroyItemInCargo(FLOOD_WATER_NAME);
+                }
             }
-        
             
-            // HasItemInCargo
-            // If was docked and isn't, update pump dictionary, with individual timers
-            // OR if inventory changed...? iunno
+            // Update active pumps if cargo inventory changed
+            if(Utils.CargoChanged()){
+                activePumps.Clear();
+
+                List<SpatialItemInstance> generalItems = GameManager.Instance.SaveData.Inventory.GetAllItemsOfType<SpatialItemInstance>(ItemType.GENERAL);
+                
+                for(int i = 0, count = generalItems.Count; i < count; ++i){
+                    if(generalItems[i].id.Contains(ANY_PUMP_NAME)){
+                        activePumps.Add(new PumpData(generalItems[i].id));
+                    }
+                }
+            }
             
-            // if not docked and now is, remove ALL waters
+            // If any pump should drain, remove water from inventory
+            for(int i = 0, count = activePumps.Count; i < count; ++i){
+                if(activePumps[i].ShouldDrain() && Utils.HasItemInCargo(FLOOD_WATER_NAME)){
+                    Utils.DestroyItemInCargo(FLOOD_WATER_NAME);
+                }
+            }
             
-            // Get all them pumps, look at their timer. If timer finished, remove a single water, set the timer based on their tier
+            previousInDock = inDock;
         }
         
         public bool OnSurface(){
