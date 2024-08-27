@@ -3,21 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 using Winch.Core;
 using Winch.Util;
+using UnityEngine.Localization;
 
 namespace DeepSubmergence {
     public class DeepSubmergence : MonoBehaviour {
     
         public static DeepSubmergence instance;
         
-        // [/] Pressure vessel art
-        // [/] underwater base model, texture
-        // [/] Find a spot on the map to put base
+        // [w] Diving behaves weird near special dock, something seems weird
+        // [/] Make fish have no expiry or close enough
+        // [/] Reposition sea base to be closer to an existing dock since we don't get those things
+        //    - maybe off gale cliffs
+        // [/] Setup collider detects player, only enables when underwater
         
         // V0.3: Underwater Base, Questline and characters
         // [x] Docking? Special dock that doesn't surface the boat, and only exists when underwater
+        //    - Might have to be
+        //      - A manually created UI that triggers on player collision, that plays a sequence of images and text based on quest state
+        //      - collider only works while underwater, make sure to safe zone/pause game/disable controls?
+        //      - It auto-checks your inventory for necessary fish instead of having the small ui that keeps it
+        //        - maybe storyline is longer so it's one of each fish? Seems tedious then
         // [x] Selling pumps and pressure vessels, level up with caught fish
-        // [x] Underwater Mechanic tinker character, questline for fishes
+        //    - might have to be "quests that unlock purchasing at all vendors". Or failing a quest, then "a bool that gets saved"
+        //    - how do merchants stock things? Can we inject into there?
+        // [x] Underwater Mechanic diver character, questline for fishes with story
+        //   - several poses of sorta animation
         // [x] Put fish around new base, balance
+        // [x] Balance cost of new parts too
         // [x] Cover art for game start? Just a fullscreen splash on a canvas, not 3D backgroundy
         // [x] Play it a shitload, bugtest, etc.
         
@@ -25,7 +37,9 @@ namespace DeepSubmergence {
         public GameObject submarinePlayer;
         public GameObject submarineUI;
         public GameObject underwaterFishableManager;
+        public GameObject seaBaseFakeDock;
         public GameObject debugAxes;
+
         public List<GameObject> managedObjects = new();
         
         private bool setup;
@@ -60,10 +74,21 @@ namespace DeepSubmergence {
             if(setup){
                 if(dredgePlayer == null){
                     ShutDown();
+                } else {
+                    // Constantly reset the freshness of deepsubmergence fish to prevent them from rotting
+                    // This is to facilitate quests (i.e. you can always keep them around) but also a bit spooky
+                    List<SpatialItemInstance> inventoryItems = GameManager.Instance.SaveData.Inventory.GetAllItemsOfType<SpatialItemInstance>(ItemType.GENERAL);
+
+                    for (int i = 0, count = inventoryItems.Count; i < count; ++i)
+                    {
+                        if(inventoryItems[i].id.Contains("deepsubmergence") && inventoryItems[i] is FishItemInstance fishy){
+                            fishy.freshness = 3.0f; // Max freshness value in game
+                        }
+                    }
                 }
             }
         }
-        
+
         private void ShutDown(){
             setup = false;
             
@@ -128,9 +153,14 @@ namespace DeepSubmergence {
             seaBaseWindows.transform.parent = seaBase.transform;
             seaBaseWindows.transform.localPosition = Vector3.zero;
             
-            // Position the seas base
-            seaBase.transform.position = new Vector3(848f, -5.7f, 20.0f);
+            // Position the sea base model
+            seaBase.transform.position = new Vector3(735.0f, -5.7f, -272.0f);
             seaBase.transform.rotation = Quaternion.Euler(0.0f, 125.0f, 0.0f);
+
+            // Setup sea base fake dock
+            GameObject seaBaseFakeDock = Utils.SetupGameObject("Sea Base Fake Dock");
+            seaBaseFakeDock.transform.position = new Vector3(729.0f, 0.0f, -275.0f);
+            seaBaseFakeDock.AddComponent<SeaBaseFakeDock>();
         }
     }
 }

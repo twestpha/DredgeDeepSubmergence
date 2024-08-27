@@ -53,8 +53,6 @@ namespace DeepSubmergence {
             }
         }
         
-        
-        
         private GameObject cachedDredgePlayer;
         private Player cachedDredgePlayerPlayer;
         private GameObject propeller;
@@ -149,7 +147,7 @@ namespace DeepSubmergence {
             
             // Hotkey
             if(Input.GetKeyDown(KeyCode.T)){
-                Utils.PutItemInCargo("deepsubmergence.pressurevesseltier3", true);
+                Utils.PutItemInCargo("deepsubmergence.fishboltfish", true);
             }
             
             // Update inputs, movement, position
@@ -164,6 +162,7 @@ namespace DeepSubmergence {
             CannotDiveReason cannotDiveReason = Utils.CanDive();
             
             if((cannotDiveReason & CannotDiveReason.InDock) != CannotDiveReason.None){
+                // get dock, is dock the special dock -> don't surface
                 onSurface = true;
             } else if(cannotDiveReason == CannotDiveReason.None){
                 if(Input.GetKeyDown(KeyCode.Q)){
