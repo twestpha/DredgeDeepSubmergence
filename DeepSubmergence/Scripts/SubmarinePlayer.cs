@@ -1,8 +1,5 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using Winch.Core;
 using Winch.Util;
 
 namespace DeepSubmergence {
@@ -160,11 +157,11 @@ namespace DeepSubmergence {
         
         private void UpdateInputs(){
             CannotDiveReason cannotDiveReason = Utils.CanDive();
+            bool inFakeDock = DeepSubmergence.instance.seaBaseFakeDock.playerInFakeDock;
             
             if((cannotDiveReason & CannotDiveReason.InDock) != CannotDiveReason.None){
-                // get dock, is dock the special dock -> don't surface
                 onSurface = true;
-            } else if(cannotDiveReason == CannotDiveReason.None){
+            } else if(cannotDiveReason == CannotDiveReason.None && !inFakeDock){
                 if(Input.GetKeyDown(KeyCode.Q)){
                     onSurface = !onSurface;
                 }
@@ -271,13 +268,15 @@ namespace DeepSubmergence {
             
             // Set a timer after it's cleared so you don't get back from fishing at 0 time left
             bool currentlyFishing = Utils.CanDive() != CannotDiveReason.None;
-            if(currentlyFishing){
+            bool inFakeDock = DeepSubmergence.instance.seaBaseFakeDock.playerInFakeDock;
+            
+            if(currentlyFishing || inFakeDock){
                 doneFishingTimer.Start();
             }
             
             if(onSurface){
                 currentDiveTime = Mathf.Max(currentDiveTime - (Time.deltaTime * SURFACE_FILL_RATE), 0.0f);
-            } else if(doneFishingTimer.Finished()){
+            } else if(doneFishingTimer.Finished() && !inFakeDock){
                 currentDiveTime += Time.deltaTime;
             }
             
@@ -333,6 +332,10 @@ namespace DeepSubmergence {
         
         public bool OnSurface(){
             return onSurface;
+        }
+        
+        public void ForceSurface(){
+            onSurface = true;
         }
         
         public bool CompletelySubmerged(){

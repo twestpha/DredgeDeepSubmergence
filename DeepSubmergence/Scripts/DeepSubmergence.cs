@@ -3,26 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using Winch.Core;
 using Winch.Util;
-using UnityEngine.Localization;
 
 namespace DeepSubmergence {
     public class DeepSubmergence : MonoBehaviour {
     
         public static DeepSubmergence instance;
         
-        // [w] Diving behaves weird near special dock, something seems weird
-        // [/] Make fish have no expiry or close enough
-        // [/] Reposition sea base to be closer to an existing dock since we don't get those things
-        //    - maybe off gale cliffs
-        // [/] Setup collider detects player, only enables when underwater
+        // [/] collider only works while underwater, make sure to safe zone/pause game/disable controls?
+        // [/] Docking? Special dock that doesn't surface the boat, and only exists when underwater
+        // [/] It auto-checks your inventory for necessary fish instead of having the small ui that keeps it
         
         // V0.3: Underwater Base, Questline and characters
-        // [x] Docking? Special dock that doesn't surface the boat, and only exists when underwater
-        //    - Might have to be
-        //      - A manually created UI that triggers on player collision, that plays a sequence of images and text based on quest state
-        //      - collider only works while underwater, make sure to safe zone/pause game/disable controls?
-        //      - It auto-checks your inventory for necessary fish instead of having the small ui that keeps it
-        //        - maybe storyline is longer so it's one of each fish? Seems tedious then
+        // [x] A manually created UI stack that triggers on player collision, that plays a sequence of images and text based on quest state
+        // [x] Saving and loading overall progress from data
         // [x] Selling pumps and pressure vessels, level up with caught fish
         //    - might have to be "quests that unlock purchasing at all vendors". Or failing a quest, then "a bool that gets saved"
         //    - how do merchants stock things? Can we inject into there?
@@ -37,7 +30,7 @@ namespace DeepSubmergence {
         public GameObject submarinePlayer;
         public GameObject submarineUI;
         public GameObject underwaterFishableManager;
-        public GameObject seaBaseFakeDock;
+        public SeaBaseFakeDock seaBaseFakeDock;
         public GameObject debugAxes;
 
         public List<GameObject> managedObjects = new();
@@ -158,9 +151,9 @@ namespace DeepSubmergence {
             seaBase.transform.rotation = Quaternion.Euler(0.0f, 125.0f, 0.0f);
 
             // Setup sea base fake dock
-            GameObject seaBaseFakeDock = Utils.SetupGameObject("Sea Base Fake Dock");
-            seaBaseFakeDock.transform.position = new Vector3(729.0f, 0.0f, -275.0f);
-            seaBaseFakeDock.AddComponent<SeaBaseFakeDock>();
+            GameObject fakeDockObject = Utils.SetupGameObject("Sea Base Fake Dock");
+            fakeDockObject.transform.position = new Vector3(730.89f, 0.0f, -276.46f);
+            seaBaseFakeDock = fakeDockObject.AddComponent<SeaBaseFakeDock>();
         }
     }
 }

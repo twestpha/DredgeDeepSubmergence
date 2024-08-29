@@ -82,6 +82,20 @@ namespace DeepSubmergence {
         //######################################################################
         
         //######################################################################
+        // Helper function for quick-setting up a copied gameobject
+        //######################################################################
+        public static GameObject SetupGameObject(string name, GameObject original){
+            GameObject newObject = GameObject.Instantiate(original);
+            newObject.name = "[DeepSubmergence] " + name;
+            
+            // Manually manage lifetime
+            GameObject.DontDestroyOnLoad(newObject);
+            DeepSubmergence.instance.managedObjects.Add(newObject);
+            return newObject;
+        }
+        //######################################################################
+        
+        //######################################################################
         // Helper function for quick-setting up a gameobject with a model and
         // default material
         //######################################################################
@@ -115,7 +129,7 @@ namespace DeepSubmergence {
         // it in the game canvas
         //######################################################################
         const string DEFAULT_GAME_CANVAS_NAME = "GameCanvas";
-        private static GameObject cachedGameCanvas;
+        public static GameObject cachedGameCanvas;
         
         public static GameObject SetupTextureAsSpriteOnCanvas(string name, Sprite sprite, Vector2 rect, Vector2 position){
             if(cachedGameCanvas == null){
@@ -299,7 +313,6 @@ namespace DeepSubmergence {
         // Helper function for testing if an item is present in the player's cargo
         //######################################################################
         public static void DestroyItemInCargo(string item, bool notify = false){
-            
             if(HasItemInCargo(item)){
                 if(notify){
                     GameManager.Instance.DialogueRunner.RemoveItemById(item);

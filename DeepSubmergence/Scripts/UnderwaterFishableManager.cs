@@ -1,8 +1,5 @@
 using System.Collections.Generic;
-﻿using System.Collections;
 using UnityEngine;
-using Winch.Core;
-using Winch.Util;
 
 namespace DeepSubmergence {
     public class UnderwaterFishableManager : MonoBehaviour {
