@@ -4,6 +4,7 @@ using Winch.Core;
 using System.Collections;
 using Winch.Util;
 using TMPro;
+using Yarn.Unity;
 
 namespace DeepSubmergence {
     public class SeaBaseFakeDock : MonoBehaviour {
@@ -27,17 +28,40 @@ namespace DeepSubmergence {
         private string[] quest3requiredfish = {
             "deepsubmergence.fishtrenchwhale",
         };
-        
         private string[] diverSprites = {
             "deepsubmergence.uidiver0",
             "deepsubmergence.uidiver1",
             "deepsubmergence.uidiver2",
         };
+        private string[] quest0Dialogues = {
+            "deepsubmergence.quest0dialogue0",
+            "deepsubmergence.quest0dialogue1",
+            "deepsubmergence.quest0dialogue2",
+            "deepsubmergence.quest0dialogue3",
+            "deepsubmergence.quest0dialogue4",
+            "deepsubmergence.quest0dialogue5",
+        };
+        private string[] quest1Dialogues = {
+            "deepsubmergence.uidiver0",
+        };
+        private string[] quest2Dialogues = {
+            "deepsubmergence.uidiver0",
+        };
+        private string[] quest3Dialogues = {
+            "deepsubmergence.uidiver0",
+        };
+        private string[] questDoneDialogues = {
+            "deepsubmergence.uidiver0",
+        };
+        
+        private const string DIVER_TITLE = "deepsubmergence.questDiverTitle";
         
         private const string TEXT_NAME = "DialogueView";
         private const string TEXT_A_NAME = "Container";
         private const string TEXT_B_NAME = "DialogueTextContainer";
         private const string TEXT_C_NAME = "DialogueText";
+        
+        private const float MAX_PROGRESS = 5;
         
         private SubmarinePlayer cachedSubmarinePlayer;
         private SphereCollider sphereCollider;
@@ -108,24 +132,25 @@ namespace DeepSubmergence {
             RectTransform dialogueTitleTextRect = dialogueTitleText.GetComponent<RectTransform>();
             dialogueTitleTextRect.SetParent(Utils.cachedGameCanvas.GetComponent<RectTransform>());
             
-            // TEMP
-            dialogueTextT.text = "Hey Cool Words";
-            dialogueTitleTextT.text = "Hey Cool Words";
-            dialogueText.SetActive(true);
-            dialogueTitleText.SetActive(true);
-            
             // Position text
             dialogueTextRect.anchorMax = Vector2.zero;
             dialogueTextRect.anchorMin = Vector2.zero;
-            dialogueTextRect.sizeDelta = new Vector2(746.0f, 186.0f);
-            dialogueTextRect.anchoredPosition = new Vector2(960f, 104.0f);
+            dialogueTextRect.sizeDelta = new Vector2(706.0f, 146.0f);
+            dialogueTextRect.anchoredPosition = new Vector2(980f, 84.0f);
             
             dialogueTitleTextRect.anchorMax = Vector2.zero;
             dialogueTitleTextRect.anchorMin = Vector2.zero;
             dialogueTitleTextRect.sizeDelta = new Vector2(450.0f, 49.0f);
             dialogueTitleTextRect.anchoredPosition = new Vector2(965f, 209.0f);
-            
-            // TODO set all UI inactive
+            dialogueTitleTextT.verticalAlignment = VerticalAlignmentOptions.Middle;
+            dialogueTitleTextT.horizontalAlignment = HorizontalAlignmentOptions.Center;
+
+            // Set all UI inactive
+            diverImage.enabled = false;
+            dialogueBackground.SetActive(false);
+            dialogueTitleBackground.SetActive(false);
+            dialogueText.SetActive(false);
+            dialogueTitleText.SetActive(false);
         }
         
         void Update(){
@@ -142,52 +167,51 @@ namespace DeepSubmergence {
         }
 
         private IEnumerator SeabaseQuestUICoroutine(){
-            
-            SetupPlayerAtFakeDock(true);
-            
-            // Check for progression
-            string[] requiredFish = GetRequiredFishListForProgressLevel(currentProgressLevel);
-            
-            if(requiredFish != null){
-                bool hasAllRequiredFish = true;
-                for(int i = 0, count = requiredFish.Length; i < count; ++i){
-                    hasAllRequiredFish &= Utils.HasItemInCargo(requiredFish[i]);
-                }
-                WinchCore.Log.Debug("hasAllRequiredFish: " + hasAllRequiredFish);
+            if(currentProgressLevel < MAX_PROGRESS){
+                SetupPlayerAtFakeDock(true);
                 
-                if(hasAllRequiredFish){
-                    currentProgressLevel++;
-                    // PUT THIS IN SAVE DATA!!
-                    
-                    // Take the fish
+                // Check for progression
+                string[] requiredFish = GetRequiredFishListForProgressLevel(currentProgressLevel);
+                
+                if(requiredFish != null){
+                    bool hasAllRequiredFish = true;
                     for(int i = 0, count = requiredFish.Length; i < count; ++i){
-                        Utils.DestroyItemInCargo(requiredFish[i]);
+                        hasAllRequiredFish &= Utils.HasItemInCargo(requiredFish[i]);
+                    }
+                    WinchCore.Log.Debug("hasAllRequiredFish: " + hasAllRequiredFish);
+                    
+                    if(hasAllRequiredFish){
+                        currentProgressLevel++;
+                        // PUT THIS IN SAVE DATA!!
+                        
+                        // Take the fish
+                        for(int i = 0, count = requiredFish.Length; i < count; ++i){
+                            Utils.DestroyItemInCargo(requiredFish[i]);
+                        }
                     }
                 }
-            } else {
-                // Nothing? No cutscene? Iunno.
+                
+                // Play dialogue
+                string[] dialogues = GetDialogueForProgressLevel(currentProgressLevel);
+                
+                for(int i = 0, count = dialogues.Length; i < count; ++i){
+                    int pickedSprite = UnityEngine.Random.Range(0, diverSprites.Length);
+                    string localeCode = GameManager.Instance.LanguageManager.GetLocale().Identifier.Code;
+
+                    yield return PlayDialogue(
+                        TextureUtil.GetSprite(diverSprites[pickedSprite]),
+                        LocalizationUtil.GetLocalizedString(localeCode, DIVER_TITLE),
+                        LocalizationUtil.GetLocalizedString(localeCode, dialogues[i])
+                    );
+                }
+
+                // Hide ui
+                yield return HideUI();
+                
+                // All done
+                SetupPlayerAtFakeDock(false);
+                yield break;
             }
-            
-            // Get conversation sequence for progress level
-            // currentProgressLevel
-            
-            
-            
-            
-            
-            
-            
-            
-            // Setup base ui
-            // write text and shuffle the character sprite
-            // play sequence depending on progress
-            // check if you have the fish we're looking for, if so progress things then play
-
-
-            yield return new WaitForSeconds(5);
-            
-            SetupPlayerAtFakeDock(false);
-            yield break;
         }
 
         private void SetupPlayerAtFakeDock(bool inDock){
@@ -209,10 +233,48 @@ namespace DeepSubmergence {
         
         private string[] GetRequiredFishListForProgressLevel(int progress){
             if(progress == 0){ return quest0requiredfish; }
-            if(progress == 1){ return quest1requiredfish; }
-            if(progress == 2){ return quest2requiredfish; }
-            if(progress == 3){ return quest3requiredfish; }
+            else if(progress == 1){ return quest1requiredfish; }
+            else if(progress == 2){ return quest2requiredfish; }
+            else if(progress == 3){ return quest3requiredfish; }
             return null;
+        }
+        
+        private string[] GetDialogueForProgressLevel(int progress){
+            if(progress == 0){ return quest0Dialogues; }
+            else if(progress == 1){ return quest1Dialogues; }
+            else if(progress == 2){ return quest2Dialogues; }
+            else if(progress == 3){ return quest3Dialogues; }
+            else { return questDoneDialogues; }
+        }
+        
+        private IEnumerator PlayDialogue(Sprite sprite, string localizedTitle, string localizedDialogue){
+
+            dialogueTitleTextT.text = localizedTitle;
+            dialogueTextT.text = localizedDialogue;
+
+            diverImage.sprite = sprite;
+            
+            diverImage.enabled = true;
+            dialogueBackground.SetActive(true);
+            dialogueTitleBackground.SetActive(true);
+            dialogueText.SetActive(true);
+            dialogueTitleText.SetActive(true);
+
+            bool anyInput = false;
+            while(!anyInput){
+                yield return null;
+                anyInput = Input.anyKeyDown;
+            }
+        }
+        
+        private IEnumerator HideUI(){
+            diverImage.enabled = false;
+            dialogueBackground.SetActive(false);
+            dialogueTitleBackground.SetActive(false);
+            dialogueText.SetActive(false);
+            dialogueTitleText.SetActive(false);
+
+            yield break;
         }
     }
 }

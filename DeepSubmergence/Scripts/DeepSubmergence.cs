@@ -21,6 +21,7 @@ namespace DeepSubmergence {
         //    - how do merchants stock things? Can we inject into there?
         // [x] Underwater Mechanic diver character, questline for fishes with story
         //   - several poses of sorta animation
+        //   - write sequence of narrative things
         // [x] Put fish around new base, balance
         // [x] Balance cost of new parts too
         // [x] Cover art for game start? Just a fullscreen splash on a canvas, not 3D backgroundy

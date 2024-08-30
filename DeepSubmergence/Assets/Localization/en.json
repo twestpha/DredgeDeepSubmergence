@@ -21,18 +21,31 @@
     "deepsubmergence.shoal.desc": "It moves as one, thinks as one, and eats as many.",
     "deepsubmergence.trenchwhale.name": "Flayed Whale",
     "deepsubmergence.trenchwhale.desc": "Although the machinery continues to grind, the animal is long dead. May as well give it some dignity in death.",
+    
     "deepsubmergence.floodwater.name": "Flooding Water",
     "deepsubmergence.floodwater.desc": "A minor annoyance. Water is automatically dried when docking, or can be drained while at sea using Pumps.",
+    
     "deepsubmergence.pumptier1.name": "Low-Quality Pump",
     "deepsubmergence.pumptier1.desc": "Removes flooding water very slowly",
     "deepsubmergence.pumptier2.name": "Straining Pump",
     "deepsubmergence.pumptier2.desc": "Removes flooding water at a medium rate",
     "deepsubmergence.pumptier3.name": "Pressurized Pump",
     "deepsubmergence.pumptier3.desc": "Removes flooding water quickly",
+    
     "deepsubmergence.pressurevesseltier1.name": "Thin Pressure Vessel",
     "deepsubmergence.pressurevesseltier1.desc": "Adds a small amount of time to how long you can remain submerged.",
     "deepsubmergence.pressurevesseltier2.name": "Thick Pressure Vessel",
     "deepsubmergence.pressurevesseltier2.desc": "Adds a reasonable amount of time to how long you can remain submerged.",
     "deepsubmergence.pressurevesseltier3.name": "Double-Hulled Pressure Vessel",
     "deepsubmergence.pressurevesseltier3.desc": "Adds a good deal of time to how long you can remain submerged.",
+    
+    "deepsubmergence.questDiverTitle": "Hollow Diver",
+    
+    "deepsubmergence.quest0dialogue0": "Oh. What misfortune led you down here, to these depths?",
+    "deepsubmergence.quest0dialogue1": "No matter, I have a favor to ask of you.",
+    "deepsubmergence.quest0dialogue2": "I was stationed down here, and some of my... er, research, escaped.",
+    "deepsubmergence.quest0dialogue3": "There was a small bolting fish, a squid caught in a net, and an entire shoal of hungry mouths.",
+    "deepsubmergence.quest0dialogue4": "Not to worry, though. My specimens won't rot, so keep them until you can bring all of them to me",
+    "deepsubmergence.quest0dialogue5": "And come back here when you have them, don't worry, don't tell, it'll be right as rain.",
+    
 }
