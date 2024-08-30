@@ -248,23 +248,63 @@ namespace DeepSubmergence {
         }
         
         private IEnumerator PlayDialogue(Sprite sprite, string localizedTitle, string localizedDialogue){
-
+            bool useAlpha = !dialogueBackground.activeSelf;
+            
             dialogueTitleTextT.text = localizedTitle;
             dialogueTextT.text = localizedDialogue;
-
+            dialogueTextT.maxVisibleCharacters = 0;
             diverImage.sprite = sprite;
+            if(useAlpha){
+                diverImage.color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
+            }
             
             diverImage.enabled = true;
             dialogueBackground.SetActive(true);
             dialogueTitleBackground.SetActive(true);
             dialogueText.SetActive(true);
             dialogueTitleText.SetActive(true);
-
+            
+            // Show dialogue over time in various animated ways
+            bool finished = false;
+            
+            Timer diverRevealTimer = new Timer(0.5f);
+            diverRevealTimer.Start();
+            Timer textRevealTimer = new Timer(1.0f);
+            textRevealTimer.Start();
+            
+            while(!finished){
+                float diverT = diverRevealTimer.Parameterized();
+                diverT = Mathf.Sqrt(diverT);
+                
+                // Alpha and Position of diver
+                if(useAlpha){
+                    diverImage.color = new Color(1.0f, 1.0f, 1.0f, diverT);
+                }
+                diverImageRect.anchoredPosition = Vector2.Lerp(new Vector2(960f, 400.0f), new Vector2(960f, 450.0f), diverT);
+                
+                // Skip to end with keypress
+                if(Input.anyKeyDown){
+                    textRevealTimer.SetParameterized(1.0f);
+                }
+                
+                float textT = textRevealTimer.Parameterized();
+                dialogueTextT.maxVisibleCharacters = (int) Mathf.Round(textT * ((float) localizedDialogue.Length));
+                
+                finished = diverRevealTimer.Finished() && textRevealTimer.Finished();
+                yield return null;
+            }
+            
+            diverImage.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+            dialogueTextT.maxVisibleCharacters = localizedDialogue.Length;
+            
+            // Wait for input to next dialogue
             bool anyInput = false;
             while(!anyInput){
                 yield return null;
                 anyInput = Input.anyKeyDown;
             }
+            
+            yield return null;
         }
         
         private IEnumerator HideUI(){
