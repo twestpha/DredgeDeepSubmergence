@@ -144,7 +144,7 @@ namespace DeepSubmergence {
             
             // Hotkey
             if(Input.GetKeyDown(KeyCode.T)){
-                Utils.PutItemInCargo("deepsubmergence.fishboltfish", true);
+                Utils.PutItemInCargo("deepsubmergence.fishtrenchwhale", false);
             }
             
             // Update inputs, movement, position

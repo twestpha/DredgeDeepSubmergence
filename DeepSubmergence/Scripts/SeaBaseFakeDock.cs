@@ -17,8 +17,8 @@ namespace DeepSubmergence {
         private string[] quest1requiredfish = {
             "deepsubmergence.fishelectriceel",
             "deepsubmergence.fishironlungfish",
-            "deepsubmergence.lampcrab",
-            "deepsubmergence.needlefish",
+            "deepsubmergence.fishlampcrab",
+            "deepsubmergence.fishneedlefish",
         };
         private string[] quest2requiredfish = {
             "deepsubmergence.fishsteelhead",
@@ -32,6 +32,7 @@ namespace DeepSubmergence {
             "deepsubmergence.uidiver0",
             "deepsubmergence.uidiver1",
             "deepsubmergence.uidiver2",
+            "deepsubmergence.uidiver3",
         };
         private string[] quest0Dialogues = {
             "deepsubmergence.quest0dialogue0",
@@ -42,16 +43,32 @@ namespace DeepSubmergence {
             "deepsubmergence.quest0dialogue5",
         };
         private string[] quest1Dialogues = {
-            "deepsubmergence.uidiver0",
+            "deepsubmergence.quest1dialogue0",
+            "deepsubmergence.quest1dialogue1",
+            "deepsubmergence.quest1dialogue2",
+            "deepsubmergence.quest1dialogue3",
+            "deepsubmergence.quest1dialogue4",
+            "deepsubmergence.quest1dialogue5",
         };
         private string[] quest2Dialogues = {
-            "deepsubmergence.uidiver0",
+            "deepsubmergence.quest2dialogue0",
+            "deepsubmergence.quest2dialogue1",
+            "deepsubmergence.quest2dialogue2",
+            "deepsubmergence.quest2dialogue3",
+            "deepsubmergence.quest2dialogue4",
+            "deepsubmergence.quest2dialogue5",
         };
         private string[] quest3Dialogues = {
-            "deepsubmergence.uidiver0",
+            "deepsubmergence.quest3dialogue0",
+            "deepsubmergence.quest3dialogue1",
+            "deepsubmergence.quest3dialogue2",
+            "deepsubmergence.quest3dialogue3",
+            "deepsubmergence.quest3dialogue4",
+            "deepsubmergence.quest3dialogue5",
         };
         private string[] questDoneDialogues = {
-            "deepsubmergence.uidiver0",
+            "deepsubmergence.questdonedialogue0",
+            "deepsubmergence.questdonedialogue1",
         };
         
         private const string DIVER_TITLE = "deepsubmergence.questDiverTitle";
@@ -137,7 +154,9 @@ namespace DeepSubmergence {
             dialogueTextRect.anchorMin = Vector2.zero;
             dialogueTextRect.sizeDelta = new Vector2(706.0f, 146.0f);
             dialogueTextRect.anchoredPosition = new Vector2(980f, 84.0f);
-            
+            dialogueTextT.enableWordWrapping = true;
+            dialogueTextT.overflowMode = TextOverflowModes.Page;
+
             dialogueTitleTextRect.anchorMax = Vector2.zero;
             dialogueTitleTextRect.anchorMin = Vector2.zero;
             dialogueTitleTextRect.sizeDelta = new Vector2(450.0f, 49.0f);
@@ -192,16 +211,26 @@ namespace DeepSubmergence {
                 }
                 
                 // Play dialogue
+                dialogueTextT.text = "";
+                dialogueTitleTextT.text = "";
+
                 string[] dialogues = GetDialogueForProgressLevel(currentProgressLevel);
                 
                 for(int i = 0, count = dialogues.Length; i < count; ++i){
-                    int pickedSprite = UnityEngine.Random.Range(0, diverSprites.Length);
+                    int pickedSprite = UnityEngine.Random.Range(0, diverSprites.Length - 1);
+                    
+                    // For the last quest, always force the sprite to be the last one
+                    if(dialogues == questDoneDialogues){
+                        pickedSprite = diverSprites.Length - 1;
+                    }
+                    
                     string localeCode = GameManager.Instance.LanguageManager.GetLocale().Identifier.Code;
 
                     yield return PlayDialogue(
                         TextureUtil.GetSprite(diverSprites[pickedSprite]),
                         LocalizationUtil.GetLocalizedString(localeCode, DIVER_TITLE),
-                        LocalizationUtil.GetLocalizedString(localeCode, dialogues[i])
+                        LocalizationUtil.GetLocalizedString(localeCode, dialogues[i]),
+                        dialogues != questDoneDialogues // Don't animate for last dialogue
                     );
                 }
 
@@ -247,7 +276,7 @@ namespace DeepSubmergence {
             else { return questDoneDialogues; }
         }
         
-        private IEnumerator PlayDialogue(Sprite sprite, string localizedTitle, string localizedDialogue){
+        private IEnumerator PlayDialogue(Sprite sprite, string localizedTitle, string localizedDialogue, bool animate){
             bool useAlpha = !dialogueBackground.activeSelf;
             
             dialogueTitleTextT.text = localizedTitle;
@@ -280,7 +309,9 @@ namespace DeepSubmergence {
                 if(useAlpha){
                     diverImage.color = new Color(1.0f, 1.0f, 1.0f, diverT);
                 }
-                diverImageRect.anchoredPosition = Vector2.Lerp(new Vector2(960f, 400.0f), new Vector2(960f, 450.0f), diverT);
+                if(animate){
+                    diverImageRect.anchoredPosition = Vector2.Lerp(new Vector2(960f, 400.0f), new Vector2(960f, 450.0f), diverT);
+                }
                 
                 // Skip to end with keypress
                 if(Input.anyKeyDown){

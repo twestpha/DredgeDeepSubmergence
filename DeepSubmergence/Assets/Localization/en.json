@@ -41,11 +41,34 @@
     
     "deepsubmergence.questDiverTitle": "Hollow Diver",
     
-    "deepsubmergence.quest0dialogue0": "Oh. What misfortune led you down here, to these depths?",
-    "deepsubmergence.quest0dialogue1": "No matter, I have a favor to ask of you.",
-    "deepsubmergence.quest0dialogue2": "I was stationed down here, and some of my... er, research, escaped.",
-    "deepsubmergence.quest0dialogue3": "There was a small bolting fish, a squid caught in a net, and an entire shoal of hungry mouths.",
-    "deepsubmergence.quest0dialogue4": "Not to worry, though. My specimens won't rot, so keep them until you can bring all of them to me",
-    "deepsubmergence.quest0dialogue5": "And come back here when you have them, don't worry, don't tell, it'll be right as rain.",
+    "deepsubmergence.quest0dialogue0": "Ah... what ill fate dragged you to these depths, to this... place?",
+    "deepsubmergence.quest0dialogue1": "But, no matter. I need something from you. A favor, if you will.",
+    "deepsubmergence.quest0dialogue2": "I was stationed here, once, until some of my research... slipped away.",
+    "deepsubmergence.quest0dialogue3": "There was a small bolting fish, a squid caught in a net, and a shoal... so many hungry mouths.",
+    "deepsubmergence.quest0dialogue4": "Don’t fret. They won't rot. They never rot.",
+    "deepsubmergence.quest0dialogue5": "Keep them... close... until you bring them to me. Return here when you have them all... and... everything will be...",
     
+    "deepsubmergence.quest1dialogue0": "That's... that's them. You-you found them. But how did...?",
+    "deepsubmergence.quest1dialogue1": "When they... when they sent me down here, I was... elated. So elated. They'd given me... everything I wanted",
+    "deepsubmergence.quest1dialogue2": "Free reign... to test... to discover... to create...",
+    "deepsubmergence.quest1dialogue3": "Take this. Here. Blueprints... for reinforcing your hull. For... for pushing out the water. The water that seeps in when you dive too deep.",
+    "deepsubmergence.quest1dialogue4": "But... but this isn’t everything. No... no, there’s more. More out there...",
+    "deepsubmergence.quest1dialogue5": "A wriggling shock... a glowing crawler... a bleeding slice of iron... and a needle’s tip. So sharp... so sharp...",
+
+    "deepsubmergence.quest2dialogue0": "Take it. More blueprints. Deeper... always deeper... ever deeper.",
+    "deepsubmergence.quest2dialogue1": "They warned us, didn’t they? You know, you remember.",
+    "deepsubmergence.quest2dialogue2": "Alone, down here. Alone. No one to watch, to track... to make sure... To check on.",
+    "deepsubmergence.quest2dialogue3": "It was just a thought. A research grant, they said. Research. Endless hours... smearing... into forever.",
+    "deepsubmergence.quest2dialogue4": "More. I need more.",
+    "deepsubmergence.quest2dialogue5": "A fish with an battered mask. An explosive thing, stitched in agony. A crushing maw... shredding... tearing.",
+    
+    "deepsubmergence.quest3dialogue0": "Yes, yes, these. My children, almost perfect, almost ready for providence.",
+    "deepsubmergence.quest3dialogue1": "Take these blueprints and dive, deeper. We're so close to touching it. Touching the abyss.",
+    "deepsubmergence.quest3dialogue2": "The agency, said no, it's not there, it's not under, you CAN'T GO THERE!",
+    "deepsubmergence.quest3dialogue3": "...",
+    "deepsubmergence.quest3dialogue4": "One more.",
+    "deepsubmergence.quest3dialogue5": "A bleached machine to cut and break through. Gnawing at the shell of reality.",
+    
+    "deepsubmergence.questdonedialogue0": "...",
+    "deepsubmergence.questdonedialogue1": "The corpse twitches and siezes, like machinery. Was it ever even alive?",
 }

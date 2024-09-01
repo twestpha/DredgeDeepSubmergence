@@ -9,20 +9,17 @@ namespace DeepSubmergence {
     
         public static DeepSubmergence instance;
         
-        // [/] collider only works while underwater, make sure to safe zone/pause game/disable controls?
-        // [/] Docking? Special dock that doesn't surface the boat, and only exists when underwater
-        // [/] It auto-checks your inventory for necessary fish instead of having the small ui that keeps it
+        // [/] A manually created UI stack that triggers on player collision, that plays a sequence of images and text based on quest state
+        // [/] Underwater Mechanic diver character, questline for fishes with story
+        // [/] several poses of sorta animation
+        // [w] Ghostly pre-quest dialogue? or allow players to stumble onto things?
+        // [/] write sequence of narrative things
         
         // V0.3: Underwater Base, Questline and characters
-        // [x] A manually created UI stack that triggers on player collision, that plays a sequence of images and text based on quest state
         // [x] Saving and loading overall progress from data
         // [x] Selling pumps and pressure vessels, level up with caught fish
-        //    - might have to be "quests that unlock purchasing at all vendors". Or failing a quest, then "a bool that gets saved"
         //    - how do merchants stock things? Can we inject into there?
-        // [x] Underwater Mechanic diver character, questline for fishes with story
-        //   - several poses of sorta animation
-        //   - write sequence of narrative things
-        // [x] Put fish around new base, balance
+        // [x] Put fish around and leading to new base, balance
         // [x] Balance cost of new parts too
         // [x] Cover art for game start? Just a fullscreen splash on a canvas, not 3D backgroundy
         // [x] Play it a shitload, bugtest, etc.
