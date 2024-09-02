@@ -9,3 +9,4 @@ This mod is a work in progress. Stay tuned for more improvements, features, and 
 # Feature List (Spoiler Free)
 - Dive back into familiar waters as a Submarine
 - 11 new types of creatures to find and capture
+- Discoverable Deep Sea Base and accompanying storyline

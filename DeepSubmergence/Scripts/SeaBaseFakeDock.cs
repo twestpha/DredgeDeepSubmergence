@@ -71,7 +71,7 @@ namespace DeepSubmergence {
             "deepsubmergence.questdonedialogue1",
         };
         
-        private const string DIVER_TITLE = "deepsubmergence.questDiverTitle";
+        private const string DIVER_TITLE = "deepsubmergence.questdivertitle";
         
         private const string TEXT_NAME = "DialogueView";
         private const string TEXT_A_NAME = "Container";
@@ -99,6 +99,9 @@ namespace DeepSubmergence {
         public bool playerInFakeDock = false;
         private int currentProgressLevel = 0;
         
+        public GameObject abilityCanvas;
+        
+        //GameCanvases\GameCanvas\Abilities
         void Start(){
             cachedSubmarinePlayer = DeepSubmergence.instance.submarinePlayer.GetComponent<SubmarinePlayer>();
             cachedDredgePlayerRigidbody = DeepSubmergence.instance.dredgePlayer.GetComponent<Rigidbody>();
@@ -106,6 +109,8 @@ namespace DeepSubmergence {
             sphereCollider = gameObject.AddComponent<SphereCollider>();
             sphereCollider.radius = 0.5f;
             sphereCollider.isTrigger = true;
+            
+            abilityCanvas = Utils.FindInChildren(Utils.FindInChildren(GameObject.Find("GameCanvases"), "GameCanvas"), "Abilities");
 
             // Load currentProgressLevel
             currentProgressLevel = GameManager.Instance.SaveData.GetIntVariable(PROGRESSION_SAVE_KEY, 0);
@@ -251,9 +256,14 @@ namespace DeepSubmergence {
             cachedDredgePlayerRigidbody.velocity = Vector3.zero;
             cachedDredgePlayerRigidbody.angularVelocity = Vector3.zero;
 
-            // hide other uis?
-            // Set invincible, protected, safe zone-d?
-            // Disable camera movement
+            // Hide other UIs
+            abilityCanvas.SetActive(!inDock);
+            
+            // Sort add a safe zone
+            GameManager.Instance.MonsterManager.isBanishActive = inDock;
+            
+            // Disable mouse-camera control while in dock
+            GameManager.Instance.PlayerCamera.cinemachineCamera.enabled = !inDock;
 
             if(!inDock){
                 cachedSubmarinePlayer.ForceSurface();

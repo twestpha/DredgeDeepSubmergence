@@ -6,18 +6,24 @@ using Winch.Util;
 
 namespace DeepSubmergence {
     public class DeepSubmergence : MonoBehaviour {
-    
+
         public static DeepSubmergence instance;
-        
-        // [/] Saving and loading overall progress from data
+
+        // [/] Add info to readme
+        // [/] TODO cleanup pass
+        // [x] Play it a shitload, bugtest, etc.
         
         // V0.3: Underwater Base, Questline and characters
+        // [x] Put fish around and leading to new base, balance sell, qty
+        
+        // V0.4: Post-tech improvements
         // [x] Selling pumps and pressure vessels, level up with caught fish
-        //    - how do merchants stock things? Can we inject into there?
         //    - unlock from progression levels 
         //    - sizing objects PITA? How to give them in a way that doesn't suck
-        // [x] Put fish around and leading to new base, balance sell, qty
         // [x] Balance cost of new parts too
+        // [x] Add to readme
+        // - Upgrades and Equipment for improving your Submarine
+        // and remove the WIP, replace with something like "dev is done but further improvements/bugfixes/expansion are welcome"
         // [x] Cover art for game start? Just a fullscreen splash on a canvas, not 3D backgroundy
         // [x] Play it a shitload, bugtest, etc.
         

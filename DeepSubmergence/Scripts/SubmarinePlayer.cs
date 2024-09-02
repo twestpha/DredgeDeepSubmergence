@@ -142,7 +142,7 @@ namespace DeepSubmergence {
             
             previouslyTeleporting = teleporting;
             
-            // Hotkey
+            // TODO REMOVE: Hotkey
             if(Input.GetKeyDown(KeyCode.T)){
                 Utils.PutItemInCargo("deepsubmergence.fishtrenchwhale", false);
             }
@@ -185,7 +185,7 @@ namespace DeepSubmergence {
                 if(allRaycastHits.Length > 0){
                     for(int i = 0, count = allRaycastHits.Length; i < count; ++i){
                         // We can't catch everything (partly because not everything has a collider) but this get most things
-                        // TODO maybe go through all the rocks in the game and add a mesh collider to them :P maybe later
+                        
                         bool shouldCollide = allRaycastHits[i].collider.gameObject.name == "Terrain"
                                              || allRaycastHits[i].collider.gameObject.name.Contains("Rock")
                                              || allRaycastHits[i].collider.gameObject.layer == LayerMask.NameToLayer("CollidesWithPlayer");
