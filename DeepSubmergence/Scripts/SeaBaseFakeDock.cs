@@ -77,7 +77,9 @@ namespace DeepSubmergence {
         private const string TEXT_A_NAME = "Container";
         private const string TEXT_B_NAME = "DialogueTextContainer";
         private const string TEXT_C_NAME = "DialogueText";
-        
+
+        private const string PROGRESSION_SAVE_KEY = "deepsubmergence.questprogress";
+
         private const float MAX_PROGRESS = 5;
         
         private SubmarinePlayer cachedSubmarinePlayer;
@@ -104,8 +106,9 @@ namespace DeepSubmergence {
             sphereCollider = gameObject.AddComponent<SphereCollider>();
             sphereCollider.radius = 0.5f;
             sphereCollider.isTrigger = true;
-            
-            // Load currentProgressLevel!
+
+            // Load currentProgressLevel
+            currentProgressLevel = GameManager.Instance.SaveData.GetIntVariable(PROGRESSION_SAVE_KEY, 0);
             
             // Setup UI pieces
             diverImage = Utils.SetupTextureAsSpriteOnCanvas(
@@ -171,12 +174,9 @@ namespace DeepSubmergence {
             dialogueText.SetActive(false);
             dialogueTitleText.SetActive(false);
         }
-        
+
         void Update(){
             sphereCollider.enabled = cachedSubmarinePlayer.CompletelySubmerged();
-
-            // TEMP
-            DeepSubmergence.instance.debugAxes.transform.position = transform.position;
         }
         
         void OnTriggerEnter(Collider other){
@@ -201,10 +201,10 @@ namespace DeepSubmergence {
                     
                     if(hasAllRequiredFish){
                         currentProgressLevel++;
-                        // PUT THIS IN SAVE DATA!!
-                        
+                        GameManager.Instance.SaveData.SetIntVariable(PROGRESSION_SAVE_KEY, currentProgressLevel);
+
                         // Take the fish
-                        for(int i = 0, count = requiredFish.Length; i < count; ++i){
+                        for (int i = 0, count = requiredFish.Length; i < count; ++i){
                             Utils.DestroyItemInCargo(requiredFish[i]);
                         }
                     }

@@ -9,17 +9,14 @@ namespace DeepSubmergence {
     
         public static DeepSubmergence instance;
         
-        // [/] A manually created UI stack that triggers on player collision, that plays a sequence of images and text based on quest state
-        // [/] Underwater Mechanic diver character, questline for fishes with story
-        // [/] several poses of sorta animation
-        // [w] Ghostly pre-quest dialogue? or allow players to stumble onto things?
-        // [/] write sequence of narrative things
+        // [/] Saving and loading overall progress from data
         
         // V0.3: Underwater Base, Questline and characters
-        // [x] Saving and loading overall progress from data
         // [x] Selling pumps and pressure vessels, level up with caught fish
         //    - how do merchants stock things? Can we inject into there?
-        // [x] Put fish around and leading to new base, balance
+        //    - unlock from progression levels 
+        //    - sizing objects PITA? How to give them in a way that doesn't suck
+        // [x] Put fish around and leading to new base, balance sell, qty
         // [x] Balance cost of new parts too
         // [x] Cover art for game start? Just a fullscreen splash on a canvas, not 3D backgroundy
         // [x] Play it a shitload, bugtest, etc.
