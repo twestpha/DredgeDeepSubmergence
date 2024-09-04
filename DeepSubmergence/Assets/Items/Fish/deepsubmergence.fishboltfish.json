@@ -17,7 +17,7 @@
     "a": 255
   },
   "squishFactor": 1,
-  "value": 5,
+  "value": 6,
   "dimensions": [
     "X",
   ],
@@ -25,10 +25,10 @@
   "day": true,
   "night": true,
   "minSizeCentimeters": 5,
-  "maxSizeCentimeters": 10,
+  "maxSizeCentimeters": 12,
   "harvestMinigameType": "DREDGE_RADIAL",
-  "perSpotMin": 3,
-  "perSpotMax": 8,
+  "perSpotMin": 6,
+  "perSpotMax": 10,
   "harvestPOICategory": "FISH_SMALL",
   "harvestableType": "COASTAL",
   "harvestDifficulty": "VERY_EASY",

@@ -8,13 +8,12 @@ namespace DeepSubmergence {
     public class DeepSubmergence : MonoBehaviour {
 
         public static DeepSubmergence instance;
-
-        // [/] Add info to readme
-        // [/] TODO cleanup pass
-        // [x] Play it a shitload, bugtest, etc.
+        
+        // [/] balance sell, qty
         
         // V0.3: Underwater Base, Questline and characters
-        // [x] Put fish around and leading to new base, balance sell, qty
+        // [x] Put fish around and leading to new base, 
+        // [x] Play it a shitload, bugtest, etc.
         
         // V0.4: Post-tech improvements
         // [x] Selling pumps and pressure vessels, level up with caught fish

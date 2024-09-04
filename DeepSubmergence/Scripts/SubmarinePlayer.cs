@@ -142,10 +142,9 @@ namespace DeepSubmergence {
             
             previouslyTeleporting = teleporting;
             
-            // TODO REMOVE: Hotkey
-            if(Input.GetKeyDown(KeyCode.T)){
-                Utils.PutItemInCargo("deepsubmergence.fishtrenchwhale", false);
-            }
+            // if(Input.GetKeyDown(KeyCode.T)){
+            //     Utils.PutItemInCargo("deepsubmergence.fishboltfish", true);
+            // }
             
             // Update inputs, movement, position
             UpdateInputs();
