@@ -81,6 +81,7 @@ namespace DeepSubmergence {
         private const string PROGRESSION_SAVE_KEY = "deepsubmergence.questprogress";
 
         private const float MAX_PROGRESS = 5;
+        private const float RETRIGGER_DOCK_TIME = 0.5f;
         
         private SubmarinePlayer cachedSubmarinePlayer;
         private SphereCollider sphereCollider;
@@ -99,9 +100,10 @@ namespace DeepSubmergence {
         public bool playerInFakeDock = false;
         private int currentProgressLevel = 0;
         
-        public GameObject abilityCanvas;
+        private GameObject abilityCanvas;
         
-        //GameCanvases\GameCanvas\Abilities
+        private Timer redockTimer = new Timer(RETRIGGER_DOCK_TIME); 
+        
         void Start(){
             cachedSubmarinePlayer = DeepSubmergence.instance.submarinePlayer.GetComponent<SubmarinePlayer>();
             cachedDredgePlayerRigidbody = DeepSubmergence.instance.dredgePlayer.GetComponent<Rigidbody>();
@@ -185,7 +187,7 @@ namespace DeepSubmergence {
         }
         
         void OnTriggerEnter(Collider other){
-            if(other.gameObject.name.Contains("HarvestZoneDetector")){
+            if(other.gameObject.name.Contains("HarvestZoneDetector") && redockTimer.Finished()){
                 StartCoroutine(SeabaseQuestUICoroutine());
             }
         }
@@ -244,6 +246,7 @@ namespace DeepSubmergence {
                 
                 // All done
                 SetupPlayerAtFakeDock(false);
+                redockTimer.Start();
                 yield break;
             }
         }
@@ -320,7 +323,7 @@ namespace DeepSubmergence {
                     diverImage.color = new Color(1.0f, 1.0f, 1.0f, diverT);
                 }
                 if(animate){
-                    diverImageRect.anchoredPosition = Vector2.Lerp(new Vector2(960f, 400.0f), new Vector2(960f, 450.0f), diverT);
+                    diverImageRect.anchoredPosition = Vector2.Lerp(new Vector2(960f, 430.0f), new Vector2(960f, 450.0f), diverT);
                 }
                 
                 // Skip to end with keypress

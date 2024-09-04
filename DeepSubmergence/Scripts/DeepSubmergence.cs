@@ -9,10 +9,9 @@ namespace DeepSubmergence {
 
         public static DeepSubmergence instance;
         
-        // [/] balance sell, qty
-        
         // V0.3: Underwater Base, Questline and characters
-        // [x] Put fish around and leading to new base, 
+        // [x] Put fish around and leading to new base
+        // [x] Timer after finishing convo so as not to re-trigger conversation
         // [x] Play it a shitload, bugtest, etc.
         
         // V0.4: Post-tech improvements
