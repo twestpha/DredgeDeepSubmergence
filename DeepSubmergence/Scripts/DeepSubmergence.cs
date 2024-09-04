@@ -8,12 +8,7 @@ namespace DeepSubmergence {
     public class DeepSubmergence : MonoBehaviour {
 
         public static DeepSubmergence instance;
-        
-        // V0.3: Underwater Base, Questline and characters
-        // [x] Put fish around and leading to new base
-        // [x] Timer after finishing convo so as not to re-trigger conversation
-        // [x] Play it a shitload, bugtest, etc.
-        
+                
         // V0.4: Post-tech improvements
         // [x] Selling pumps and pressure vessels, level up with caught fish
         //    - unlock from progression levels 
@@ -71,9 +66,16 @@ namespace DeepSubmergence {
                     // This is to facilitate quests (i.e. you can always keep them around) but also a bit spooky
                     List<SpatialItemInstance> inventoryItems = GameManager.Instance.SaveData.Inventory.GetAllItemsOfType<SpatialItemInstance>(ItemType.GENERAL);
 
-                    for (int i = 0, count = inventoryItems.Count; i < count; ++i)
-                    {
+                    for(int i = 0, count = inventoryItems.Count; i < count; ++i){
                         if(inventoryItems[i].id.Contains("deepsubmergence") && inventoryItems[i] is FishItemInstance fishy){
+                            fishy.freshness = 3.0f; // Max freshness value in game
+                        }
+                    }
+
+                    List<SpatialItemInstance> storageItems = GameManager.Instance.SaveData.Storage.GetAllItemsOfType<SpatialItemInstance>(ItemType.GENERAL);
+
+                    for(int i = 0, count = storageItems.Count; i < count; ++i){
+                        if(storageItems[i].id.Contains("deepsubmergence") && storageItems[i] is FishItemInstance fishy){
                             fishy.freshness = 3.0f; // Max freshness value in game
                         }
                     }

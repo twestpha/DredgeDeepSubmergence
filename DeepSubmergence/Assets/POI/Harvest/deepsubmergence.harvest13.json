@@ -1,18 +1,18 @@
 {
     "location": {
-        "x": 704.0,
+        "x": 670.0,
         "y": 0.0,
-        "z": -355.0
+        "z": -603.0
     },
-    "harvestableParticlePrefab": "MediumRoundFishParticles",
-    "items": [ "deepsubmergence.fishnetsquid" ],
-    "startStock": 2,
-    "maxStock": 7,
+    "harvestableParticlePrefab": "BronzeWhaler",
+    "items": [ "deepsubmergence.fishshreddershark" ],
+    "startStock": 1,
+    "maxStock": 2,
     "doesRestock": true,
     "usesTimeSpecificStock": false,
     "overrideDefaultDaySpecialChance": true,
     "overriddenDaytimeSpecialChance": 0.5,
     "overrideDefaultNightSpecialChance": true,
     "overriddenNighttimeSpecialChance": 0.5,
-    "harvestDifficulty": "Easy",
+    "harvestDifficulty": "Hard",
 }

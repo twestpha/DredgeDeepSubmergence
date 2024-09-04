@@ -1,11 +1,11 @@
 {
     "location": {
-        "x": 474.0,
+        "x": 880.0,
         "y": 0.0,
-        "z": 97.0
+        "z": -271.0
     },
     "harvestableParticlePrefab": "MediumRoundFishParticles",
-    "items": [ "deepsubmergence.fishelectricfish", "deepsubmergence.fishneedlefish" ],
+    "items": [ "deepsubmergence.fishnetsquid", "deepsubmergence.fishelectriceel" ],
     "startStock": 4,
     "maxStock": 6,
     "doesRestock": true,
@@ -13,5 +13,6 @@
     "overrideDefaultDaySpecialChance": true,
     "overriddenDaytimeSpecialChance": 0.5,
     "overrideDefaultNightSpecialChance": true,
-    "overriddenNighttimeSpecialChance": 0.5
+    "overriddenNighttimeSpecialChance": 0.5,
+    "harvestDifficulty": "Easy",
 }

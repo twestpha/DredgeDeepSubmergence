@@ -1,13 +1,13 @@
 {
     "location": {
-        "x": 704.0,
+        "x": 657.0,
         "y": 0.0,
-        "z": -355.0
+        "z": -440.0
     },
     "harvestableParticlePrefab": "MediumRoundFishParticles",
-    "items": [ "deepsubmergence.fishnetsquid" ],
+    "items": [ "deepsubmergence.fishsteelhead" ],
     "startStock": 2,
-    "maxStock": 7,
+    "maxStock": 6,
     "doesRestock": true,
     "usesTimeSpecificStock": false,
     "overrideDefaultDaySpecialChance": true,

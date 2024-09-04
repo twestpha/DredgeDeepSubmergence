@@ -9,7 +9,7 @@ namespace DeepSubmergence {
         private const string HARVESTABLE_POIS_PARENT_NAME = "HarvestPOIs";
         private const string CUSTOM_HARVESTABLE_IDENTIFIER = "deepsubmergence";
         
-        private const float DIVE_SIGHT_DISTANCE = 20.0f;
+        private const float DIVE_SIGHT_DISTANCE = 30.0f;
         
         private List<GameObject> allCustomHarvestables = new();
         private SubmarinePlayer cachedSubmarinePlayer;

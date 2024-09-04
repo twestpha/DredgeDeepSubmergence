@@ -1,11 +1,11 @@
 {
     "location": {
-        "x": 465.0,
+        "x": 562.0,
         "y": 0.0,
-        "z": -176.0
+        "z": -107.0
     },
     "harvestableParticlePrefab": "MediumRoundFishParticles",
-    "items": [ "deepsubmergence.fishsteelfish", "deepsubmergence.fishtorpedofish" ],
+    "items": [ "deepsubmergence.fishlampcrab", "deepsubmergence.fishironlungfish" ],
     "startStock": 3,
     "maxStock": 6,
     "doesRestock": true,
