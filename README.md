@@ -9,4 +9,8 @@ This mod is a work in progress. Stay tuned for more improvements, features, and 
 # Feature List (Spoiler Free)
 - Dive back into familiar waters as a Submarine
 - 11 new types of creatures to find and capture
-- Discoverable Deep Sea Base and accompanying storyline (Near Gale Cliffs!)
+- Discoverable Deep Sea Base and accompanying storyline (East of Gale Cliffs)
+
+# Known Issues
+- Siphon Trawler doesn't function correctly
+- Sea Base is difficult to find
