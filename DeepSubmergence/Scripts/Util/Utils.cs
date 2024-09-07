@@ -283,7 +283,6 @@ namespace DeepSubmergence {
                         break;
                     }
                 }
-                WinchCore.Log.Debug("foundItem: " + foundItem);
 
                 if(foundItem != null){
                     SpatialItemInstance newItem = new SpatialItemInstance();

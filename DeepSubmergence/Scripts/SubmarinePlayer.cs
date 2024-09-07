@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Winch.Config;
+using Winch.Core;
 using Winch.Util;
 
 namespace DeepSubmergence {
@@ -31,7 +33,13 @@ namespace DeepSubmergence {
         private const string ANY_PUMP_NAME = "pumptier";
         private const string ANY_PRESSUREVESSEL_NAME = "pressurevessel";
         private const string BUBBLES_NAME = "SurfaceBubbles";
-        
+
+        private const string OOZE_PUMP_PARENT_NAME = "IronHavenTrawl";
+        private const string OOZE_PUMP_CHILD_NAME = "OozeCollector";
+        private const string OOZE_PUMP_ITEM_A = "tir-net1";
+        private const string OOZE_PUMP_ITEM_B = "tir-net2";
+        private const string OOZE_PUMP_ABILITY = "trawl";
+
         private class PumpData {
             public string item;
             public Timer timeRemaining;
@@ -142,9 +150,15 @@ namespace DeepSubmergence {
             
             previouslyTeleporting = teleporting;
             
-            // if(Input.GetKeyDown(KeyCode.T)){
-            //     Utils.PutItemInCargo("deepsubmergence.fishboltfish", true);
-            // }
+            if(Input.GetKeyDown(KeyCode.T)){
+                // List<SpatialItemInstance> inventoryItems = GameManager.Instance.SaveData.Inventory.GetAllItemsOfType<SpatialItemInstance>(ItemType.EQUIPMENT);
+                // WinchCore.Log.Debug(inventoryItems + ", " + inventoryItems.Count);
+                // 
+                // for (int i = 0, count = inventoryItems.Count; i < count; ++i)
+                // {
+                //     WinchCore.Log.Debug(i + ": " + inventoryItems[i].id);
+                // }
+            }
             
             // Update inputs, movement, position
             UpdateInputs();
@@ -364,9 +378,25 @@ namespace DeepSubmergence {
                 boatModelProxies[i].GetComponent<MeshRenderer>().enabled = false;
                 
                 for(int j = 0, jcount = boatModelProxies[i].transform.childCount; j < jcount; ++j){
-                    boatModelProxies[i].transform.GetChild(j).gameObject.SetActive(false);
+                    GameObject child = boatModelProxies[i].transform.GetChild(j).gameObject;
+
+                    // Handle custom en/dis-abling for specific gameobjects here
+                    if(child.name.Contains(OOZE_PUMP_PARENT_NAME)){
+                        child.SetActive(true);
+
+                        bool hasOozePumpItem = Utils.HasItemInCargo(OOZE_PUMP_ITEM_A) || Utils.HasItemInCargo(OOZE_PUMP_ITEM_B);
+                        AbilityData oozeAbility = GameManager.Instance.PlayerAbilities.GetAbilityDataByName(OOZE_PUMP_ABILITY);
+                        bool usingOozePumpAbility = GameManager.Instance.PlayerAbilities.GetIsAbilityActive(oozeAbility);
+
+                        for (int k = 0, kcount = child.transform.childCount; k < kcount; ++k)
+                        {
+                           GameObject pumpChild = child.transform.GetChild(k).gameObject;
+                           pumpChild.SetActive(pumpChild.name.Contains(OOZE_PUMP_CHILD_NAME) && usingOozePumpAbility && hasOozePumpItem);
+                        }
+                    } else {
+                        child.SetActive(false);
+                    }
                 }
-                
             }
         }
     }

@@ -8,8 +8,14 @@ namespace DeepSubmergence {
     public class DeepSubmergence : MonoBehaviour {
 
         public static DeepSubmergence instance;
-                
-        // V0.4: Post-tech improvements
+        
+        // [CNR] Bug when diving... near iron rig?
+        // [/] Siphon trawler not working
+        
+        // V0.4 bugs & feedback fixes
+        // [x] Update readme
+        
+        // V0.5: Post-tech improvements
         // [x] Selling pumps and pressure vessels, level up with caught fish
         //    - unlock from progression levels 
         //    - sizing objects PITA? How to give them in a way that doesn't suck
