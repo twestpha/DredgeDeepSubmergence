@@ -4,9 +4,14 @@ Installable using the [Dredge Mod Manager](https://github.com/DREDGE-Mods/Dredge
 
 ![Deep Submergence](./thumbnail.png)
 
-This mod is a work in progress. Stay tuned for more improvements, features, and content, and report any problems as an issue in github.
+This mod is a work in progress. Stay tuned for more improvements, features, and content, and report any problems as an issue in github. If you want to contribute to this project, please reach out on the [Dredge Mod Discord](https://discord.com/invite/qFqPuTUAmD)!
 
 # Feature List (Spoiler Free)
 - Dive back into familiar waters as a Submarine
 - 11 new types of creatures to find and capture
-- Discoverable Deep Sea Base and accompanying storyline
+- Discoverable Deep Sea Base and accompanying storyline (East of Gale Cliffs)
+
+# Known Issues
+- Siphon Trawler doesn't function correctly.
+- Sea Base is difficult to find.
+- References to "blueprints" are for currently not supported unlocking items.
