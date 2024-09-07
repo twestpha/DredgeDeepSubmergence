@@ -4,7 +4,7 @@ using Winch.Core;
 using System.Collections;
 using Winch.Util;
 using TMPro;
-using Yarn.Unity;
+using System;
 
 namespace DeepSubmergence {
     public class SeaBaseFakeDock : MonoBehaviour {
@@ -105,85 +105,93 @@ namespace DeepSubmergence {
         private Timer redockTimer = new Timer(RETRIGGER_DOCK_TIME); 
         
         void Start(){
-            cachedSubmarinePlayer = DeepSubmergence.instance.submarinePlayer.GetComponent<SubmarinePlayer>();
-            cachedDredgePlayerRigidbody = DeepSubmergence.instance.dredgePlayer.GetComponent<Rigidbody>();
-            
-            sphereCollider = gameObject.AddComponent<SphereCollider>();
-            sphereCollider.radius = 0.5f;
-            sphereCollider.isTrigger = true;
-            
-            abilityCanvas = Utils.FindInChildren(Utils.FindInChildren(GameObject.Find("GameCanvases"), "GameCanvas"), "Abilities");
+            try {
+                cachedSubmarinePlayer = DeepSubmergence.instance.submarinePlayer.GetComponent<SubmarinePlayer>();
+                cachedDredgePlayerRigidbody = DeepSubmergence.instance.dredgePlayer.GetComponent<Rigidbody>();
+                
+                sphereCollider = gameObject.AddComponent<SphereCollider>();
+                sphereCollider.radius = 0.5f;
+                sphereCollider.isTrigger = true;
+                
+                abilityCanvas = Utils.FindInChildren(Utils.FindInChildren(GameObject.Find("GameCanvases"), "GameCanvas"), "Abilities");
 
-            // Load currentProgressLevel
-            currentProgressLevel = GameManager.Instance.SaveData.GetIntVariable(PROGRESSION_SAVE_KEY, 0);
-            
-            // Setup UI pieces
-            diverImage = Utils.SetupTextureAsSpriteOnCanvas(
-                "Diver Image",
-                TextureUtil.GetSprite(diverSprites[0]),
-                new Vector2(460.0f, 900.0f),
-                new Vector2(960f, 450.0f)
-            ).GetComponent<Image>();
-            diverImageRect = diverImage.GetComponent<RectTransform>();
-            
-            dialogueBackground = Utils.SetupTextureAsSpriteOnCanvas(
-                "Dialogue Background",
-                TextureUtil.GetSprite("deepsubmergence.uitextbackground"),
-                new Vector2(746.0f, 186.0f),
-                new Vector2(960f, 104.0f)
-            );
-            
-            dialogueTitleBackground = Utils.SetupTextureAsSpriteOnCanvas(
-                "Dialogue Title Background",
-                TextureUtil.GetSprite("deepsubmergence.uititlebackground"),
-                new Vector2(450.0f, 49.0f),
-                new Vector2(960f, 209.0f)
-            );
-            
-            // Setup texts
-            GameObject foundText = Utils.FindInChildren(
-                Utils.FindInChildren(
+                // Load currentProgressLevel
+                currentProgressLevel = GameManager.Instance.SaveData.GetIntVariable(PROGRESSION_SAVE_KEY, 0);
+                
+                // Setup UI pieces
+                diverImage = Utils.SetupTextureAsSpriteOnCanvas(
+                    "Diver Image",
+                    TextureUtil.GetSprite(diverSprites[0]),
+                    new Vector2(460.0f, 900.0f),
+                    new Vector2(960f, 450.0f)
+                ).GetComponent<Image>();
+                diverImageRect = diverImage.GetComponent<RectTransform>();
+                
+                dialogueBackground = Utils.SetupTextureAsSpriteOnCanvas(
+                    "Dialogue Background",
+                    TextureUtil.GetSprite("deepsubmergence.uitextbackground"),
+                    new Vector2(746.0f, 186.0f),
+                    new Vector2(960f, 104.0f)
+                );
+                
+                dialogueTitleBackground = Utils.SetupTextureAsSpriteOnCanvas(
+                    "Dialogue Title Background",
+                    TextureUtil.GetSprite("deepsubmergence.uititlebackground"),
+                    new Vector2(450.0f, 49.0f),
+                    new Vector2(960f, 209.0f)
+                );
+                
+                // Setup texts
+                GameObject foundText = Utils.FindInChildren(
                     Utils.FindInChildren(
-                        GameObject.Find(TEXT_NAME), TEXT_A_NAME
-                    ), TEXT_B_NAME
-                ), TEXT_C_NAME
-            );
-            
-            dialogueText = Utils.SetupGameObject("Dialogue Text", foundText);
-            dialogueTextT = dialogueText.GetComponent<TMP_Text>();
-            RectTransform dialogueTextRect = dialogueText.GetComponent<RectTransform>();
-            dialogueTextRect.SetParent(Utils.cachedGameCanvas.GetComponent<RectTransform>());
-            
-            dialogueTitleText = Utils.SetupGameObject("Dialogue Title Text", foundText);
-            dialogueTitleTextT = dialogueTitleText.GetComponent<TMP_Text>();
-            RectTransform dialogueTitleTextRect = dialogueTitleText.GetComponent<RectTransform>();
-            dialogueTitleTextRect.SetParent(Utils.cachedGameCanvas.GetComponent<RectTransform>());
-            
-            // Position text
-            dialogueTextRect.anchorMax = Vector2.zero;
-            dialogueTextRect.anchorMin = Vector2.zero;
-            dialogueTextRect.sizeDelta = new Vector2(706.0f, 146.0f);
-            dialogueTextRect.anchoredPosition = new Vector2(980f, 84.0f);
-            dialogueTextT.enableWordWrapping = true;
-            dialogueTextT.overflowMode = TextOverflowModes.Page;
+                        Utils.FindInChildren(
+                            GameObject.Find(TEXT_NAME), TEXT_A_NAME
+                        ), TEXT_B_NAME
+                    ), TEXT_C_NAME
+                );
+                
+                dialogueText = Utils.SetupGameObject("Dialogue Text", foundText);
+                dialogueTextT = dialogueText.GetComponent<TMP_Text>();
+                RectTransform dialogueTextRect = dialogueText.GetComponent<RectTransform>();
+                dialogueTextRect.SetParent(Utils.cachedGameCanvas.GetComponent<RectTransform>());
+                
+                dialogueTitleText = Utils.SetupGameObject("Dialogue Title Text", foundText);
+                dialogueTitleTextT = dialogueTitleText.GetComponent<TMP_Text>();
+                RectTransform dialogueTitleTextRect = dialogueTitleText.GetComponent<RectTransform>();
+                dialogueTitleTextRect.SetParent(Utils.cachedGameCanvas.GetComponent<RectTransform>());
+                
+                // Position text
+                dialogueTextRect.anchorMax = Vector2.zero;
+                dialogueTextRect.anchorMin = Vector2.zero;
+                dialogueTextRect.sizeDelta = new Vector2(706.0f, 146.0f);
+                dialogueTextRect.anchoredPosition = new Vector2(980f, 84.0f);
+                dialogueTextT.enableWordWrapping = true;
+                dialogueTextT.overflowMode = TextOverflowModes.Page;
 
-            dialogueTitleTextRect.anchorMax = Vector2.zero;
-            dialogueTitleTextRect.anchorMin = Vector2.zero;
-            dialogueTitleTextRect.sizeDelta = new Vector2(450.0f, 49.0f);
-            dialogueTitleTextRect.anchoredPosition = new Vector2(965f, 209.0f);
-            dialogueTitleTextT.verticalAlignment = VerticalAlignmentOptions.Middle;
-            dialogueTitleTextT.horizontalAlignment = HorizontalAlignmentOptions.Center;
+                dialogueTitleTextRect.anchorMax = Vector2.zero;
+                dialogueTitleTextRect.anchorMin = Vector2.zero;
+                dialogueTitleTextRect.sizeDelta = new Vector2(450.0f, 49.0f);
+                dialogueTitleTextRect.anchoredPosition = new Vector2(965f, 209.0f);
+                dialogueTitleTextT.verticalAlignment = VerticalAlignmentOptions.Middle;
+                dialogueTitleTextT.horizontalAlignment = HorizontalAlignmentOptions.Center;
 
-            // Set all UI inactive
-            diverImage.enabled = false;
-            dialogueBackground.SetActive(false);
-            dialogueTitleBackground.SetActive(false);
-            dialogueText.SetActive(false);
-            dialogueTitleText.SetActive(false);
+                // Set all UI inactive
+                diverImage.enabled = false;
+                dialogueBackground.SetActive(false);
+                dialogueTitleBackground.SetActive(false);
+                dialogueText.SetActive(false);
+                dialogueTitleText.SetActive(false);
+            } catch(Exception e){
+                WinchCore.Log.Error(e.ToString());
+            }
         }
 
         void Update(){
-            sphereCollider.enabled = cachedSubmarinePlayer.CompletelySubmerged();
+            try {
+                sphereCollider.enabled = cachedSubmarinePlayer.CompletelySubmerged();
+            } catch(Exception e){
+                WinchCore.Log.Error(e.ToString());
+            }
         }
         
         void OnTriggerEnter(Collider other){
@@ -204,7 +212,6 @@ namespace DeepSubmergence {
                     for(int i = 0, count = requiredFish.Length; i < count; ++i){
                         hasAllRequiredFish &= Utils.HasItemInCargo(requiredFish[i]);
                     }
-                    WinchCore.Log.Debug("hasAllRequiredFish: " + hasAllRequiredFish);
                     
                     if(hasAllRequiredFish){
                         currentProgressLevel++;

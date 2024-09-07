@@ -3,26 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using Winch.Core;
 using Winch.Util;
+using System;
 
 namespace DeepSubmergence {
     public class DeepSubmergence : MonoBehaviour {
 
         public static DeepSubmergence instance;
         
-        // [CNR] Bug when diving... near iron rig?
-        // [/] Siphon trawler not working
+        // [CNR] Bug: Unable to interact with UI or surface in specific situation
         
         // V0.4 bugs & feedback fixes
+        // [x] Setup better logging all around
+        // [x] Play feedback...? Balance changes...?
         // [x] Update readme
         
         // V0.5: Post-tech improvements
         // [x] Selling pumps and pressure vessels, level up with caught fish
-        //    - unlock from progression levels 
+        //    - unlock from progression levels
         //    - sizing objects PITA? How to give them in a way that doesn't suck
         // [x] Balance cost of new parts too
-        // [x] Add to readme
-        // - Upgrades and Equipment for improving your Submarine
-        // and remove the WIP, replace with something like "dev is done but further improvements/bugfixes/expansion are welcome"
+        // [x] Update readme
         // [x] Cover art for game start? Just a fullscreen splash on a canvas, not 3D backgroundy
         // [x] Play it a shitload, bugtest, etc.
         
@@ -45,6 +45,7 @@ namespace DeepSubmergence {
         }
         
         IEnumerator Start(){
+            
             setup = false;
             
             // spin until we find a player
@@ -53,39 +54,47 @@ namespace DeepSubmergence {
                 dredgePlayer = GameObject.Find("Player");
             }
 
-            // Instantiate all the objects needed for the mod
-            SetupSubmarinePlayer();
-            SetupDebugAxes();
-            SetupDiveUI();
-            SetupFishableManager();
-            SetupSeaBase();
-            
-            setup = true;
+            try {
+                // Instantiate all the objects needed for the mod
+                SetupSubmarinePlayer();
+                SetupDebugAxes();
+                SetupDiveUI();
+                SetupFishableManager();
+                SetupSeaBase();
+                
+                setup = true;
+            } catch (Exception e){
+                WinchCore.Log.Error(e.ToString());
+            }
         }
         
         void Update(){
-            if(setup){
-                if(dredgePlayer == null){
-                    ShutDown();
-                } else {
-                    // Constantly reset the freshness of deepsubmergence fish to prevent them from rotting
-                    // This is to facilitate quests (i.e. you can always keep them around) but also a bit spooky
-                    List<SpatialItemInstance> inventoryItems = GameManager.Instance.SaveData.Inventory.GetAllItemsOfType<SpatialItemInstance>(ItemType.GENERAL);
+            try {
+                if(setup){
+                    if(dredgePlayer == null){
+                        ShutDown();
+                    } else {
+                        // Constantly reset the freshness of deepsubmergence fish to prevent them from rotting
+                        // This is to facilitate quests (i.e. you can always keep them around) but also a bit spooky
+                        List<SpatialItemInstance> inventoryItems = GameManager.Instance.SaveData.Inventory.GetAllItemsOfType<SpatialItemInstance>(ItemType.GENERAL);
 
-                    for(int i = 0, count = inventoryItems.Count; i < count; ++i){
-                        if(inventoryItems[i].id.Contains("deepsubmergence") && inventoryItems[i] is FishItemInstance fishy){
-                            fishy.freshness = 3.0f; // Max freshness value in game
+                        for(int i = 0, count = inventoryItems.Count; i < count; ++i){
+                            if(inventoryItems[i].id.Contains("deepsubmergence") && inventoryItems[i] is FishItemInstance fishy){
+                                fishy.freshness = 3.0f; // Max freshness value in game
+                            }
                         }
-                    }
 
-                    List<SpatialItemInstance> storageItems = GameManager.Instance.SaveData.Storage.GetAllItemsOfType<SpatialItemInstance>(ItemType.GENERAL);
+                        List<SpatialItemInstance> storageItems = GameManager.Instance.SaveData.Storage.GetAllItemsOfType<SpatialItemInstance>(ItemType.GENERAL);
 
-                    for(int i = 0, count = storageItems.Count; i < count; ++i){
-                        if(storageItems[i].id.Contains("deepsubmergence") && storageItems[i] is FishItemInstance fishy){
-                            fishy.freshness = 3.0f; // Max freshness value in game
+                        for(int i = 0, count = storageItems.Count; i < count; ++i){
+                            if(storageItems[i].id.Contains("deepsubmergence") && storageItems[i] is FishItemInstance fishy){
+                                fishy.freshness = 3.0f; // Max freshness value in game
+                            }
                         }
                     }
                 }
+            } catch (Exception e){
+                WinchCore.Log.Error(e.ToString());
             }
         }
 

@@ -1,6 +1,6 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Winch.Config;
 using Winch.Core;
 using Winch.Util;
 
@@ -90,82 +90,90 @@ namespace DeepSubmergence {
         private Timer doneFishingTimer = new(DONE_FISHING_TIME);
         
         void Start(){
-            cachedDredgePlayer = DeepSubmergence.instance.dredgePlayer;
-            cachedDredgePlayerPlayer = cachedDredgePlayer.GetComponent<Player>();
-            
-            submarineMesh = GetComponent<MeshRenderer>();
-            
-            // Set up and dis/enable the right player gameobjects and components to make this all work
-            ApplyAblingToDredgePlayer();
-            
-            // Find and cache boat particles
-            cachedBoatParticles = GameObject.Find("BoatTrailParticles").GetComponent<ParticleSystem>();
-            
-            // Create and position propeller
-            propeller = Utils.SetupModelTextureAsGameObject(
-                "Submarine Propeller",
-                ModelUtil.GetModel("deepsubmergence.submarinepropeller"),
-                TextureUtil.GetTexture("deepsubmergence.propellertexture")
-            );
-            propeller.transform.parent = transform;
-            propeller.transform.localPosition = Vector3.zero;
-            
-            // Create and setup ship light
-            GameObject newLight = new GameObject();
-            newLight.name = "[DeepSubmergence] Player light";
-            playerLight = newLight.AddComponent<Light>();
-            playerLight.type = LightType.Spot;
-            playerLight.intensity = LIGHT_INTENSITY;
-            playerLight.spotAngle = LIGHT_ANGLE;
-            playerLight.range = LIGHT_RANGE;
-            
-            newLight.transform.parent = transform;
-            newLight.transform.localPosition = LIGHT_POSITION_OFFSET;
-            
-            // Find and copy bubble particles
-            GameObject foundBubbles = GameObject.Find(BUBBLES_NAME);
-            GameObject bubbleCopy = GameObject.Instantiate(foundBubbles);
-            cachedBubbleParticlesCopy = bubbleCopy.GetComponent<ParticleSystem>();
-            cachedBubbleParticlesCopy.Stop();
+            try {
+                cachedDredgePlayer = DeepSubmergence.instance.dredgePlayer;
+                cachedDredgePlayerPlayer = cachedDredgePlayer.GetComponent<Player>();
+                
+                submarineMesh = GetComponent<MeshRenderer>();
+                
+                // Set up and dis/enable the right player gameobjects and components to make this all work
+                ApplyAblingToDredgePlayer();
+                
+                // Find and cache boat particles
+                cachedBoatParticles = GameObject.Find("BoatTrailParticles").GetComponent<ParticleSystem>();
+                
+                // Create and position propeller
+                propeller = Utils.SetupModelTextureAsGameObject(
+                    "Submarine Propeller",
+                    ModelUtil.GetModel("deepsubmergence.submarinepropeller"),
+                    TextureUtil.GetTexture("deepsubmergence.propellertexture")
+                );
+                propeller.transform.parent = transform;
+                propeller.transform.localPosition = Vector3.zero;
+                
+                // Create and setup ship light
+                GameObject newLight = new GameObject();
+                newLight.name = "[DeepSubmergence] Player light";
+                playerLight = newLight.AddComponent<Light>();
+                playerLight.type = LightType.Spot;
+                playerLight.intensity = LIGHT_INTENSITY;
+                playerLight.spotAngle = LIGHT_ANGLE;
+                playerLight.range = LIGHT_RANGE;
+                
+                newLight.transform.parent = transform;
+                newLight.transform.localPosition = LIGHT_POSITION_OFFSET;
+                
+                // Find and copy bubble particles
+                GameObject foundBubbles = GameObject.Find(BUBBLES_NAME);
+                GameObject bubbleCopy = GameObject.Instantiate(foundBubbles);
+                cachedBubbleParticlesCopy = bubbleCopy.GetComponent<ParticleSystem>();
+                cachedBubbleParticlesCopy.Stop();
+            } catch (Exception e){
+                WinchCore.Log.Error(e.ToString());
+            }
         }
         
         void Update(){
-            // Intermittently disable all the other boat models in case they get activated in other ways
-            if(disableTimer.Finished()){
-                disableTimer.Start();
-                ApplyAblingToDredgePlayer();
-            }
+            try {
+                // Intermittently disable all the other boat models in case they get activated in other ways
+                if(disableTimer.Finished()){
+                    disableTimer.Start();
+                    ApplyAblingToDredgePlayer();
+                }
 
-            // Enable lights
-            playerLight.enabled = Utils.IsLightOn();
-            
-            // Enable model
-            bool teleporting = Utils.IsTeleporting();
-            if(!previouslyTeleporting && teleporting){
-                teleportTimer.Start();
+                // Enable lights
+                playerLight.enabled = Utils.IsLightOn();
+                
+                // Enable model
+                bool teleporting = Utils.IsTeleporting();
+                if(!previouslyTeleporting && teleporting){
+                    teleportTimer.Start();
+                }
+                
+                submarineMesh.enabled = teleportTimer.Finished();
+                propeller.SetActive(teleportTimer.Finished());
+                
+                previouslyTeleporting = teleporting;
+                
+                if(Input.GetKeyDown(KeyCode.T)){
+                    // List<SpatialItemInstance> inventoryItems = GameManager.Instance.SaveData.Inventory.GetAllItemsOfType<SpatialItemInstance>(ItemType.EQUIPMENT);
+                    // WinchCore.Log.Debug(inventoryItems + ", " + inventoryItems.Count);
+                    // 
+                    // for (int i = 0, count = inventoryItems.Count; i < count; ++i)
+                    // {
+                    //     WinchCore.Log.Debug(i + ": " + inventoryItems[i].id);
+                    // }
+                }
+                
+                // Update inputs, movement, position
+                UpdateInputs();
+                UpdatePositionAndRotation();
+                
+                UpdateDiveTime();
+                UpdateFloodWater();
+            } catch (Exception e){
+                WinchCore.Log.Error(e.ToString());
             }
-            
-            submarineMesh.enabled = teleportTimer.Finished();
-            propeller.SetActive(teleportTimer.Finished());
-            
-            previouslyTeleporting = teleporting;
-            
-            if(Input.GetKeyDown(KeyCode.T)){
-                // List<SpatialItemInstance> inventoryItems = GameManager.Instance.SaveData.Inventory.GetAllItemsOfType<SpatialItemInstance>(ItemType.EQUIPMENT);
-                // WinchCore.Log.Debug(inventoryItems + ", " + inventoryItems.Count);
-                // 
-                // for (int i = 0, count = inventoryItems.Count; i < count; ++i)
-                // {
-                //     WinchCore.Log.Debug(i + ": " + inventoryItems[i].id);
-                // }
-            }
-            
-            // Update inputs, movement, position
-            UpdateInputs();
-            UpdatePositionAndRotation();
-            
-            UpdateDiveTime();
-            UpdateFloodWater();
         }
         
         private void UpdateInputs(){
