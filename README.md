@@ -14,4 +14,4 @@ This mod is a work in progress. Stay tuned for more improvements, features, and 
 # Known Issues
 - Siphon Trawler doesn't function correctly.
 - Sea Base is difficult to find.
-- References to "blueprints" are for currently not supported unlocking items.
+- References to "blueprints" are for upcoming items.

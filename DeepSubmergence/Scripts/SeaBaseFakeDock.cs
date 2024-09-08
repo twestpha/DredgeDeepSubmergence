@@ -243,8 +243,7 @@ namespace DeepSubmergence {
                     yield return PlayDialogue(
                         TextureUtil.GetSprite(diverSprites[pickedSprite]),
                         LocalizationUtil.GetLocalizedString(localeCode, DIVER_TITLE),
-                        LocalizationUtil.GetLocalizedString(localeCode, dialogues[i]),
-                        dialogues != questDoneDialogues // Don't animate for last dialogue
+                        LocalizationUtil.GetLocalizedString(localeCode, dialogues[i])
                     );
                 }
 
@@ -296,7 +295,7 @@ namespace DeepSubmergence {
             else { return questDoneDialogues; }
         }
         
-        private IEnumerator PlayDialogue(Sprite sprite, string localizedTitle, string localizedDialogue, bool animate){
+        private IEnumerator PlayDialogue(Sprite sprite, string localizedTitle, string localizedDialogue){
             bool useAlpha = !dialogueBackground.activeSelf;
             
             dialogueTitleTextT.text = localizedTitle;
@@ -329,12 +328,11 @@ namespace DeepSubmergence {
                 if(useAlpha){
                     diverImage.color = new Color(1.0f, 1.0f, 1.0f, diverT);
                 }
-                if(animate){
-                    diverImageRect.anchoredPosition = Vector2.Lerp(new Vector2(960f, 430.0f), new Vector2(960f, 450.0f), diverT);
-                }
+
+                diverImageRect.anchoredPosition = Vector2.Lerp(new Vector2(960f, 430.0f), new Vector2(960f, 450.0f), diverT);
                 
                 // Skip to end with keypress
-                if(Input.anyKeyDown){
+                if(Input.GetKeyDown(KeyCode.Mouse0)){
                     textRevealTimer.SetParameterized(1.0f);
                 }
                 
@@ -349,10 +347,11 @@ namespace DeepSubmergence {
             dialogueTextT.maxVisibleCharacters = localizedDialogue.Length;
             
             // Wait for input to next dialogue
-            bool anyInput = false;
-            while(!anyInput){
+            bool input = false;
+            
+            while(!input){
                 yield return null;
-                anyInput = Input.anyKeyDown;
+                input = Input.GetKeyDown(KeyCode.Mouse0);
             }
             
             yield return null;

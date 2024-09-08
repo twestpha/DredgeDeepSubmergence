@@ -10,12 +10,16 @@ namespace DeepSubmergence {
 
         public static DeepSubmergence instance;
         
-        // [CNR] Bug: Unable to interact with UI or surface in specific situation
+        // [/] Make dialogue only progress with certain buttons (match existing - only mouse)
         
         // V0.4 bugs & feedback fixes
-        // [x] Setup better logging all around
-        // [x] Play feedback...? Balance changes...?
-        // [x] Update readme
+        // [x] Last quest image has no fx (lmfao)
+        // [x] docking mechanic jank (not sure if fixable)
+        // [x] Immersive text; show/hide quotes and have less direct conversational UI
+        // [x] Switch dialogue/pseudoquests to be more systemic, for intro cutscene?
+        // [x] Switch over to using addressables for assets
+        // [x] Sonar ping system?
+        // [x] Update readme with fixed issues/new features
         
         // V0.5: Post-tech improvements
         // [x] Selling pumps and pressure vessels, level up with caught fish
