@@ -1,0 +1,14 @@
+{
+    "saveId": "deepsubmergence.testquest",
+    "progress": 0,
+    "chunks": [
+        {
+            "requiredItems": [ "deepsubmergence.fishboltfish" ],
+            "dialogueOnFinish": [ "deepsubmergence.quest0dialogue0" ],
+            "controlTags": [ "q" ],
+            "possibleFrames": [
+                [ "deepsubmergence.uidiver0" ]
+            ]
+        }
+    ]
+}

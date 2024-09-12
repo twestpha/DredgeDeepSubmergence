@@ -90,6 +90,7 @@ namespace DeepSubmergence {
         private Image diverImage;
         private RectTransform diverImageRect;
         private GameObject dialogueBackground;
+        private GameObject dialogueQuotes;
         private GameObject dialogueTitleBackground;
         private GameObject dialogueText;
         private GameObject dialogueTitleText;
@@ -130,6 +131,13 @@ namespace DeepSubmergence {
                 dialogueBackground = Utils.SetupTextureAsSpriteOnCanvas(
                     "Dialogue Background",
                     TextureUtil.GetSprite("deepsubmergence.uitextbackground"),
+                    new Vector2(746.0f, 186.0f),
+                    new Vector2(960f, 104.0f)
+                );
+                
+                dialogueQuotes = Utils.SetupTextureAsSpriteOnCanvas(
+                    "Dialogue Quotes",
+                    TextureUtil.GetSprite("deepsubmergence.uitextquotes"),
                     new Vector2(746.0f, 186.0f),
                     new Vector2(960f, 104.0f)
                 );
@@ -178,6 +186,7 @@ namespace DeepSubmergence {
                 // Set all UI inactive
                 diverImage.enabled = false;
                 dialogueBackground.SetActive(false);
+                dialogueQuotes.SetActive(false);
                 dialogueTitleBackground.SetActive(false);
                 dialogueText.SetActive(false);
                 dialogueTitleText.SetActive(false);

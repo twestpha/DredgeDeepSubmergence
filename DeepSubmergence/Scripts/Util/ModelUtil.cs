@@ -37,12 +37,11 @@ namespace Winch.Util
                         }
                         catch(Exception ex)
                         {
-                            WinchCore.Log.Error($"Failed to load texture file {file}: {ex}");
+                            WinchCore.Log.Error($"Failed to load model file {file}: {ex}");
                         }
                     }
                 }
             }
-            
         }
 
         public static Mesh GetModel(string key)

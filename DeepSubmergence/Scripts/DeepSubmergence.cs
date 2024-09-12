@@ -10,18 +10,24 @@ namespace DeepSubmergence {
 
         public static DeepSubmergence instance;
         
-        // [/] Make dialogue only progress with certain buttons (match existing - only mouse)
-        
         // V0.4 bugs & feedback fixes
-        // [x] Last quest image has no fx (lmfao)
-        // [x] docking mechanic jank (not sure if fixable)
         // [x] Immersive text; show/hide quotes and have less direct conversational UI
+        //   - some rewrites needed
         // [x] Switch dialogue/pseudoquests to be more systemic, for intro cutscene?
+        // [x] Seperate quest UI from fake dock honestly
+        // [x] Intro dialogue/quest/thing to be like "go here for the thing"
+        //
         // [x] Switch over to using addressables for assets
-        // [x] Sonar ping system?
+        // [x] Sonar ping system? Echoes in distance, plays particles on fish?
+        //
+        // [x] Switch fish to abyssal
+        //
+        // [x] More fish just because?
+        //
         // [x] Update readme with fixed issues/new features
         
         // V0.5: Post-tech improvements
+        // [x] current fake-docking mechanic jank (not sure if fixable, it's the nature of docks not being supported directly)
         // [x] Selling pumps and pressure vessels, level up with caught fish
         //    - unlock from progression levels
         //    - sizing objects PITA? How to give them in a way that doesn't suck
@@ -35,6 +41,7 @@ namespace DeepSubmergence {
         public GameObject submarineUI;
         public GameObject underwaterFishableManager;
         public SeaBaseFakeDock seaBaseFakeDock;
+        public GameObject questManager;
         public GameObject debugAxes;
 
         public List<GameObject> managedObjects = new();
@@ -60,10 +67,14 @@ namespace DeepSubmergence {
 
             try {
                 // Instantiate all the objects needed for the mod
-                SetupSubmarinePlayer();
                 SetupDebugAxes();
-                SetupDiveUI();
+                
+                SetupQuestManager();
                 SetupFishableManager();
+                
+                SetupSubmarinePlayer();
+                SetupDiveUI();
+                
                 SetupSeaBase();
                 
                 setup = true;
@@ -174,6 +185,11 @@ namespace DeepSubmergence {
             GameObject fakeDockObject = Utils.SetupGameObject("Sea Base Fake Dock");
             fakeDockObject.transform.position = new Vector3(730.89f, 0.0f, -276.46f);
             seaBaseFakeDock = fakeDockObject.AddComponent<SeaBaseFakeDock>();
+        }
+        
+        private void SetupQuestManager(){
+            questManager = Utils.SetupGameObject("Quest Manager");
+            questManager.AddComponent<QuestManager>();
         }
     }
 }
