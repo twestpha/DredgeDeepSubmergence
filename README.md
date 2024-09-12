@@ -13,5 +13,6 @@ This mod is a work in progress. Stay tuned for more improvements, features, and 
 
 # Known Issues
 - Siphon Trawler doesn't function correctly.
-- Sea Base is difficult to find.
+- Sea Base and fish are difficult to find
+- Docking and quest dialogue have some small bugs with them
 - References to "blueprints" are for upcoming items.
