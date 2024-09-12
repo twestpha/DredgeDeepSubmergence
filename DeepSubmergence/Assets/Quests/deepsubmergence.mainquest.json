@@ -1,0 +1,37 @@
+{
+    "saveId": "deepsubmergence.mainquest",
+    "progress": 0,
+    "chunks": [
+        {
+            "requiredItems": [
+                "deepsubmergence.fishboltfish",
+                "deepsubmergence.fishnetsquid",
+                "deepsubmergence.fishshoal",
+            ],
+            "dialogueOnFinish": [
+                "deepsubmergence.quest0dialogue0",
+                "deepsubmergence.quest0dialogue1",
+                "deepsubmergence.quest0dialogue2",
+                "deepsubmergence.quest0dialogue3",
+                "deepsubmergence.quest0dialogue4",
+                "deepsubmergence.quest0dialogue5",
+            ],
+            "controlTags": [ 
+                "q", 
+                "q", 
+                "q", 
+                "q",
+                "q", 
+                "q", 
+            ],
+            "frames": [
+                "deepsubmergence.uidiver0",
+                "deepsubmergence.uidiver0",
+                "deepsubmergence.uidiver0",
+                "deepsubmergence.uidiver0",
+                "deepsubmergence.uidiver0",
+                "deepsubmergence.uidiver0",
+            ]
+        }
+    ]
+}

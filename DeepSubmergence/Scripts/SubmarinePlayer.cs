@@ -17,9 +17,9 @@ namespace DeepSubmergence {
         private const float PROP_SPINUP_TIME = 0.4f;
         private const float DIVING_ROTATION = 10.0f;
         private const float DIVE_ROTATION_TIME = 0.25f;
-        private const float LIGHT_INTENSITY = 1.0f;
+        private const float LIGHT_INTENSITY = 2.0f;
         private const float LIGHT_ANGLE = 140.0f;
-        private const float LIGHT_RANGE = 10.0f;
+        private const float LIGHT_RANGE = 15.0f;
         private const float SURFACE_FILL_RATE = 4.0f;
         private const float DONE_FISHING_TIME = 1.0f;
         private const float TELEPORT_TIME = 2.0f;
@@ -95,6 +95,12 @@ namespace DeepSubmergence {
                 cachedDredgePlayerPlayer = cachedDredgePlayer.GetComponent<Player>();
                 
                 submarineMesh = GetComponent<MeshRenderer>();
+                
+                // Reset state
+                onSurface = true;
+                previouslyTeleporting = false;
+                previousInDock = true;
+                depthParameter = 0.0f;
                 
                 // Set up and dis/enable the right player gameobjects and components to make this all work
                 ApplyAblingToDredgePlayer();

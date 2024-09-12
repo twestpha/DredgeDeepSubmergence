@@ -9,67 +9,67 @@ using System;
 namespace DeepSubmergence {
     public class SeaBaseFakeDock : MonoBehaviour {
         
-        private string[] quest0requiredfish = {
-            "deepsubmergence.fishboltfish",
-            "deepsubmergence.fishnetsquid",
-            "deepsubmergence.fishshoal",
-        };
-        private string[] quest1requiredfish = {
-            "deepsubmergence.fishelectriceel",
-            "deepsubmergence.fishironlungfish",
-            "deepsubmergence.fishlampcrab",
-            "deepsubmergence.fishneedlefish",
-        };
-        private string[] quest2requiredfish = {
-            "deepsubmergence.fishsteelhead",
-            "deepsubmergence.fishtorpedofish",
-            "deepsubmergence.fishshreddershark",
-        };
-        private string[] quest3requiredfish = {
-            "deepsubmergence.fishtrenchwhale",
-        };
+        // private string[] quest0requiredfish = {
+        //     "deepsubmergence.fishboltfish",
+        //     "deepsubmergence.fishnetsquid",
+        //     "deepsubmergence.fishshoal",
+        // };
+        // private string[] quest1requiredfish = {
+        //     "deepsubmergence.fishelectriceel",
+        //     "deepsubmergence.fishironlungfish",
+        //     "deepsubmergence.fishlampcrab",
+        //     "deepsubmergence.fishneedlefish",
+        // };
+        // private string[] quest2requiredfish = {
+        //     "deepsubmergence.fishsteelhead",
+        //     "deepsubmergence.fishtorpedofish",
+        //     "deepsubmergence.fishshreddershark",
+        // };
+        // private string[] quest3requiredfish = {
+        //     "deepsubmergence.fishtrenchwhale",
+        // };
         private string[] diverSprites = {
             "deepsubmergence.uidiver0",
             "deepsubmergence.uidiver1",
             "deepsubmergence.uidiver2",
             "deepsubmergence.uidiver3",
         };
-        private string[] quest0Dialogues = {
-            "deepsubmergence.quest0dialogue0",
-            "deepsubmergence.quest0dialogue1",
-            "deepsubmergence.quest0dialogue2",
-            "deepsubmergence.quest0dialogue3",
-            "deepsubmergence.quest0dialogue4",
-            "deepsubmergence.quest0dialogue5",
-        };
-        private string[] quest1Dialogues = {
-            "deepsubmergence.quest1dialogue0",
-            "deepsubmergence.quest1dialogue1",
-            "deepsubmergence.quest1dialogue2",
-            "deepsubmergence.quest1dialogue3",
-            "deepsubmergence.quest1dialogue4",
-            "deepsubmergence.quest1dialogue5",
-        };
-        private string[] quest2Dialogues = {
-            "deepsubmergence.quest2dialogue0",
-            "deepsubmergence.quest2dialogue1",
-            "deepsubmergence.quest2dialogue2",
-            "deepsubmergence.quest2dialogue3",
-            "deepsubmergence.quest2dialogue4",
-            "deepsubmergence.quest2dialogue5",
-        };
-        private string[] quest3Dialogues = {
-            "deepsubmergence.quest3dialogue0",
-            "deepsubmergence.quest3dialogue1",
-            "deepsubmergence.quest3dialogue2",
-            "deepsubmergence.quest3dialogue3",
-            "deepsubmergence.quest3dialogue4",
-            "deepsubmergence.quest3dialogue5",
-        };
-        private string[] questDoneDialogues = {
-            "deepsubmergence.questdonedialogue0",
-            "deepsubmergence.questdonedialogue1",
-        };
+        // private string[] quest0Dialogues = {
+        //     "deepsubmergence.quest0dialogue0",
+        //     "deepsubmergence.quest0dialogue1",
+        //     "deepsubmergence.quest0dialogue2",
+        //     "deepsubmergence.quest0dialogue3",
+        //     "deepsubmergence.quest0dialogue4",
+        //     "deepsubmergence.quest0dialogue5",
+        // };
+        // private string[] quest1Dialogues = {
+        //     "deepsubmergence.quest1dialogue0",
+        //     "deepsubmergence.quest1dialogue1",
+        //     "deepsubmergence.quest1dialogue2",
+        //     "deepsubmergence.quest1dialogue3",
+        //     "deepsubmergence.quest1dialogue4",
+        //     "deepsubmergence.quest1dialogue5",
+        // };
+        // private string[] quest2Dialogues = {
+        //     "deepsubmergence.quest2dialogue0",
+        //     "deepsubmergence.quest2dialogue1",
+        //     "deepsubmergence.quest2dialogue2",
+        //     "deepsubmergence.quest2dialogue3",
+        //     "deepsubmergence.quest2dialogue4",
+        //     "deepsubmergence.quest2dialogue5",
+        // };
+        // private string[] quest3Dialogues = {
+        //     "deepsubmergence.quest3dialogue0",
+        //     "deepsubmergence.quest3dialogue1",
+        //     "deepsubmergence.quest3dialogue2",
+        //     "deepsubmergence.quest3dialogue3",
+        //     "deepsubmergence.quest3dialogue4",
+        //     "deepsubmergence.quest3dialogue5",
+        // };
+        // private string[] questDoneDialogues = {
+        //     "deepsubmergence.questdonedialogue0",
+        //     "deepsubmergence.questdonedialogue1",
+        // };
         
         private const string DIVER_TITLE = "deepsubmergence.questdivertitle";
         
@@ -79,6 +79,7 @@ namespace DeepSubmergence {
         private const string TEXT_C_NAME = "DialogueText";
 
         private const string PROGRESSION_SAVE_KEY = "deepsubmergence.questprogress";
+        private const string MAIN_QUEST_KEY = "deepsubmergence.mainquest";
 
         private const float MAX_PROGRESS = 5;
         private const float RETRIGGER_DOCK_TIME = 0.5f;
@@ -99,7 +100,6 @@ namespace DeepSubmergence {
         private TMP_Text dialogueTitleTextT;
         
         public bool playerInFakeDock = false;
-        private int currentProgressLevel = 0;
         
         private GameObject abilityCanvas;
         
@@ -115,9 +115,6 @@ namespace DeepSubmergence {
                 sphereCollider.isTrigger = true;
                 
                 abilityCanvas = Utils.FindInChildren(Utils.FindInChildren(GameObject.Find("GameCanvases"), "GameCanvas"), "Abilities");
-
-                // Load currentProgressLevel
-                currentProgressLevel = GameManager.Instance.SaveData.GetIntVariable(PROGRESSION_SAVE_KEY, 0);
                 
                 // Setup UI pieces
                 diverImage = Utils.SetupTextureAsSpriteOnCanvas(
@@ -210,11 +207,14 @@ namespace DeepSubmergence {
         }
 
         private IEnumerator SeabaseQuestUICoroutine(){
-            if(currentProgressLevel < MAX_PROGRESS){
+            QuestManager qm = QuestManager.instance;
+            
+            if(qm.CanProgress(MAIN_QUEST_KEY)){
+                
                 SetupPlayerAtFakeDock(true);
                 
                 // Check for progression
-                string[] requiredFish = GetRequiredFishListForProgressLevel(currentProgressLevel);
+                string[] requiredFish = qm.GetRequiredItems(MAIN_QUEST_KEY);
                 
                 if(requiredFish != null){
                     bool hasAllRequiredFish = true;
@@ -223,8 +223,7 @@ namespace DeepSubmergence {
                     }
                     
                     if(hasAllRequiredFish){
-                        currentProgressLevel++;
-                        GameManager.Instance.SaveData.SetIntVariable(PROGRESSION_SAVE_KEY, currentProgressLevel);
+                        qm.IncrementProgress(MAIN_QUEST_KEY);
 
                         // Take the fish
                         for (int i = 0, count = requiredFish.Length; i < count; ++i){
@@ -236,23 +235,20 @@ namespace DeepSubmergence {
                 // Play dialogue
                 dialogueTextT.text = "";
                 dialogueTitleTextT.text = "";
-
-                string[] dialogues = GetDialogueForProgressLevel(currentProgressLevel);
+                
+                string[] dialogues = qm.GetDialogueOnFinish(MAIN_QUEST_KEY);
                 
                 for(int i = 0, count = dialogues.Length; i < count; ++i){
-                    int pickedSprite = UnityEngine.Random.Range(0, diverSprites.Length - 1);
-                    
-                    // For the last quest, always force the sprite to be the last one
-                    if(dialogues == questDoneDialogues){
-                        pickedSprite = diverSprites.Length - 1;
-                    }
+                    DialogueControlTags controlTags = qm.GetControlTags(MAIN_QUEST_KEY, i);
+                    string nextFrameSpriteName = qm.GetNextFrame(MAIN_QUEST_KEY, i);
                     
                     string localeCode = GameManager.Instance.LanguageManager.GetLocale().Identifier.Code;
 
                     yield return PlayDialogue(
-                        TextureUtil.GetSprite(diverSprites[pickedSprite]),
+                        TextureUtil.GetSprite(nextFrameSpriteName),
                         LocalizationUtil.GetLocalizedString(localeCode, DIVER_TITLE),
-                        LocalizationUtil.GetLocalizedString(localeCode, dialogues[i])
+                        LocalizationUtil.GetLocalizedString(localeCode, dialogues[i]),
+                        controlTags
                     );
                 }
 
@@ -277,7 +273,7 @@ namespace DeepSubmergence {
             // Hide other UIs
             abilityCanvas.SetActive(!inDock);
             
-            // Sort add a safe zone
+            // Sort of add a safe zone
             GameManager.Instance.MonsterManager.isBanishActive = inDock;
             
             // Disable mouse-camera control while in dock
@@ -288,24 +284,9 @@ namespace DeepSubmergence {
             }
         }
         
-        private string[] GetRequiredFishListForProgressLevel(int progress){
-            if(progress == 0){ return quest0requiredfish; }
-            else if(progress == 1){ return quest1requiredfish; }
-            else if(progress == 2){ return quest2requiredfish; }
-            else if(progress == 3){ return quest3requiredfish; }
-            return null;
-        }
-        
-        private string[] GetDialogueForProgressLevel(int progress){
-            if(progress == 0){ return quest0Dialogues; }
-            else if(progress == 1){ return quest1Dialogues; }
-            else if(progress == 2){ return quest2Dialogues; }
-            else if(progress == 3){ return quest3Dialogues; }
-            else { return questDoneDialogues; }
-        }
-        
-        private IEnumerator PlayDialogue(Sprite sprite, string localizedTitle, string localizedDialogue){
+        private IEnumerator PlayDialogue(Sprite sprite, string localizedTitle, string localizedDialogue, DialogueControlTags controlTags){
             bool useAlpha = !dialogueBackground.activeSelf;
+            
             
             dialogueTitleTextT.text = localizedTitle;
             dialogueTextT.text = localizedDialogue;
@@ -320,6 +301,7 @@ namespace DeepSubmergence {
             dialogueTitleBackground.SetActive(true);
             dialogueText.SetActive(true);
             dialogueTitleText.SetActive(true);
+            dialogueQuotes.SetActive((controlTags | DialogueControlTags.UseQuotes) != DialogueControlTags.None);
             
             // Show dialogue over time in various animated ways
             bool finished = false;
@@ -372,6 +354,7 @@ namespace DeepSubmergence {
             dialogueTitleBackground.SetActive(false);
             dialogueText.SetActive(false);
             dialogueTitleText.SetActive(false);
+            dialogueQuotes.SetActive(false);
 
             yield break;
         }

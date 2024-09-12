@@ -6,7 +6,7 @@ namespace DeepSubmergence {
         public string[] requiredItems;
         public string[] dialogueOnFinish;
         public string[] controlTags;
-        public string[][] possibleFrames;
+        public string[] frames;
     }
 
     [Serializable]

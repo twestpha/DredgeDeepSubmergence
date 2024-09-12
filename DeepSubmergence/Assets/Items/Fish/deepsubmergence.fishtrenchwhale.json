@@ -32,7 +32,7 @@
   "perSpotMin": 1,
   "perSpotMax": 1,
   "harvestPOICategory": "FISH_SMALL",
-  "harvestableType": "COASTAL",
+  "harvestableType": "ABYSSAL",
   "harvestDifficulty": "VERY_EASY",
   "isAberration": true,
 }

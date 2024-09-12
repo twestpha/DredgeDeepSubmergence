@@ -10,17 +10,16 @@ namespace DeepSubmergence {
 
         public static DeepSubmergence instance;
         
+        // [/] Immersive text; show/hide quotes and have less direct conversational UI
+        // [/] Switch dialogue/pseudoquests to be more systemic, for intro cutscene?
+        // [/] Switch fish to abyssal
+        
         // V0.4 bugs & feedback fixes
-        // [x] Immersive text; show/hide quotes and have less direct conversational UI
-        //   - some rewrites needed
-        // [x] Switch dialogue/pseudoquests to be more systemic, for intro cutscene?
         // [x] Seperate quest UI from fake dock honestly
         // [x] Intro dialogue/quest/thing to be like "go here for the thing"
         //
         // [x] Switch over to using addressables for assets
         // [x] Sonar ping system? Echoes in distance, plays particles on fish?
-        //
-        // [x] Switch fish to abyssal
         //
         // [x] More fish just because?
         //
