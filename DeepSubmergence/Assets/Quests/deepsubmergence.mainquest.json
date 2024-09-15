@@ -4,8 +4,12 @@
     "progress": 0,
     "chunks": [
         {
-            "autoProgress": true,
-            "requiredItems": [],
+            "autoProgress": false,
+            "requiredItems": [
+                "deepsubmergence.fishboltfish",
+                "deepsubmergence.fishnetsquid",
+                "deepsubmergence.fishshoal",
+            ],
             "dialogueOnFinish": [
                 "deepsubmergence.mainquest.0.0",
                 "deepsubmergence.mainquest.0.1",
@@ -78,9 +82,9 @@
         {
             "autoProgress": false,
             "requiredItems": [
-                "deepsubmergence.fishboltfish",
-                "deepsubmergence.fishnetsquid",
-                "deepsubmergence.fishshoal",
+                "deepsubmergence.fishsteelhead",
+                "deepsubmergence.fishtorpedofish",
+                "deepsubmergence.fishshreddershark",
             ],
             "dialogueOnFinish": [
                 "deepsubmergence.mainquest.2.0",
@@ -114,9 +118,7 @@
         {
             "autoProgress": false,
             "requiredItems": [
-                "deepsubmergence.fishsteelhead",
-                "deepsubmergence.fishtorpedofish",
-                "deepsubmergence.fishshreddershark",
+                "deepsubmergence.fishtrenchwhale",
             ],
             "dialogueOnFinish": [
                 "deepsubmergence.mainquest.3.0",
@@ -145,25 +147,6 @@
                 "deepsubmergence.uidiver1",
                 "deepsubmergence.uidiver2",
                 "deepsubmergence.uidiver2",
-            ]
-        },
-        {
-            "autoProgress": false,
-            "requiredItems": [
-                "deepsubmergence.fishtrenchwhale",
-            ],
-            "dialogueOnFinish": [
-                "deepsubmergence.mainquest.4.0",
-                "deepsubmergence.mainquest.4.1",
-            ],
-            "itemsOnFinish": [],
-            "controlTags": [ 
-                "",
-                "q",
-            ],
-            "frames": [
-                "deepsubmergence.uidiver3",
-                "deepsubmergence.uidiver3",
             ]
         },
         {

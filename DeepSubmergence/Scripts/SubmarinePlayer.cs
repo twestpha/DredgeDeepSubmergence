@@ -162,13 +162,10 @@ namespace DeepSubmergence {
                 previouslyTeleporting = teleporting;
                 
                 if(Input.GetKeyDown(KeyCode.T)){
-                    // List<SpatialItemInstance> inventoryItems = GameManager.Instance.SaveData.Inventory.GetAllItemsOfType<SpatialItemInstance>(ItemType.EQUIPMENT);
-                    // WinchCore.Log.Debug(inventoryItems + ", " + inventoryItems.Count);
-                    // 
-                    // for (int i = 0, count = inventoryItems.Count; i < count; ++i)
-                    // {
-                    //     WinchCore.Log.Debug(i + ": " + inventoryItems[i].id);
-                    // }
+                    // Utils.PutItemInCargo("deepsubmergence.fishsteelhead", true);
+                    // Utils.PutItemInCargo("deepsubmergence.fishtorpedofish", true);
+                    // Utils.PutItemInCargo("deepsubmergence.fishshreddershark", true);
+                    // Utils.PutItemInCargo("deepsubmergence.fishtrenchwhale", true);
                 }
                 
                 // Update inputs, movement, position

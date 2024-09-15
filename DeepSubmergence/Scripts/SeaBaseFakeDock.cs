@@ -134,12 +134,12 @@ namespace DeepSubmergence {
             try {
                 // Debug key combo for resetting quests
                 if(Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.R)){
-                    QuestManager.instance.ResetAllQuests();
+                    // QuestManager.instance.ResetAllQuests();
                 }
                 
                 // Debug key combo for progressing main quest
                 if(Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.T)){
-                    QuestManager.instance.IncrementProgress(MAIN_QUEST_KEY);
+                    // QuestManager.instance.IncrementProgress(MAIN_QUEST_KEY);
                 }
                 
                 // Try to play intro quest if applicable, some dialogue hinting at the location and a map item

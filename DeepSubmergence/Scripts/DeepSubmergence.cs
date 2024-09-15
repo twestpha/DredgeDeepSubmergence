@@ -9,12 +9,6 @@ namespace DeepSubmergence {
     public class DeepSubmergence : MonoBehaviour {
 
         public static DeepSubmergence instance;
-                
-        // [/] Put new fish in places
-        
-        // V0.4 Bugs & feedback fixes
-        // [x] Play the quest start to finish
-        // [x] Update readme with fixed issues/new features, comment out debug keys
         
         // V0.5: Post-tech improvements
         // [x] Final long-term reward for completing quest chain
