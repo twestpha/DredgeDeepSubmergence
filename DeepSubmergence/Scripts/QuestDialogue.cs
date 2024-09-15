@@ -3,6 +3,7 @@ using System;
 namespace DeepSubmergence {
     [Serializable]
     public class QuestDialogueChunk {
+        public bool autoProgress;
         public string[] requiredItems;
         public string[] dialogueOnFinish;
         public string[] controlTags;

@@ -9,24 +9,17 @@ using System;
 namespace DeepSubmergence {
     public class SeaBaseFakeDock : MonoBehaviour {
         
-        // private string[] diverSprites = {
-        //     "deepsubmergence.uidiver0",
-        //     "deepsubmergence.uidiver1",
-        //     "deepsubmergence.uidiver2",
-        //     "deepsubmergence.uidiver3",
-        // };
-
-        // private const string DIVER_TITLE = "deepsubmergence.questdivertitle";
-        
         private const string TEXT_NAME = "DialogueView";
         private const string TEXT_A_NAME = "Container";
         private const string TEXT_B_NAME = "DialogueTextContainer";
         private const string TEXT_C_NAME = "DialogueText";
 
         private const string MAIN_QUEST_KEY = "deepsubmergence.mainquest";
+        private const string INTRO_QUEST_KEY = "deepsubmergence.introquest";
 
         private const float MAX_PROGRESS = 5;
         private const float RETRIGGER_DOCK_TIME = 0.5f;
+        private const float INTRO_DELAY = 5.0f;
         
         private SubmarinePlayer cachedSubmarinePlayer;
         private SphereCollider sphereCollider;
@@ -48,6 +41,7 @@ namespace DeepSubmergence {
         private GameObject abilityCanvas;
         
         private Timer redockTimer = new Timer(RETRIGGER_DOCK_TIME); 
+        private Timer introDelayTimer = new Timer(INTRO_DELAY); 
         
         void Start(){
             try {
@@ -138,6 +132,31 @@ namespace DeepSubmergence {
 
         void Update(){
             try {
+                // Debug key combo for resetting quests
+                if(Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.R)){
+                    QuestManager.instance.ResetAllQuests();
+                }
+                
+                // Debug key combo for progressing main quest
+                if(Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.T)){
+                    QuestManager.instance.IncrementProgress(MAIN_QUEST_KEY);
+                }
+                
+                // Try to play intro quest if applicable, some dialogue hinting at the location and a map item
+                if(QuestManager.instance.CanProgress(INTRO_QUEST_KEY) && !playerInFakeDock){
+                    CannotDiveReason cannotDiveReason = Utils.CanDive();
+                    
+                    if((cannotDiveReason & CannotDiveReason.InDock) > 0){
+                        introDelayTimer.Start();
+                    }
+                    
+                    if(introDelayTimer.Finished()){
+                        // TODO Give map item
+                        StartCoroutine(SeabaseQuestUICoroutine(INTRO_QUEST_KEY));
+                    }
+                }
+                
+                // Able the dock collider only when diving
                 sphereCollider.enabled = cachedSubmarinePlayer.CompletelySubmerged();
             } catch(Exception e){
                 WinchCore.Log.Error(e.ToString());
@@ -146,28 +165,28 @@ namespace DeepSubmergence {
         
         void OnTriggerEnter(Collider other){
             if(other.gameObject.name.Contains("HarvestZoneDetector") && redockTimer.Finished()){
-                StartCoroutine(SeabaseQuestUICoroutine());
+                StartCoroutine(SeabaseQuestUICoroutine(MAIN_QUEST_KEY));
             }
         }
 
-        private IEnumerator SeabaseQuestUICoroutine(){
+        private IEnumerator SeabaseQuestUICoroutine(string quest){
             QuestManager qm = QuestManager.instance;
             
-            if(qm.CanProgress(MAIN_QUEST_KEY)){
-                
+            if(qm.CanProgress(quest)){
                 SetupPlayerAtFakeDock(true);
                 
                 // Check for progression
-                string[] requiredFish = qm.GetRequiredItems(MAIN_QUEST_KEY);
+                string[] requiredFish = qm.GetRequiredItems(quest);
                 
-                if(requiredFish != null){
+                // No required fish should play dialogue, but not progress the quest
+                if(requiredFish != null && requiredFish.Length > 0){
                     bool hasAllRequiredFish = true;
                     for(int i = 0, count = requiredFish.Length; i < count; ++i){
                         hasAllRequiredFish &= Utils.HasItemInCargo(requiredFish[i]);
                     }
                     
                     if(hasAllRequiredFish){
-                        qm.IncrementProgress(MAIN_QUEST_KEY);
+                        qm.IncrementProgress(quest);
 
                         // Take the fish
                         for (int i = 0, count = requiredFish.Length; i < count; ++i){
@@ -180,13 +199,12 @@ namespace DeepSubmergence {
                 dialogueTextT.text = "";
                 dialogueTitleTextT.text = "";
                 
-                string speakerName = qm.GetSpeakerName(MAIN_QUEST_KEY);
-                string[] dialogues = qm.GetDialogueOnFinish(MAIN_QUEST_KEY);
-                
+                string speakerName = qm.GetSpeakerName(quest);
+                string[] dialogues = qm.GetDialogueOnFinish(quest);
+
                 for(int i = 0, count = dialogues.Length; i < count; ++i){
-                    DialogueControlTags controlTags = qm.GetControlTags(MAIN_QUEST_KEY, i);
-                    string nextFrameSpriteName = qm.GetNextFrame(MAIN_QUEST_KEY, i);
-                    
+                    DialogueControlTags controlTags = qm.GetControlTags(quest, i);
+                    string nextFrameSpriteName = qm.GetNextFrame(quest, i);
                     string localeCode = GameManager.Instance.LanguageManager.GetLocale().Identifier.Code;
 
                     yield return PlayDialogue(
@@ -196,7 +214,11 @@ namespace DeepSubmergence {
                         controlTags
                     );
                 }
-
+                
+                if(qm.ShouldAutoProgress(quest)){
+                    qm.IncrementProgress(quest);
+                }
+                
                 // Hide ui
                 yield return HideUI();
                 
@@ -232,21 +254,21 @@ namespace DeepSubmergence {
         private IEnumerator PlayDialogue(Sprite sprite, string localizedTitle, string localizedDialogue, DialogueControlTags controlTags){
             bool useAlpha = !dialogueBackground.activeSelf;
             
-            
             dialogueTitleTextT.text = localizedTitle;
             dialogueTextT.text = localizedDialogue;
             dialogueTextT.maxVisibleCharacters = 0;
             diverImage.sprite = sprite;
+            
             if(useAlpha){
                 diverImage.color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
             }
             
-            diverImage.enabled = true;
+            diverImage.enabled = sprite != null;
             dialogueBackground.SetActive(true);
             dialogueTitleBackground.SetActive(true);
             dialogueText.SetActive(true);
             dialogueTitleText.SetActive(true);
-            dialogueQuotes.SetActive((controlTags | DialogueControlTags.UseQuotes) != DialogueControlTags.None);
+            dialogueQuotes.SetActive((controlTags & DialogueControlTags.UseQuotes) > 0);
             
             // Show dialogue over time in various animated ways
             bool finished = false;

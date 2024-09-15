@@ -69,6 +69,14 @@ namespace DeepSubmergence {
             return result;
         }
         
+        public void ResetAllQuests(){
+            WinchCore.Log.Debug("Resetting all quests");
+            
+            foreach(QuestDialogue quest in allQuestDialogues.Values){
+                quest.progress = 0;
+            }
+        }
+        
         public void IncrementProgress(string saveId){
             allQuestDialogues[saveId].progress++;
             GameManager.Instance.SaveData.SetIntVariable(saveId, allQuestDialogues[saveId].progress);
@@ -108,6 +116,10 @@ namespace DeepSubmergence {
         public string GetNextFrame(string saveId, int dialogueIndex)
         {
             return allQuestDialogues[saveId].chunks[GetProgress(saveId)].frames[dialogueIndex];
+        }
+        
+        public bool ShouldAutoProgress(string saveId){
+            return allQuestDialogues[saveId].chunks[GetProgress(saveId)].autoProgress;
         }
     }   
 }

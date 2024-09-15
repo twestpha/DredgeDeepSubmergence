@@ -1,22 +1,26 @@
 {
-    "saveId": "deepsubmergence.mainquest",
-    "speakerName" : "deepsubmergence.questdivertitle",
+    "saveId": "deepsubmergence.introquest",
+    "speakerName" : "deepsubmergence.questintrotitle",
     "progress": 0,
     "chunks": [
         {
+            "autoProgress": true,
             "requiredItems": [],
             "dialogueOnFinish": [
-                "deepsubmergence.quest0dialogue0",
-                "deepsubmergence.quest0dialogue1",
+                "deepsubmergence.introquest.0.0",
+                "deepsubmergence.introquest.0.1",
+                "deepsubmergence.introquest.0.2",
             ],
             "controlTags": [ 
-                "q", 
-                "q", 
+                "",
+                "",
+                "q",
             ],
             "frames": [
-                "deepsubmergence.uidiver0",
-                "deepsubmergence.uidiver1",
+                "",
+                "",
+                "",
             ]
-        }
+        },
     ]
 }
