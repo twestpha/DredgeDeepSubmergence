@@ -7,7 +7,7 @@ Installable using the [Dredge Mod Manager](https://github.com/DREDGE-Mods/Dredge
 This mod is a work in progress. Stay tuned for more improvements, features, and content, and report any problems as an issue in github. If you want to contribute to this project, please reach out on the [Dredge Mod Discord](https://discord.com/invite/qFqPuTUAmD)!
 
 You can find the Fish and Sea Base by exploring around east of the Gale Cliffs. 
-[!Sea Base Map](./seabasemap.png)
+![Sea Base Map](./seabasemap.png)
 
 # Feature List (Spoiler Free)
 - Dive back into familiar waters as a Submarine
