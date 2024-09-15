@@ -1,0 +1,20 @@
+{
+	"itemNameKey": "deepsubmergence.map.name",
+	"itemDescriptionKey": "deepsubmergence.map.desc",
+	"sprite": "deepsubmergence.iconmap",
+	"itemColor": {
+		"r": 58,
+		"g": 40,
+		"b": 32,
+		"a": 255
+	},
+	"squishFactor": 1,
+	"value": 0,
+	"dimensions": [
+        "XXX",
+        "XXX",
+		"XXX",
+	],
+	"damageMode": "NONE",
+    "canBeDiscardedByPlayer": true,
+}

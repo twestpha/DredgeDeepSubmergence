@@ -151,7 +151,6 @@ namespace DeepSubmergence {
                     }
                     
                     if(introDelayTimer.Finished()){
-                        // TODO Give map item
                         StartCoroutine(SeabaseQuestUICoroutine(INTRO_QUEST_KEY));
                     }
                 }
@@ -174,6 +173,9 @@ namespace DeepSubmergence {
             
             if(qm.CanProgress(quest)){
                 SetupPlayerAtFakeDock(true);
+                
+                // Cache items on finish
+                string[] itemsOnFinish = qm.GetItemsOnFinish(quest);
                 
                 // Check for progression
                 string[] requiredFish = qm.GetRequiredItems(quest);
@@ -213,6 +215,11 @@ namespace DeepSubmergence {
                         LocalizationUtil.GetLocalizedString(localeCode, dialogues[i]),
                         controlTags
                     );
+                    
+                    // Get items and add to inventory
+                    if(itemsOnFinish != null && itemsOnFinish.Length > i && !string.IsNullOrEmpty(itemsOnFinish[i])){
+                        Utils.PutItemInCargo(itemsOnFinish[i], true);
+                    }
                 }
                 
                 if(qm.ShouldAutoProgress(quest)){

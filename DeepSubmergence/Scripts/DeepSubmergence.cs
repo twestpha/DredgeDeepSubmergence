@@ -10,20 +10,16 @@ namespace DeepSubmergence {
 
         public static DeepSubmergence instance;
         
-        // [/] More fish just because?
-        // [/] Make sure empty requirements are advanceable/repeatable?
-        // [/] empty sprites working
-        // [/] Rewrite main quest
-        // [/] Intro dialogue/quest/thing to be like "go here for the thing", 
+        // [/] gives map item
+        // [/] Add sea base map to items, allow it to be discarded
         
         // V0.4 Bugs & feedback fixes
-        // [x] gives map item
-        // [x] Add sea base map to items, allow it to be discarded
         // [x] Put new fish in places
-        //
-        // [x] Update readme with fixed issues/new features
+        // [x] Play the quest start to finish
+        // [x] Update readme with fixed issues/new features, comment out debug keys
         
         // V0.5: Post-tech improvements
+        // [x] Final long-term reward for completing quest chain
         // [x] Switch over to using addressables for assets
         // [x] Sonar ping system? Echoes in distance, plays particles on fish?
         // [x] Replace fake dock with real dock

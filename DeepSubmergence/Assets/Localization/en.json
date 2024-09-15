@@ -29,6 +29,9 @@
     "deepsubmergence.floodwater.name": "Flooding Water",
     "deepsubmergence.floodwater.desc": "A minor annoyance. Water is automatically dried when docking, or can be drained while at sea using Pumps.",
     
+    "deepsubmergence.map.name" : "Map to Sea Base",
+    "deepsubmergence.map.desc" : "A tattered, soaked map pointing the direction to some sort of Sea Base. Can be discarded once found.",
+    
     "deepsubmergence.pumptier1.name": "Low-Quality Pump",
     "deepsubmergence.pumptier1.desc": "Removes flooding water very slowly",
     "deepsubmergence.pumptier2.name": "Straining Pump",

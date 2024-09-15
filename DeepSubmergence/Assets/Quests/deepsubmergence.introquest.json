@@ -11,6 +11,11 @@
                 "deepsubmergence.introquest.0.1",
                 "deepsubmergence.introquest.0.2",
             ],
+            "itemsOnFinish": [
+                "",
+                "deepsubmergence.map",
+                "",
+            ],
             "controlTags": [ 
                 "",
                 "",

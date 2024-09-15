@@ -6,6 +6,7 @@ namespace DeepSubmergence {
         public bool autoProgress;
         public string[] requiredItems;
         public string[] dialogueOnFinish;
+        public string[] itemsOnFinish;
         public string[] controlTags;
         public string[] frames;
     }

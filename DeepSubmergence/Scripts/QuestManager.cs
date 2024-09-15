@@ -121,5 +121,9 @@ namespace DeepSubmergence {
         public bool ShouldAutoProgress(string saveId){
             return allQuestDialogues[saveId].chunks[GetProgress(saveId)].autoProgress;
         }
+
+        public string[] GetItemsOnFinish(string saveId){
+            return allQuestDialogues[saveId].chunks[GetProgress(saveId)].itemsOnFinish;
+        }
     }   
 }
