@@ -9,12 +9,10 @@ namespace DeepSubmergence {
     public class DeepSubmergence : MonoBehaviour {
 
         public static DeepSubmergence instance;
-        
-        // [/] gives map item
-        // [/] Add sea base map to items, allow it to be discarded
+                
+        // [/] Put new fish in places
         
         // V0.4 Bugs & feedback fixes
-        // [x] Put new fish in places
         // [x] Play the quest start to finish
         // [x] Update readme with fixed issues/new features, comment out debug keys
         

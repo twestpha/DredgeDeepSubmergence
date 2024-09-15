@@ -1,12 +1,12 @@
 {
     "location": {
-        "x": 562.0,
+        "x": 599.0,
         "y": 0.0,
-        "z": -107.0
+        "z": -235.0
     },
     "harvestableParticlePrefab": "MediumRoundFishParticles",
-    "items": [ "deepsubmergence.fishlampcrab", "deepsubmergence.fishironlungfish", "deepsubmergence.fishclampster" ],
-    "startStock": 3,
+    "items": [ "deepsubmergence.fishclampster", "deepsubmergence.fishlampcrab" ],
+    "startStock": 2,
     "maxStock": 6,
     "doesRestock": true,
     "usesTimeSpecificStock": false,
@@ -14,5 +14,5 @@
     "overriddenDaytimeSpecialChance": 0.5,
     "overrideDefaultNightSpecialChance": true,
     "overriddenNighttimeSpecialChance": 0.5,
-    "harvestDifficulty": "Medium",
+    "harvestDifficulty": "Easy",
 }
