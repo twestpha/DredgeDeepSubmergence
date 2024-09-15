@@ -11,11 +11,12 @@ You can find the Fish and Sea Base by exploring around east of the Gale Cliffs.
 
 # Feature List (Spoiler Free)
 - Dive back into familiar waters as a Submarine
-- 11 new types of creatures to find and capture while diving
-- Discoverable Deep Sea Base and accompanying storyline
+- 13 new types of creatures to find and capture while diving
+- Discoverable Deep Sea Base and accompanying storyline East of Gale Cliffs
 
 # Known Issues
-- Siphon Trawler doesn't function correctly.
-- Sea Base and fish are difficult to find (See exclamation point on map above)
+- Better logging has been added, so please include any logs where possible
 - Docking and quest dialogue have some small bugs with them
 - References to "blueprints" are for upcoming items.
+- Diving UI can be stuck, resulting in damage instantly when attempting to dive. Quit and restart to fix.
+- Dialogue UI can become unable to progress in certain situations.
