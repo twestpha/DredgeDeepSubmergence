@@ -80,6 +80,7 @@ namespace DeepSubmergence {
             DeepSubmergence.instance.managedObjects.Add(newObject);
             return newObject;
         }
+        
         //######################################################################
         
         //######################################################################

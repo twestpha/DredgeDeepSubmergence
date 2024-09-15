@@ -1,13 +1,10 @@
 {
     "saveId": "deepsubmergence.mainquest",
+    "speakerName" : "deepsubmergence.questdivertitle",
     "progress": 0,
     "chunks": [
         {
-            "requiredItems": [
-                "deepsubmergence.fishboltfish",
-                "deepsubmergence.fishnetsquid",
-                "deepsubmergence.fishshoal",
-            ],
+            "requiredItems": [],
             "dialogueOnFinish": [
                 "deepsubmergence.quest0dialogue0",
                 "deepsubmergence.quest0dialogue1",
@@ -26,12 +23,123 @@
             ],
             "frames": [
                 "deepsubmergence.uidiver0",
+                "deepsubmergence.uidiver1",
+                "deepsubmergence.uidiver1",
                 "deepsubmergence.uidiver0",
-                "deepsubmergence.uidiver0",
-                "deepsubmergence.uidiver0",
-                "deepsubmergence.uidiver0",
+                "deepsubmergence.uidiver1",
                 "deepsubmergence.uidiver0",
             ]
-        }
+        },
+        {
+            "requiredItems": [
+                "deepsubmergence.fishelectriceel",
+                "deepsubmergence.fishironlungfish",
+                "deepsubmergence.fishlampcrab",
+                "deepsubmergence.fishneedlefish",
+            ],
+            "dialogueOnFinish": [
+                "deepsubmergence.quest1dialogue0",
+                "deepsubmergence.quest1dialogue1",
+                "deepsubmergence.quest1dialogue2",
+                "deepsubmergence.quest1dialogue3",
+                "deepsubmergence.quest1dialogue4",
+                "deepsubmergence.quest1dialogue5",
+            ],
+            "controlTags": [ 
+                "q", 
+                "q", 
+                "q", 
+                "q",
+                "q", 
+                "q", 
+            ],
+            "frames": [
+                "deepsubmergence.uidiver1",
+                "deepsubmergence.uidiver0",
+                "deepsubmergence.uidiver1",
+                "deepsubmergence.uidiver2",
+                "deepsubmergence.uidiver1",
+                "deepsubmergence.uidiver0",
+            ]
+        },
+        {
+            "requiredItems": [
+                "deepsubmergence.fishboltfish",
+                "deepsubmergence.fishnetsquid",
+                "deepsubmergence.fishshoal",
+            ],
+            "dialogueOnFinish": [
+                "deepsubmergence.quest2dialogue0",
+                "deepsubmergence.quest2dialogue1",
+                "deepsubmergence.quest2dialogue2",
+                "deepsubmergence.quest2dialogue3",
+                "deepsubmergence.quest2dialogue4",
+                "deepsubmergence.quest2dialogue5",
+            ],
+            "controlTags": [ 
+                "q", 
+                "q", 
+                "q", 
+                "q",
+                "q", 
+                "q", 
+            ],
+            "frames": [
+                "deepsubmergence.uidiver1",
+                "deepsubmergence.uidiver2",
+                "deepsubmergence.uidiver1",
+                "deepsubmergence.uidiver0",
+                "deepsubmergence.uidiver1",
+                "deepsubmergence.uidiver1",
+            ]
+        },
+        {
+            "requiredItems": [
+                "deepsubmergence.fishsteelhead",
+                "deepsubmergence.fishtorpedofish",
+                "deepsubmergence.fishshreddershark",
+            ],
+            "dialogueOnFinish": [
+                "deepsubmergence.quest3dialogue0",
+                "deepsubmergence.quest3dialogue1",
+                "deepsubmergence.quest3dialogue2",
+                "deepsubmergence.quest3dialogue3",
+                "deepsubmergence.quest3dialogue4",
+                "deepsubmergence.quest3dialogue5",
+            ],
+            "controlTags": [ 
+                "q", 
+                "q", 
+                "q", 
+                "q",
+                "q", 
+                "q", 
+            ],
+            "frames": [
+                "deepsubmergence.uidiver1",
+                "deepsubmergence.uidiver2",
+                "deepsubmergence.uidiver1",
+                "deepsubmergence.uidiver2",
+                "deepsubmergence.uidiver1",
+                "deepsubmergence.uidiver2",
+            ]
+        },
+        {
+            "requiredItems": [
+                "deepsubmergence.fishtrenchwhale",
+            ],
+            "dialogueOnFinish": [
+                "deepsubmergence.questdonedialogue0",
+                "deepsubmergence.questdonedialogue1",
+            ],
+            "controlTags": [ 
+                "q", 
+                "q", 
+            ],
+            "frames": [
+                "deepsubmergence.uidiver3",
+                "deepsubmergence.uidiver3",
+            ]
+        },
     ]
 }

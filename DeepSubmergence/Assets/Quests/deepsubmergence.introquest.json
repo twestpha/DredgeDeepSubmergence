@@ -1,0 +1,22 @@
+{
+    "saveId": "deepsubmergence.mainquest",
+    "speakerName" : "deepsubmergence.questdivertitle",
+    "progress": 0,
+    "chunks": [
+        {
+            "requiredItems": [],
+            "dialogueOnFinish": [
+                "deepsubmergence.quest0dialogue0",
+                "deepsubmergence.quest0dialogue1",
+            ],
+            "controlTags": [ 
+                "q", 
+                "q", 
+            ],
+            "frames": [
+                "deepsubmergence.uidiver0",
+                "deepsubmergence.uidiver1",
+            ]
+        }
+    ]
+}

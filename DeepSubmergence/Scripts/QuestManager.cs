@@ -86,6 +86,10 @@ namespace DeepSubmergence {
             return allQuestDialogues[saveId].chunks[GetProgress(saveId)].requiredItems;
         }
         
+        public string GetSpeakerName(string saveId){
+            return allQuestDialogues[saveId].speakerName;
+        }
+        
         public string[] GetDialogueOnFinish(string saveId){
             return allQuestDialogues[saveId].chunks[GetProgress(saveId)].dialogueOnFinish;
         }

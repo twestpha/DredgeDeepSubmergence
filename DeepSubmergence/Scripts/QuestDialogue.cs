@@ -12,6 +12,7 @@ namespace DeepSubmergence {
     [Serializable]
     public class QuestDialogue {
         public string saveId;
+        public string speakerName;
         public int progress;
         public QuestDialogueChunk[] chunks;
     }

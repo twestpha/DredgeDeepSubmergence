@@ -10,28 +10,28 @@ namespace DeepSubmergence {
 
         public static DeepSubmergence instance;
         
-        // [/] Immersive text; show/hide quotes and have less direct conversational UI
-        // [/] Switch dialogue/pseudoquests to be more systemic, for intro cutscene?
-        // [/] Switch fish to abyssal
+        // [/] More fish just because?
         
-        // V0.4 bugs & feedback fixes
-        // [x] Seperate quest UI from fake dock honestly
+        // V0.4 Bugs & feedback fixes
+        // [x] Make sure empty requirements are advanceable/repeatable?
+        // [x] empty sprites working
+        // [x] Rewrite main quest
         // [x] Intro dialogue/quest/thing to be like "go here for the thing"
+        // [x] Put new fish in places
         //
         // [x] Switch over to using addressables for assets
         // [x] Sonar ping system? Echoes in distance, plays particles on fish?
         //
-        // [x] More fish just because?
-        //
         // [x] Update readme with fixed issues/new features
         
         // V0.5: Post-tech improvements
-        // [x] current fake-docking mechanic jank (not sure if fixable, it's the nature of docks not being supported directly)
+        // [x] Replace fake dock with real dock
         // [x] Selling pumps and pressure vessels, level up with caught fish
         //    - unlock from progression levels
-        //    - sizing objects PITA? How to give them in a way that doesn't suck
         // [x] Balance cost of new parts too
         // [x] Update readme
+        // [x] Torpedo bait
+        // [x] Custom monster
         // [x] Cover art for game start? Just a fullscreen splash on a canvas, not 3D backgroundy
         // [x] Play it a shitload, bugtest, etc.
         
