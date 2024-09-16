@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 using Winch.Core;
 using Winch.Util;
 using System;
@@ -10,18 +11,25 @@ namespace DeepSubmergence {
 
         public static DeepSubmergence instance;
         
+        // [/] Lobster art polish to be more readable
+        // [/] Cover art for game start, Just a fullscreen splash on a canvas, not 3D backgroundy
+        
         // V0.5: Post-tech improvements
+        // [x] Switch over to using addressables for assets, get that pipeline working
+        //   - switch models over
+        //
         // [x] Final long-term reward for completing quest chain
-        // [x] Switch over to using addressables for assets
-        // [x] Sonar ping system? Echoes in distance, plays particles on fish?
+        //   - cool eldritch object that does a cool thing
+        // [x] Sonar ping system? Echoes in distance, plays particles on fish? using/replacing horn?
+        //
         // [x] Replace fake dock with real dock
         // [x] Selling pumps and pressure vessels, level up with caught fish
         //    - unlock from progression levels
-        // [x] Balance cost of new parts too
-        // [x] Update readme
+        // [x] Balance cost, efficacy of new parts too
+        //
         // [x] Torpedo bait
-        // [x] Custom monster
-        // [x] Cover art for game start? Just a fullscreen splash on a canvas, not 3D backgroundy
+        //
+        // [x] Update readme
         // [x] Play it a shitload, bugtest, etc.
         
         public GameObject dredgePlayer;
@@ -30,6 +38,8 @@ namespace DeepSubmergence {
         public GameObject underwaterFishableManager;
         public SeaBaseFakeDock seaBaseFakeDock;
         public GameObject questManager;
+        public GameObject splashCanvasMenu;
+        public GameObject splashArt;
         public GameObject debugAxes;
 
         public List<GameObject> managedObjects = new();
@@ -47,13 +57,24 @@ namespace DeepSubmergence {
             
             setup = false;
             
-            // spin until we find a player
+            // Spin until we find the main menu canvas, then setup splash art
+            splashCanvasMenu = null;
+            while(splashCanvasMenu == null){
+                yield return null;
+                splashCanvasMenu = Utils.FindInChildren(GameObject.Find("Canvases"), "MenuCanvas");
+            }
+            
+            SetupAndShowSplashArt();
+            
+            // Spin until we find a player
             while(dredgePlayer == null){
                 yield return null;
                 dredgePlayer = GameObject.Find("Player");
             }
 
             try {
+                TeardownSplashArt();
+                
                 // Instantiate all the objects needed for the mod
                 SetupDebugAxes();
                 
@@ -107,7 +128,9 @@ namespace DeepSubmergence {
             WinchCore.Log.Debug("Resetting");
             
             for(int i = 0, count = managedObjects.Count; i < count; ++i){
-                Destroy(managedObjects[i]);
+                if(managedObjects != null){
+                    Destroy(managedObjects[i]);
+                }
             }
             
             // Kick off a restart waiting for player
@@ -178,6 +201,35 @@ namespace DeepSubmergence {
         private void SetupQuestManager(){
             questManager = Utils.SetupGameObject("Quest Manager");
             questManager.AddComponent<QuestManager>();
+        }
+        
+        private void SetupAndShowSplashArt(){
+            
+            
+            splashArt = new GameObject();
+            splashArt.name = "[DeepSubmergence] Menu Splash Art";
+            
+            RectTransform newRectTransform = splashArt.AddComponent<RectTransform>();
+            
+            Image splashArtImage = splashArt.AddComponent<Image>();
+            splashArtImage.sprite = TextureUtil.GetSprite("deepsubmergence.uisplashart");
+            
+            newRectTransform.SetParent(splashCanvasMenu.transform);
+            newRectTransform.SetSiblingIndex(0);
+            
+            // Default to bottom-left corner because reasons
+            newRectTransform.anchorMax = Vector2.zero;
+            newRectTransform.anchorMin = Vector2.zero;
+            
+            newRectTransform.sizeDelta = new Vector2(1920.0f, 1080.0f);  
+            newRectTransform.anchoredPosition = new Vector2(960.0f, 540.0f);
+            
+            // Manually manage lifetime
+            managedObjects.Add(splashArt);
+        }
+        
+        private void TeardownSplashArt(){
+            Destroy(splashArt);
         }
     }
 }
