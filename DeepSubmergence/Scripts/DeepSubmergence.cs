@@ -8,26 +8,31 @@ using System;
 
 namespace DeepSubmergence {
     public class DeepSubmergence : MonoBehaviour {
+        
+        private const string MOD_ADDRESSABLE_NAME = "twestpha.deepsubmergence_assets_all_95c9b4f47ece71963eb15e8256aaac4f";
 
         public static DeepSubmergence instance;
         
-        // [/] Lobster art polish to be more readable
-        // [/] Cover art for game start, Just a fullscreen splash on a canvas, not 3D backgroundy
-        
-        // V0.5: Post-tech improvements
+        // V0.5: More Cool Things
         // [x] Switch over to using addressables for assets, get that pipeline working
-        //   - switch models over
+        //   - switch models and textures over, leave materials being stolen from things
         //
         // [x] Final long-term reward for completing quest chain
         //   - cool eldritch object that does a cool thing
         // [x] Sonar ping system? Echoes in distance, plays particles on fish? using/replacing horn?
+        //   - ping particles needed from addressable
+        //   - sound effect needed from addressable
         //
+        // [x] Torpedo bait
+        //
+        // [x] Coupla more fish why not
+        //
+        // V0.6: Post-tech improvements
         // [x] Replace fake dock with real dock
+        //   - rework that whole quest chain :P
         // [x] Selling pumps and pressure vessels, level up with caught fish
         //    - unlock from progression levels
         // [x] Balance cost, efficacy of new parts too
-        //
-        // [x] Torpedo bait
         //
         // [x] Update readme
         // [x] Play it a shitload, bugtest, etc.
@@ -56,6 +61,9 @@ namespace DeepSubmergence {
         IEnumerator Start(){
             
             setup = false;
+
+            yield return Utils.LoadAddressable(MOD_ADDRESSABLE_NAME);
+            WinchCore.Log.Debug("Finished loading mod addressable");
             
             // Spin until we find the main menu canvas, then setup splash art
             splashCanvasMenu = null;
@@ -140,7 +148,7 @@ namespace DeepSubmergence {
         private void SetupSubmarinePlayer(){
             submarinePlayer = Utils.SetupModelTextureAsGameObject(
                 "SubmarinePlayer",
-                ModelUtil.GetModel("deepsubmergence.submarine"),
+                Utils.GetAssetFromAddressables<Mesh>("deepsubmergence.submarine"),
                 TextureUtil.GetTexture("deepsubmergence.submarinetexture")
             );
 

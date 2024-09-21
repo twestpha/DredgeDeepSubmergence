@@ -6,6 +6,8 @@ using System.Linq;
 using System;
 using Sirenix.OdinInspector;
 using Winch.Serialization.Item;
+using System.Collections;
+using System.IO;
 
 namespace DeepSubmergence {
     
@@ -67,6 +69,64 @@ namespace DeepSubmergence {
             return null;
         }
         //######################################################################
+        
+        private static AssetBundle cachedModAddressable;
+        private static Dictionary<string, UnityEngine.Object> cachedModAddressableAssets = new Dictionary<string, UnityEngine.Object>();
+
+        public static IEnumerator LoadAddressable(string addressableName){
+            cachedModAddressableAssets.Clear();
+            
+            AssetBundle bundle = null;
+            try {
+                string[] modDirs = Directory.GetDirectories("Mods");
+                foreach (string modDir in modDirs)
+                {
+                    if(modDir.Contains("DeepSubmergence")){
+                        string addressablePath = Path.Combine(Path.Combine(Path.Combine(modDir, "Assets"), "Addressables"), addressableName);
+                        
+                        if(!File.Exists(addressablePath + ".bundle")){
+                            WinchCore.Log.Error("Missing addressable file " + addressablePath);
+                            continue;
+                        }
+                        
+                        bundle = AssetBundle.LoadFromFile(addressablePath);
+                    }
+                }
+            } catch (Exception e){
+                WinchCore.Log.Error(e.ToString());
+                yield break;
+            }
+            
+            if(bundle == null){
+                WinchCore.Log.Error("Failed to load addressable bundle for " + addressableName);
+            } else {
+                WinchCore.Log.Debug("Loaded addressable bundle for " + addressableName);
+            }
+            
+            int totalAssets = bundle.GetAllAssetNames().Length;
+            int i = 0;
+            WinchCore.Log.Debug("Starting load of " + totalAssets + " assets...");
+            
+            foreach(string assetName in bundle.GetAllAssetNames()){
+                AssetBundleRequest req = bundle.LoadAssetAsync(assetName);
+                i++;
+                
+                while(!req.isDone){
+                    WinchCore.Log.Debug("Finished loading asset " + assetName + " in bundle " + addressableName + "(" + i + " / " + totalAssets + ")");
+                    yield return null;
+                }
+
+                cachedModAddressableAssets.Add(assetName, req.asset);
+            }
+        }
+        
+        public static T GetAssetFromAddressables<T>(string assetName) where T : UnityEngine.Object {
+            if(cachedModAddressableAssets.ContainsKey(assetName)){
+                return cachedModAddressableAssets[assetName] as T;
+            }
+
+            return default(T);
+        }
         
         //######################################################################
         // Helper function for quick-setting up an empty gameobject
