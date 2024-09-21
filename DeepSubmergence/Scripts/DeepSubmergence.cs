@@ -8,19 +8,17 @@ using System;
 
 namespace DeepSubmergence {
     public class DeepSubmergence : MonoBehaviour {
-
-        // [/] Coupla more fishies why not
-        // [/] Rearrange the order of the fishies in the encyclopedia (???)
-        // [/] Skeleton overlay model
         
         public static DeepSubmergence instance;
         
+        // [/] Leviathan's Heart item
+        // [/] Hook up skeleton logic to correlate with having the item
+        
         // V0.5: More Cool Things
         // [x] Final long-term reward for completing quest chain
-        //   - cool eldritch object that does a cool thing "Leviathan's Heart", what effects...?
-        //   [x] Leviathan's Heart item
-        //   [x] Hook up skeleton logic
-        //   [x] Hook up mechanical effects
+        //   - cool eldritch object that does a cool thing "Leviathan's Heart", turns rot into something...?
+        //   faster? More light? what's something that's globally useful and a reason to keep playing the game?
+        //   [x] Hook up mechanical effects, description
         // 
         // [x] Torpedo bait
         //

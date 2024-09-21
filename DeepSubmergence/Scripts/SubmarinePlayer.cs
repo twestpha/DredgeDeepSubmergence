@@ -39,6 +39,8 @@ namespace DeepSubmergence {
         private const string OOZE_PUMP_ITEM_A = "tir-net1";
         private const string OOZE_PUMP_ITEM_B = "tir-net2";
         private const string OOZE_PUMP_ABILITY = "trawl";
+        
+        private const string ENDGAME_ITEM_NAME = "deepsubmergence.leviathanheart";
 
         private class PumpData {
             public string item;
@@ -61,6 +63,7 @@ namespace DeepSubmergence {
         private GameObject cachedDredgePlayer;
         private Player cachedDredgePlayerPlayer;
         private GameObject propeller;
+        private GameObject submarineSkeleton;
         
         private MeshRenderer submarineMesh;
         private Light playerLight;
@@ -136,7 +139,7 @@ namespace DeepSubmergence {
                 cachedBubbleParticlesCopy.Stop();
                 
                 // Create and setup submarine skeleton
-                GameObject submarineSkeleton = Utils.SetupModelTextureAsGameObject(
+                submarineSkeleton = Utils.SetupModelTextureAsGameObject(
                     "Submarine Skeleton",
                     ModelUtil.GetModel("deepsubmergence.skeleton"),
                     TextureUtil.GetTexture("deepsubmergence.skeletontexture")
@@ -146,7 +149,7 @@ namespace DeepSubmergence {
                 submarineSkeleton.transform.localPosition = Vector3.zero;
                 submarineSkeleton.transform.localRotation = Quaternion.identity;
                 
-                submarineSkeleton.SetActive(false); // TODO make this able/disable if you have the end-game item equipped
+                submarineSkeleton.SetActive(false);
             } catch (Exception e){
                 WinchCore.Log.Error(e.ToString());
             }
@@ -175,10 +178,7 @@ namespace DeepSubmergence {
                 previouslyTeleporting = teleporting;
                 
                 if(Input.GetKeyDown(KeyCode.T)){
-                    // Utils.PutItemInCargo("deepsubmergence.fishsteelhead", true);
-                    // Utils.PutItemInCargo("deepsubmergence.fishtorpedofish", true);
-                    // Utils.PutItemInCargo("deepsubmergence.fishshreddershark", true);
-                    // Utils.PutItemInCargo("deepsubmergence.fishtrenchwhale", true);
+                    Utils.PutItemInCargo(ENDGAME_ITEM_NAME, true);
                 }
                 
                 // Update inputs, movement, position
@@ -421,6 +421,11 @@ namespace DeepSubmergence {
                         child.SetActive(false);
                     }
                 }
+            }
+            
+            // Apply abling to skeleton
+            if(submarineSkeleton != null){
+                submarineSkeleton.SetActive(Utils.HasItemInCargo(ENDGAME_ITEM_NAME));
             }
         }
     }

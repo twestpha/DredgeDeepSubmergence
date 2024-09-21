@@ -44,6 +44,9 @@
     "deepsubmergence.pumptier3.name": "Pressurized Pump",
     "deepsubmergence.pumptier3.desc": "Removes flooding water quickly",
     
+    "deepsubmergence.leviathanheart.name" : "Leviathan's Heart",
+    "deepsubmergence.leviathanheart.desc" : "Cool thing cool thing cool thing",
+    
     "deepsubmergence.pressurevesseltier1.name": "Thin Pressure Vessel",
     "deepsubmergence.pressurevesseltier1.desc": "Adds a small amount of time to how long you can remain submerged.",
     "deepsubmergence.pressurevesseltier2.name": "Thick Pressure Vessel",

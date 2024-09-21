@@ -1,0 +1,19 @@
+{
+	"itemNameKey": "deepsubmergence.leviathanheart.name",
+	"itemDescriptionKey": "deepsubmergence.leviathanheart.desc",
+	"sprite": "deepsubmergence.iconleviathanheart",
+	"itemColor": {
+		"r": 58,
+		"g": 40,
+		"b": 32,
+		"a": 255
+	},
+	"squishFactor": 0,
+	"value": 0,
+	"dimensions": [
+        "XXX",
+		"XXX",
+	],
+	"damageMode": "NONE",
+    "canBeDiscardedByPlayer": true,
+}
