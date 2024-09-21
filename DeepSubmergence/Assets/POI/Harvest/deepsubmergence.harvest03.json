@@ -5,7 +5,7 @@
         "z": -271.0
     },
     "harvestableParticlePrefab": "MediumRoundFishParticles",
-    "items": [ "deepsubmergence.fishnetsquid", "deepsubmergence.fishelectriceel" ],
+    "items": [ "deepsubmergence.fish_013_netsquid", "deepsubmergence.fish_010_electriceel" ],
     "startStock": 4,
     "maxStock": 6,
     "doesRestock": true,

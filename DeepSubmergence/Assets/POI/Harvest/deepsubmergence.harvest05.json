@@ -5,7 +5,7 @@
         "z": -206.0
     },
     "harvestableParticlePrefab": "MediumRoundFishParticles",
-    "items": [ "deepsubmergence.fishlampcrab", "deepsubmergence.fishneedlefish" ],
+    "items": [ "deepsubmergence.fish_015_lampcrab", "deepsubmergence.fish_022_needlefish" ],
     "startStock": 3,
     "maxStock": 6,
     "doesRestock": true,

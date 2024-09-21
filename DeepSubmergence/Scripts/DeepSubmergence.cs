@@ -10,17 +10,21 @@ namespace DeepSubmergence {
     public class DeepSubmergence : MonoBehaviour {
 
         // [/] Coupla more fishies why not
+        // [/] Rearrange the order of the fishies in the encyclopedia (???)
+        // [/] Skeleton overlay model
         
         public static DeepSubmergence instance;
         
         // V0.5: More Cool Things
         // [x] Final long-term reward for completing quest chain
-        //   - cool eldritch object that does a cool thing
-        //
+        //   - cool eldritch object that does a cool thing "Leviathan's Heart", what effects...?
+        //   [x] Leviathan's Heart item
+        //   [x] Hook up skeleton logic
+        //   [x] Hook up mechanical effects
+        // 
         // [x] Torpedo bait
         //
         // [x] New harvest pois for new fishies
-        // [x] Rearrange the order of the fishies in the encyclopedia (???)
         //
         // [x] play -> menu -> play repro's that diving bug?
         //
@@ -36,6 +40,7 @@ namespace DeepSubmergence {
         //   - rework that whole quest chain :P
         // [x] Selling pumps and pressure vessels, level up with caught fish
         //    - unlock from progression levels
+        // [x] Selling torpedo bait
         // [x] Balance cost, efficacy of new parts too
         //
         // [x] Update readme
@@ -148,7 +153,7 @@ namespace DeepSubmergence {
         
         private void SetupSubmarinePlayer(){
             submarinePlayer = Utils.SetupModelTextureAsGameObject(
-                "SubmarinePlayer",
+                "Submarine Player",
                 ModelUtil.GetModel("deepsubmergence.submarine"),
                 TextureUtil.GetTexture("deepsubmergence.submarinetexture")
             );

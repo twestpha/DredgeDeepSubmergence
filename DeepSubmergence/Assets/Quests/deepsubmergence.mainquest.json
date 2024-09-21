@@ -6,9 +6,9 @@
         {
             "autoProgress": false,
             "requiredItems": [
-                "deepsubmergence.fishboltfish",
-                "deepsubmergence.fishnetsquid",
-                "deepsubmergence.fishshoal",
+                "deepsubmergence.fish_000_boltfish",
+                "deepsubmergence.fish_013_netsquid",
+                "deepsubmergence.fish_016_shoal",
             ],
             "dialogueOnFinish": [
                 "deepsubmergence.mainquest.0.0",
@@ -45,10 +45,10 @@
         {
             "autoProgress": false,
             "requiredItems": [
-                "deepsubmergence.fishelectriceel",
-                "deepsubmergence.fishironlungfish",
-                "deepsubmergence.fishlampcrab",
-                "deepsubmergence.fishneedlefish",
+                "deepsubmergence.fish_010_electriceel",
+                "deepsubmergence.fish_012_ironlungfish",
+                "deepsubmergence.fish_015_lampcrab",
+                "deepsubmergence.fish_022_needlefish",
             ],
             "dialogueOnFinish": [
                 "deepsubmergence.mainquest.1.0",
@@ -82,9 +82,9 @@
         {
             "autoProgress": false,
             "requiredItems": [
-                "deepsubmergence.fishsteelhead",
-                "deepsubmergence.fishtorpedofish",
-                "deepsubmergence.fishshreddershark",
+                "deepsubmergence.fish_001_steelhead",
+                "deepsubmergence.fish_018_torpedofish",
+                "deepsubmergence.fish_045_shreddershark",
             ],
             "dialogueOnFinish": [
                 "deepsubmergence.mainquest.2.0",
@@ -118,7 +118,7 @@
         {
             "autoProgress": false,
             "requiredItems": [
-                "deepsubmergence.fishtrenchwhale",
+                "deepsubmergence.fish_060_trenchwhale",
             ],
             "dialogueOnFinish": [
                 "deepsubmergence.mainquest.3.0",

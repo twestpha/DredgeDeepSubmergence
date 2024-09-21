@@ -5,7 +5,7 @@
         "z": -447.0
     },
     "harvestableParticlePrefab": "BronzeWhaler",
-    "items": [ "deepsubmergence.fishshoal" ],
+    "items": [ "deepsubmergence.fish_016_shoal" ],
     "startStock": 1,
     "maxStock": 2,
     "doesRestock": true,

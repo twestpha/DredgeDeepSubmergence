@@ -134,6 +134,19 @@ namespace DeepSubmergence {
                 GameObject bubbleCopy = GameObject.Instantiate(foundBubbles);
                 cachedBubbleParticlesCopy = bubbleCopy.GetComponent<ParticleSystem>();
                 cachedBubbleParticlesCopy.Stop();
+                
+                // Create and setup submarine skeleton
+                GameObject submarineSkeleton = Utils.SetupModelTextureAsGameObject(
+                    "Submarine Skeleton",
+                    ModelUtil.GetModel("deepsubmergence.skeleton"),
+                    TextureUtil.GetTexture("deepsubmergence.skeletontexture")
+                );
+                
+                submarineSkeleton.transform.parent = transform;
+                submarineSkeleton.transform.localPosition = Vector3.zero;
+                submarineSkeleton.transform.localRotation = Quaternion.identity;
+                
+                submarineSkeleton.SetActive(false); // TODO make this able/disable if you have the end-game item equipped
             } catch (Exception e){
                 WinchCore.Log.Error(e.ToString());
             }

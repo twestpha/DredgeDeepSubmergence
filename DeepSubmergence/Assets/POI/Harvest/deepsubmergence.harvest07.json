@@ -5,7 +5,7 @@
         "z": -301.0
     },
     "harvestableParticlePrefab": "MediumRoundFishParticles",
-    "items": [ "deepsubmergence.fishsteelhead", "deepsubmergence.fishboltfish" ],
+    "items": [ "deepsubmergence.fish_001_steelhead", "deepsubmergence.fish_000_boltfish" ],
     "startStock": 1,
     "maxStock": 2,
     "doesRestock": true,

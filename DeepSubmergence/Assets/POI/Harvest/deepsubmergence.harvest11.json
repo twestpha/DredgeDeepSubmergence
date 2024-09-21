@@ -5,7 +5,7 @@
         "z": -469.0
     },
     "harvestableParticlePrefab": "MediumRoundFishParticles",
-    "items": [ "deepsubmergence.fishtorpedofish" ],
+    "items": [ "deepsubmergence.fish_018_torpedofish" ],
     "startStock": 2,
     "maxStock": 6,
     "doesRestock": true,

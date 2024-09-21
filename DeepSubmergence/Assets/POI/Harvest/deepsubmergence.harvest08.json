@@ -5,7 +5,7 @@
         "z": -111.0
     },
     "harvestableParticlePrefab": "BronzeWhaler",
-    "items": [ "deepsubmergence.fishshreddershark" ],
+    "items": [ "deepsubmergence.fish_045_shreddershark" ],
     "startStock": 1,
     "maxStock": 2,
     "doesRestock": true,
