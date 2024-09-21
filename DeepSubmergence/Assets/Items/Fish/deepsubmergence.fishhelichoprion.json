@@ -1,0 +1,37 @@
+{
+  "itemNameKey": "deepsubmergence.helichoprion.name",
+  "itemDescriptionKey": "deepsubmergence.helichoprion.desc",
+  "itemType": "GENERAL",
+  "itemSubtype": "FISH",
+  "sprite": "deepsubmergence.iconhelichoprion",
+  "itemColor": {
+    "r": 59,
+    "g": 38,
+    "b": 34,
+    "a": 255
+  },
+  "tooltipTextColor": {
+    "r": 74,
+    "g": 237,
+    "b": 217,
+    "a": 255
+  },
+  "squishFactor": 1,
+  "value": 560,
+  "dimensions": [
+    "XXXXX",
+    "XX   ",
+  ],
+  "zonesFoundIn": "OPEN_OCEAN",
+  "day": true,
+  "night": true,
+  "minSizeCentimeters": 760,
+  "maxSizeCentimeters": 880,
+  "harvestMinigameType": "DREDGE_RADIAL",
+  "perSpotMin": 3,
+  "perSpotMax": 5,
+  "harvestPOICategory": "FISH_SMALL",
+  "harvestableType": "ABYSSAL",
+  "harvestDifficulty": "VERY_EASY",
+  "isAberration": true,
+}

@@ -9,25 +9,34 @@ using System;
 namespace DeepSubmergence {
     public class DeepSubmergence : MonoBehaviour {
 
+        // [/] Coupla more fishies why not
+        
         public static DeepSubmergence instance;
         
-        // [/] Lobster art polish to be more readable
-        // [/] Cover art for game start, Just a fullscreen splash on a canvas, not 3D backgroundy
-        
-        // V0.5: Post-tech improvements
-        // [x] Switch over to using addressables for assets, get that pipeline working
-        //   - switch models over
-        //
+        // V0.5: More Cool Things
         // [x] Final long-term reward for completing quest chain
         //   - cool eldritch object that does a cool thing
-        // [x] Sonar ping system? Echoes in distance, plays particles on fish? using/replacing horn?
         //
+        // [x] Torpedo bait
+        //
+        // [x] New harvest pois for new fishies
+        // [x] Rearrange the order of the fishies in the encyclopedia (???)
+        //
+        // [x] play -> menu -> play repro's that diving bug?
+        //
+        // [x] Switch over to using addressables for assets, get that pipeline working
+        //   - switch models and textures over, leave materials being stolen from things
+        //
+        // [x] Sonar ping system? Echoes in distance, plays particles on fish? using/replacing horn?
+        //   - ping particles needed from addressable
+        //   - sound effect needed from addressable
+        //
+        // V0.6: Post-tech improvements
         // [x] Replace fake dock with real dock
+        //   - rework that whole quest chain :P
         // [x] Selling pumps and pressure vessels, level up with caught fish
         //    - unlock from progression levels
         // [x] Balance cost, efficacy of new parts too
-        //
-        // [x] Torpedo bait
         //
         // [x] Update readme
         // [x] Play it a shitload, bugtest, etc.

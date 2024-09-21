@@ -1,0 +1,18 @@
+{
+    "location": {
+        "x": 772.0,
+        "y": 0.0,
+        "z": -243.0
+    },
+    "harvestableParticlePrefab": "MediumRoundFishParticles",
+    "items": [ "deepsubmergence.fisharukusame" ],
+    "startStock": 500,
+    "maxStock": 500,
+    "doesRestock": true,
+    "usesTimeSpecificStock": false,
+    "overrideDefaultDaySpecialChance": true,
+    "overriddenDaytimeSpecialChance": 0.5,
+    "overrideDefaultNightSpecialChance": true,
+    "overriddenNighttimeSpecialChance": 0.5,
+    "harvestDifficulty": "Easy",
+}
