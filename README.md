@@ -17,6 +17,7 @@ You can find the Fish and Sea Base by exploring around east of the Gale Cliffs.
 # Known Issues
 - Better logging has been added, so please include any logs where possible
 - Docking and quest dialogue have some small bugs with them
-- References to "blueprints" are for upcoming items.
+- References to "blueprints" in dialogue are for upcoming items.
 - Diving UI can be stuck, resulting in damage instantly when attempting to dive. Quit and restart to fix.
 - Dialogue UI can become unable to progress in certain situations.
+- In the pale reach, the icebreaker may show as equipped but won't function
